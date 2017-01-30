@@ -1,4 +1,4 @@
 .DS_Store
 /Skrapple/target/
 /Skrapple/nbproject/
-**/ManualTests.java
+ManualTests.java
