@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import fi.luupanu.skrapple.HelloWorld;
+import fi.luupanu.skrapple.ManualTests;
 
 /**
  *
@@ -44,6 +44,6 @@ public class HelloWorldTest {
     // public void hello() {}
     
     public void TestHelloWorld() {
-        assertEquals("HelloWorldZ", HelloWorld.helloWorldZ());
+        assertEquals("HelloWorldZ", ManualTests.helloWorldZ());
     }
 }

@@ -11,4 +11,21 @@ package fi.luupanu.skrapple.core;
  */
 public class Letter {
     
+    private final LetterType type;
+    
+    public Letter(LetterType type) {
+        this.type = type;
+    }
+    
+    public LetterType getType() {
+        return type;
+    }
+    
+    public int getPoints() {
+        return type.getPoints();
+    }
+    
+    public String getName() {
+        return type.getName();
+    }
 }
