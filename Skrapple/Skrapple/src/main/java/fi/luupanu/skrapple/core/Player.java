@@ -30,4 +30,9 @@ public class Player {
     public void addPoints(int n) {
         points += n;
     }
+    
+    @Override
+    public String toString() {
+        return name + ": " + points + " points";
+    }
 }

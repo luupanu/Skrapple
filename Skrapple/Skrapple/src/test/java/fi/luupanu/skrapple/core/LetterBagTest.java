@@ -80,7 +80,7 @@ public class LetterBagTest {
     }
     
     @Test
-    public void removeLetterDoesNotAllowRemovingOutOfBounds() {
+    public void removeLetterByIndexDoesNotAllowRemovingOutOfBounds() {
         assertEquals(false, bag.removeLetterByIndex(-1));
         assertEquals(false, bag.removeLetterByIndex(101));
         assertEquals(101, bag.getSize());

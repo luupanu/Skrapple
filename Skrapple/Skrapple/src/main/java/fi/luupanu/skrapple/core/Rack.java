@@ -26,6 +26,7 @@ public class Rack {
     }
 
     public int getTotalPoints() {
+        // tarvittaneen ainakin lopun miinuspisteytyksiä varten
         int sum = 0;
         for (Letter let : rack) {
             sum += let.getPoints();
@@ -41,7 +42,8 @@ public class Rack {
     }
 
     public Letter takeLetter(int i) {
-        if (i >= 0 && i < rack.size()) {
+        // onkohan i < RACK_MAX_SIZE turha vai hyvä check varulta?
+        if (i >= 0 && i < rack.size() && i < RACK_MAX_SIZE) {
             Letter taken = rack.get(i);
             rack.remove(i);
             return taken;
