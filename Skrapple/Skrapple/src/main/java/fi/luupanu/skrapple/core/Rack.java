@@ -5,10 +5,47 @@
  */
 package fi.luupanu.skrapple.core;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author panu
  */
 public class Rack {
-    
+
+    private ArrayList<Letter> rack;
+    private static final int RACK_MAX_SIZE = 7;
+
+    public Rack() {
+        this.rack = new ArrayList<>(7);
+    }
+
+    public ArrayList<Letter> getContents() {
+        return rack;
+    }
+
+    public int getTotalPoints() {
+        int sum = 0;
+        for (Letter let : rack) {
+            sum += let.getPoints();
+        }
+        return sum;
+    }
+
+    public void refillRack(LetterBag bag) {
+        while (bag.getSize() > 0 && rack.size() < RACK_MAX_SIZE) {
+            Letter taken = bag.takeRandomLetterFromBag();
+            rack.add(taken);
+        }
+    }
+
+    public Letter takeLetter(int i) {
+        if (i >= 0 && i < rack.size()) {
+            Letter taken = rack.get(i);
+            rack.remove(i);
+            return taken;
+        }
+        return null;
+    }
 }

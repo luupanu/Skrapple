@@ -11,4 +11,23 @@ package fi.luupanu.skrapple.core;
  */
 public class Player {
     
+    private final String name;
+    private int points;
+    
+    public Player(String name) {
+        this.name = name;
+        this.points = 0;
+    }
+    
+    public String getPlayerName() {
+        return name;
+    }
+    
+    public int getPlayerPoints() {
+        return points;
+    }
+    
+    public void addPoints(int n) {
+        points += n;
+    }
 }

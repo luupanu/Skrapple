@@ -7,6 +7,7 @@ package fi.luupanu.skrapple.core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  *
@@ -14,24 +15,37 @@ import java.util.Iterator;
  */
 public class LetterBag {
 
-    ArrayList<Letter> bag;
+    private ArrayList<Letter> bag;
+    private Random random;
 
     public LetterBag() {
         this.bag = new ArrayList<>();
         placeAllLettersInBag();
+        this.random = new Random();
     }
 
     public ArrayList<Letter> getContents() {
         return bag;
     }
-    
+
     public int getSize() {
         return bag.size();
     }
 
-    public boolean removeLetterByIndex(int k) {
-        if (k >= 0 && k < bag.size()) {
-            bag.remove(k);
+    public Letter takeRandomLetterFromBag() {
+        int i = 0;
+        if (bag.size() > 1) {
+            i = random.nextInt(bag.size());
+        }
+        Letter taken = bag.get(i);
+        removeLetterByType(taken.getType());
+        return taken;
+    }
+
+    // poista jompikumpi lopullista toteutusta varten
+    public boolean removeLetterByIndex(int i) {
+        if (i >= 0 && i < bag.size()) {
+            bag.remove(i);
             return true;
         }
         return false;
