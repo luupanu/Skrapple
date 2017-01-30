@@ -5,7 +5,7 @@ Kahden pelaajan suomenkielinen Scrabble-klooni. Sanasto kotukselta. Ohjelmassa v
 **Käyttäjät:** Kaksi (ihmis)pelaajaa
 
 **Kaikkien käyttäjien toiminnot:**
-* uusi peli *
+* uusi peli
   * kysytään varmistus, mikäli edellinen peli on jo käynnissä
 
 * pelin pelaaminen
