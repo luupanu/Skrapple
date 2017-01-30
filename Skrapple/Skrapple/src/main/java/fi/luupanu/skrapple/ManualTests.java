@@ -18,15 +18,25 @@ public class ManualTests {
     public static void main(String[] args) {
         LetterBag bag = new LetterBag();
 
-        printContents(bag);
-
         System.out.println("\nsize: " + bag.getContents().size() + "\n");
-
-        bag.removeLetter(26);
-
-        printContents(bag);
+        
+        bag.removeAllLettersByType(LetterType.LETTER_A);
         
         System.out.println("\nsize: " + bag.getContents().size() + "\n");
+//
+//        System.out.println("\nsize: " + bag.getContents().size() + "\n");
+//
+//        bag.removeLetter(26);
+//
+//        printContents(bag);
+//        
+//        System.out.println("\nsize: " + bag.getContents().size() + "\n");
+//        
+//        bag.removeLetter(new Letter(LetterType.LETTER_WILD));
+//        
+//        printContents(bag);
+//        
+//        System.out.println("\nsize: " + bag.getContents().size() + "\n");
     }
 
     public static String helloWorldZ() {
@@ -36,7 +46,7 @@ public class ManualTests {
     private static void printContents(LetterBag bag) {
         int i = 0;
         for (Letter let : bag.getContents()) {
-            System.out.println(i + " " + let.getName());
+            System.out.println(i + " " + let);
             i++;
         }
     }

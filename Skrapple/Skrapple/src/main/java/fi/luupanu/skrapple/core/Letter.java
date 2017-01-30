@@ -25,7 +25,8 @@ public class Letter {
         return type.getPoints();
     }
     
-    public String getName() {
+    @Override
+    public String toString() {
         return type.getName();
     }
 }
