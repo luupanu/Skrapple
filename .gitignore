@@ -1,3 +1,4 @@
 .DS_Store
 /Skrapple/target/
 /Skrapple/nbproject/
+/Skrapple/src/main/java/fi/luupanu/skrapple/ManualTests.java
