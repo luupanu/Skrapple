@@ -42,7 +42,7 @@ public class LetterBag {
         return taken;
     }
 
-    // poista jompikumpi lopullista toteutusta varten
+    // poista jompikumpi lopullista toteutusta varten?
     public boolean removeLetterByIndex(int i) {
         if (i >= 0 && i < bag.size()) {
             bag.remove(i);
@@ -50,7 +50,7 @@ public class LetterBag {
         }
         return false;
     }
-
+    // poista jompikumpi lopullista toteutusta varten?
     public boolean removeLetterByType(LetterType t) {
         for (Letter let : bag) {
             if (let.getType() == t) {

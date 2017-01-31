@@ -42,7 +42,7 @@ public class Rack {
     }
 
     public Letter takeLetter(int i) {
-        // onkohan i < RACK_MAX_SIZE turha vai hyvä check varulta?
+        // onkohan i < RACK_MAX_SIZE turha vai hyvä check varuilta?
         if (i >= 0 && i < rack.size() && i < RACK_MAX_SIZE) {
             Letter taken = rack.get(i);
             rack.remove(i);
