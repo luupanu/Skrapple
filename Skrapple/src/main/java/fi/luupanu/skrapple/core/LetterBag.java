@@ -7,6 +7,7 @@ package fi.luupanu.skrapple.core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Random;
  */
 public class LetterBag {
 
-    private ArrayList<Letter> bag;
+    private List<Letter> bag;
     private Random random;
 
     public LetterBag() {
@@ -24,7 +25,7 @@ public class LetterBag {
         this.random = new Random();
     }
 
-    public ArrayList<Letter> getContents() {
+    public List<Letter> getContents() {
         return bag;
     }
 

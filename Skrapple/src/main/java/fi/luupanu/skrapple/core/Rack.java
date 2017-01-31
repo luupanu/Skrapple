@@ -6,6 +6,7 @@
 package fi.luupanu.skrapple.core;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -14,14 +15,14 @@ import java.util.Random;
  */
 public class Rack {
 
-    private ArrayList<Letter> rack;
+    private List<Letter> rack;
     private static final int RACK_MAX_SIZE = 7;
 
     public Rack() {
         this.rack = new ArrayList<>(7);
     }
 
-    public ArrayList<Letter> getContents() {
+    public List<Letter> getContents() {
         return rack;
     }
 
