@@ -13,10 +13,12 @@ public class Player {
     
     private final String name;
     private int points;
+    private Rack rack;
     
     public Player(String name) {
         this.name = name;
         this.points = 0;
+        this.rack = new Rack();
     }
     
     public String getPlayerName() {
@@ -25,6 +27,10 @@ public class Player {
     
     public int getPlayerPoints() {
         return points;
+    }
+    
+    public Rack getPlayerRack() {
+        return rack;
     }
     
     public void addPoints(int n) {
