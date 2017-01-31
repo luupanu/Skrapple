@@ -7,6 +7,8 @@ Kahden pelaajan suomenkielinen Scrabble-klooni. Sanasto kotukselta. Ohjelmassa v
 **Kaikkien käyttäjien toiminnot:**
 * uusi peli
   * kysytään varmistus, mikäli edellinen peli on jo käynnissä
+  * Scrabblen virallisten sääntöjen mukaan jokainen pelaaja nostaa kirjainpussista yhden kirjaimen ja lähimmäksi A:ta päässyt pelaaja aloittaa
+    * ohjelmassa mahdollisesti Pelaaja 1 aloittaa aina
 
 * pelin pelaaminen
   * pelaa vuoro
