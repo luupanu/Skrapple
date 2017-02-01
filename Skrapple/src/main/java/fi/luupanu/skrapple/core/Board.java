@@ -32,18 +32,19 @@ public class Board {
         "W..l...W...l..W",};
 
     private Square[][] board;
-    public boolean turn = true; // true = player ones turn
+    private boolean turn; 
 
     public Board() {
+        turn = true; // true = player ones turn
         createDefaultBoard();
     }
 
     public Square[][] getContents() {
         return board;
     }
-
-    public int getSize() {
-        return board.length;
+    
+    public boolean getTurn() {
+        return turn;
     }
 
     private void createDefaultBoard() {

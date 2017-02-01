@@ -13,6 +13,7 @@ public class Square {
 
     private final SquareType type;
     private boolean occupied;
+    private Letter letter;
 
     public Square(SquareType type) {
         this.type = type;
@@ -22,13 +23,20 @@ public class Square {
     public SquareType getType() {
         return type;
     }
+    
+    public Letter getLetter() {
+        return letter;
+    }
+    
+    public void placeLetter(Letter letter) {
+        if (!occupied) {
+            this.letter = letter;
+            occupied = true;
+        }
+    }
 
     public boolean hasLetter() {
         return occupied;
-    }
-
-    public void setOccupied() {
-        occupied = true;
     }
 
     @Override

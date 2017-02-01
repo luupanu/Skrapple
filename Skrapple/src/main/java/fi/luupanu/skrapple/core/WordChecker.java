@@ -9,6 +9,8 @@ package fi.luupanu.skrapple.core;
  *
  * @author panu
  */
-public class Word {
-    
+public class WordChecker {
+    /*  TO-DO: a working class WordChecker. WordChecker will check if the
+        to-be-added words actually form something meaningful using a dictionary.
+    */
 }

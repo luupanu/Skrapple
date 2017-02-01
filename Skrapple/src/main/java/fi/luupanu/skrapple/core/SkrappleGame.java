@@ -10,5 +10,56 @@ package fi.luupanu.skrapple.core;
  * @author panu
  */
 public class SkrappleGame {
+
+    private Player p1;
+    private Player p2;
+    private Board board;
+    private SkrappleGameState state;
+
+    public SkrappleGame(Player p1, Player p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+        createGame();
+    }
     // TODO: the main game loop
+
+    public Player play() {
+        // still under construction. Returns the winner of the game
+        while (true) {
+            Turn turn = new Turn();
+            boolean whosTurn = board.getTurn();
+            turn.doTurn(whosTurn);
+            if (state != SkrappleGameState.STATE_PLAYING) {
+                break;
+            }
+        }
+
+        subtractRemainingLetters();
+        return declareWinner();
+    }
+
+    private void createGame() {
+        state = SkrappleGameState.STATE_PLAYING;
+        board = new Board();
+    }
+
+    private void subtractRemainingLetters() {
+        p1.addPoints(-p1.getPlayerRack().getTotalPoints());
+        p2.addPoints(-p2.getPlayerRack().getTotalPoints());
+    }
+
+    private Player declareWinner() {
+        if (state == SkrappleGameState.STATE_PLAYER_2_RESIGNED) {
+            return p1;
+        } else if (state == SkrappleGameState.STATE_PLAYER_1_RESIGNED) {
+            return p2;
+        }
+        if (p1.getPlayerPoints() > p2.getPlayerPoints()) {
+            return p1;
+        } else if (p1.getPlayerPoints() < p2.getPlayerPoints()) {
+            return p2;
+        }
+        return null;
+    }
+
 }

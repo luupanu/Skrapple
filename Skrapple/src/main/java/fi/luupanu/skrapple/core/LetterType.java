@@ -25,14 +25,14 @@ public enum LetterType {
     LETTER_M("M", 3),
     LETTER_N("N", 1),
     LETTER_O("O", 2),
-    LETTER_P("P", 4), // huom. Q-kirjainta ei suomenkielisessä Scrabblessä ole ollenkaan
+    LETTER_P("P", 4), // letter Q does not exist in the Finnish version
     LETTER_R("R", 4),
     LETTER_S("S", 1),
     LETTER_T("T", 1),
     LETTER_U("U", 3),
     LETTER_V("V", 4),
     LETTER_W("W", 8),
-    LETTER_Y("Y", 4), // ei myöskään Z-kirjainta
+    LETTER_Y("Y", 4), // nor Z
     LETTER_AE("Ä", 2),
     LETTER_OE("Ö", 7),
     LETTER_WILD("*", 0);
