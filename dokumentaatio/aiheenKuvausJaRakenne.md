@@ -1,6 +1,6 @@
 **Aihe:** Skrapple - suomenkielinen Scrabble-klooni
 
-Kahden pelaajan suomenkielinen Scrabble-klooni. Sanasto kotukselta. Ohjelmassa voisi olla mukana myös esim. all-time high-score, tai pelien tallentamisominaisuus mikäli kerkeää toteuttamaan. Peliä pelataan ns. "hotseat"-moninpelimuodolla, ei siis internetin kautta.
+Kahden pelaajan suomenkielinen [Scrabble](https://fi.wikipedia.org/wiki/Scrabble)-klooni. Sanasto kotukselta. Ohjelmassa voisi olla mukana myös esim. all-time high-score, tai pelien tallentamisominaisuus mikäli kerkeää toteuttamaan. Peliä pelataan nk. "[hotseat](https://fi.wikipedia.org/wiki/Hotseat)"-moninpelimuodolla, ei siis internetin kautta.
 
 **Käyttäjät:** Kaksi (ihmis)pelaajaa
 
