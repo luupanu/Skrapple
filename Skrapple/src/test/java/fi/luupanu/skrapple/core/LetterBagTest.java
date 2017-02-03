@@ -21,10 +21,15 @@ import static org.junit.Assert.*;
 public class LetterBagTest {
 
     private LetterBag bag;
+    private LetterBag emptyBag;
+    private Letter let;
 
     @Before
     public void setUp() {
         bag = new LetterBag();
+        emptyBag = new LetterBag();
+        let = new Letter(LetterType.LETTER_E);
+        emptyBag.getContents().clear();
     }
 
     @Test
@@ -88,8 +93,10 @@ public class LetterBagTest {
     
     @Test
     public void removeLetterByIndexWorks() {
-        assertEquals(true, bag.removeLetterByIndex(0));
-        assertEquals(100, bag.getSize());
+        assertEquals(false, emptyBag.removeLetterByIndex(0));
+        emptyBag.placeLetterInBag(let);
+        assertEquals(true, emptyBag.removeLetterByIndex(0));
+        assertEquals(0, emptyBag.getSize());
     }
     
     @Test
@@ -113,8 +120,7 @@ public class LetterBagTest {
     @Test
     public void placingLetterWorks() {
         int i = numberOfLettersByTypeInBag(bag, LetterType.LETTER_E);
-        Letter l = new Letter(LetterType.LETTER_E);
-        bag.placeLetterInBag(l);
+        bag.placeLetterInBag(let);
         assertEquals(i+1, numberOfLettersByTypeInBag(bag, LetterType.LETTER_E));
         assertEquals(102, bag.getSize());
     }

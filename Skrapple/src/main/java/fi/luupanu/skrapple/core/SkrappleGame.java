@@ -15,6 +15,7 @@ public class SkrappleGame {
     private Player p2;
     private Board board;
     private SkrappleGameState state;
+    private boolean whoseTurn;
 
     public SkrappleGame(Player p1, Player p2) {
         this.p1 = p1;
@@ -27,11 +28,11 @@ public class SkrappleGame {
         // still under construction. Returns the winner of the game
         while (true) {
             Turn turn = new Turn();
-            boolean whosTurn = board.getTurn();
-            turn.doTurn(whosTurn);
+            turn.doTurn(whoseTurn);
             if (state != SkrappleGameState.STATE_PLAYING) {
                 break;
             }
+            switchTurn();
         }
 
         subtractRemainingLetters();
@@ -41,6 +42,7 @@ public class SkrappleGame {
     private void createGame() {
         state = SkrappleGameState.STATE_PLAYING;
         board = new Board();
+        whoseTurn = true; // true = player one's turn
     }
 
     private void subtractRemainingLetters() {
@@ -60,6 +62,14 @@ public class SkrappleGame {
             return p2;
         }
         return null;
+    }
+            
+    public boolean getTurn() {
+        return whoseTurn;
+    }
+    
+    public void switchTurn() {
+        whoseTurn = !getTurn();
     }
 
 }
