@@ -44,8 +44,8 @@ public class SkrappleGame {
     }
 
     private void subtractRemainingLetters() {
-        p1.addPoints(-p1.getPlayerRack().getTotalPoints());
-        p2.addPoints(-p2.getPlayerRack().getTotalPoints());
+        p1.addPoints(-p1.getPlayerRack().getRackPoints());
+        p2.addPoints(-p2.getPlayerRack().getRackPoints());
     }
 
     private Player declareWinner() {

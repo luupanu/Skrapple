@@ -26,7 +26,7 @@ public class Rack {
         return rack;
     }
 
-    public int getTotalPoints() {
+    public int getRackPoints() {
         // tarvittaneen ainakin lopun miinuspisteytyksiä varten
         int sum = 0;
         for (Letter let : rack) {

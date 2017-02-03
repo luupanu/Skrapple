@@ -20,7 +20,7 @@ public class LetterBag {
     private Random random;
 
     public LetterBag() {
-        this.bag = new ArrayList<>();
+        this.bag = new ArrayList<>(101);
         placeAllLettersInBag();
         this.random = new Random();
     }
@@ -61,6 +61,7 @@ public class LetterBag {
         return false;
     }
 
+    // optional method for banning certain letters
     public int removeAllLettersByType(LetterType t) {
         // returns how many were removed
         int i = 0;

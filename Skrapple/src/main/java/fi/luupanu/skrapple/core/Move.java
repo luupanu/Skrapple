@@ -17,10 +17,8 @@ public class Move {
     
     // TO-DO: tie the class LetterQueue with Move in a logical way
     
-    private LetterQueue queue;
-    
     public Move() {
-        queue = new LetterQueue();
+
     }
     
     private boolean checkIfValidMove() {

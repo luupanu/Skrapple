@@ -29,14 +29,14 @@ public class Board {
         "l..w...l...w..l",
         "..w...l.l...w..",
         ".w...L...L...w.",
-        "W..l...W...l..W",};
+        "W..l...W...l..W"};
 
     private Square[][] board;
     private boolean turn; 
 
     public Board() {
-        turn = true; // true = player ones turn
         createDefaultBoard();
+        turn = true; // true = player one's turn
     }
 
     public Square[][] getContents() {
