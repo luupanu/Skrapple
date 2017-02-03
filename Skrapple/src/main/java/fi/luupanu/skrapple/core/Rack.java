@@ -14,6 +14,8 @@ import java.util.Random;
  * @author panu
  */
 public class Rack {
+    
+    // TO-DO: switching letters
 
     private List<Letter> rack;
     private static final int RACK_MAX_SIZE = 7;

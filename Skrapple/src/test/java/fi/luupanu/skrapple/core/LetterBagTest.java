@@ -125,6 +125,17 @@ public class LetterBagTest {
         assertEquals(102, bag.getSize());
     }
     
+    @Test
+    public void takeRandomLetterFromEmptyBagReturnsNull() {
+        assertEquals(null, emptyBag.takeRandomLetterFromBag());
+    }
+    
+    @Test
+    public void takeRandomLetterFromBagWithOneLetterReturnsTheLetter() {
+        emptyBag.placeLetterInBag(let);
+        assertEquals(let, emptyBag.takeRandomLetterFromBag());
+    }
+    
     /* Helper methods */
     
     private boolean bagHasNoLettersOfType(LetterBag b, LetterType t) {

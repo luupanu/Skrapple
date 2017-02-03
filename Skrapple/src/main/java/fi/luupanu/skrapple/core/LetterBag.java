@@ -34,6 +34,9 @@ public class LetterBag {
     }
 
     public Letter takeRandomLetterFromBag() {
+        if (bag.size() < 1) {
+            return null;
+        }
         int i = 0;
         if (bag.size() > 1) {
             i = random.nextInt(bag.size());
@@ -51,6 +54,7 @@ public class LetterBag {
         }
         return false;
     }
+
     // don't need two, remove this function or the previous?
     public boolean removeLetterByType(LetterType t) {
         for (Letter let : bag) {
