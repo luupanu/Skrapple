@@ -5,3 +5,4 @@ Päivä | Tunnit | Kuvaus
 30.01.2017 | 8h | Pelilogiikkaluokkien tekoa ja LetterBagTest
 31.01.2017 | 4h | Pelilogiikkaluokkien tekoa
 01.02.2017 | 7h | Pelilogiikkaluokkien tekoa, main game loop -"prototyyppi"
+03.02.2017 | 6h | Testien lisäämistä, luokkakaavio

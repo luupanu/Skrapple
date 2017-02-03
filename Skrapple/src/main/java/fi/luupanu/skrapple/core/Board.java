@@ -42,7 +42,7 @@ public class Board {
     }
     
     public Square getSquare(int x, int y) {
-        if ((x >= 0 && x < 15) && y >= 0 && y < 15) {
+        if (x >= 0 && x < 15 && y >= 0 && y < 15) {
             return board[y][x];
         }
         return null;
