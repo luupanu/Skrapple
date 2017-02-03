@@ -44,4 +44,6 @@ Kahden pelaajan suomenkielinen [Scrabble](https://fi.wikipedia.org/wiki/Scrabble
   * käyttäjä avaa listan parhaista pisteistä ja voi tarkastella sitä
   * päivittyy automattisesti pelin päätyttyä
   
+  **Luokkakaavio:**
+  
   ![Luokkakaavio](https://yuml.me/f38fe6a4)
