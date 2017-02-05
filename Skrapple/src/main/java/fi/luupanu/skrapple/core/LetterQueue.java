@@ -22,6 +22,12 @@ public class LetterQueue {
         make invalid letter placements. The whole queue can then be canceled so
         that the board remains unchanged if the user makes an invalid move. */
     
+    /*  HashMap doesn't seem to really work as the same type of a letter doesn't
+        provide a sufficiently unique hashCode(). No easy solution that I can
+        think of other than to give Letter a property Coordinate with appropriate
+        methods. With this solution HashMap can be replaced with a Set of
+        Coordinates to be added. */
+    
     private Map<Letter, Point> lettersToBePlaced;
     private boolean direction; // true = horizontal, false = vertical
 
@@ -34,7 +40,7 @@ public class LetterQueue {
     }
 
     public boolean addLetterToQueue(Letter let, Point p, Board board) {
-        if (!isValidCoordinate(p.x, p.y)) {
+        if (!isValidCoordinate(p.x, p.y) || lettersToBePlaced.containsKey(let)) {
             return false;
         }
 
@@ -61,10 +67,26 @@ public class LetterQueue {
         }
 
         if (lettersToBePlaced.size() == 1) {
-            checkSecondLetterCorrectPlacement(p, board);
+            if (checkSecondLetterCorrectPlacement(p, board)) {
+                lettersToBePlaced.put(let, p);
+                return true;
+            }
+            return false;
         }
         
-        return checkRemainingLettersCorrectPlacement(p, board, direction);
+        if (checkRemainingLettersCorrectPlacement(p, board, direction)) {
+            lettersToBePlaced.put(let, p);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean removeLetterFromQueue(Letter let) {
+        if (lettersToBePlaced.containsKey(let)) {
+            lettersToBePlaced.remove(let);
+            return true;
+        }
+        return false;
     }
 
     private boolean checkFirstLetterCorrectPlacement(Point p, Board board) {
@@ -80,7 +102,9 @@ public class LetterQueue {
             rest of the letters (a player can either place a word vertically or
             horizontally on the board, not both at the same time) */
         for (Point firstLetterCoordinate : lettersToBePlaced.values()) {
-            if (firstLetterCoordinate.x == p.x) {
+            if (firstLetterCoordinate.x == p.x && firstLetterCoordinate.y == p.y) {
+                return false;
+            } else if (firstLetterCoordinate.x == p.x) {
                 direction = false; // vertical
                 return true;
             } else if (firstLetterCoordinate.y == p.y) {
@@ -160,5 +184,14 @@ public class LetterQueue {
             }
         }
         return true;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Point p : lettersToBePlaced.values()) {
+            sb.append(p).append(" - ");
+        }
+        return sb.toString();
     }
 }
