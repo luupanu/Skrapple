@@ -54,6 +54,28 @@ public class LetterQueueTest {
         assertEquals(false, q.addLetterToQueue(new Letter(LetterType.LETTER_F), p, b));
         assertEquals(0, q.getLetterQueue().size());
     }
+    
+    @Test
+    public void addingTheSameLetterTwiceWithDifferentCoordinatesFails() {
+        assertEquals(true, q.addLetterToQueue(let, new Point(7, 7), b));
+        assertEquals(false, q.addLetterToQueue(let, new Point(7, 8), b));
+        assertEquals(1, q.getLetterQueue().size());
+    }
+    
+    @Test
+    public void removingALetterWorks() {
+        assertEquals(true, q.addLetterToQueue(let, new Point(7, 7), b));
+        assertEquals(true, q.removeLetterFromQueue(let));
+        assertEquals(0, q.getLetterQueue().size());
+    }
+    
+    @Test
+    public void addingTheSameLetterTwiceIfRemovedFirstSucceeds() {
+        assertEquals(true, q.addLetterToQueue(let, new Point(7, 7), b));
+        assertEquals(true, q.removeLetterFromQueue(let));
+        assertEquals(true, q.addLetterToQueue(let, new Point(7, 7), b));
+        assertEquals(1, q.getLetterQueue().size());
+    }
 
     @Test
     public void addingALetterToQueueWhenBoardIsEmptyFailsIfTheWordIsNotConstructedTowardsTheCenterSquare() {
@@ -71,18 +93,18 @@ public class LetterQueueTest {
     @Test
     public void addingALetterToQueueWhenBoardIsEmptySucceedsIfTheWordIsConstructedTowardsTheCenterSquareVertically() {
         for (int y = 0; y < 15; y++) {
-            assertEquals(true, q.addLetterToQueue(let, new Point(7, y), b));
-            assertEquals(1, q.getLetterQueue().size());
+            LetterQueue queue = new LetterQueue();
+            assertEquals(true, queue.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(7, y), b));
+            assertEquals(1, queue.getLetterQueue().size());
         }
     }
 
     @Test
     public void addingALetterToQueueWhenBoardIsEmptySucceedsIfTheWordIsConstructedTowardsTheCenterSquareHorizontally() {
         for (int x = 0; x < 15; x++) {
-            p.setLocation(x, 7);
-            assertEquals(true, q.addLetterToQueue(let, new Point(x, 7), b));
-            System.out.println(q.getLetterQueue().size());
-            assertEquals(1, q.getLetterQueue().size());
+            LetterQueue queue = new LetterQueue();
+            assertEquals(true, queue.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(x, 7), b));
+            assertEquals(1, queue.getLetterQueue().size());
         }
     }
 
@@ -115,28 +137,100 @@ public class LetterQueueTest {
         }
     }
 
-//    @Test
-//    public void addingSecondLetterFailsIfNotOnTheSameRowOrColumnAsTheFirstLetter() {
-//        b.getSquare(7, 7).placeLetter(let);
-//        assertEquals(true, q.addLetterToQueue(let, new Point(8, 8), b));
-//        for (int y = 0; y < 15; y++) {
-//            for (int x = 0; x < 15; x++) {
-//                if (x == 8 || y == 8 || (x == 7 && y == 7)) {
-//                    continue;
-//                }
-//                p.setLocation(x, y);
-//                assertEquals(false, q.addLetterToQueue(let, p, b));
-//            }
-//        }
-//    }
-//
-//    @Test
-//    public void addingSecondLetterSucceedsIfOnTheSameRowAsTheFirstLetter() {
-//        q.addLetterToQueue(let, new Point(7, 7), b);
-//        for (int x = 0; x < 15; x++) {
-//            for (int y = 0; y < 15; y++) {
-//                assertEquals(true, q.addLetterToQueue(let, p, b));
-//            }
-//        }
-//    }
+    @Test
+    public void addingSecondLetterFailsIfNotOnTheSameRowOrColumnAsTheFirstLetterInTheQueue() {
+        b.getSquare(7, 7).placeLetter(let);
+        assertEquals(true, q.addLetterToQueue(let, new Point(8, 8), b));
+        for (int y = 0; y < 15; y++) {
+            for (int x = 0; x < 15; x++) {
+                if (x == 8 || y == 8 || (x == 7 && y == 7)) {
+                    continue;
+                }
+                p.setLocation(x, y);
+                assertEquals(false, q.addLetterToQueue(new Letter(LetterType.LETTER_E), p, b));
+            }
+        }
+    }
+
+    @Test
+    public void addingSecondLetterSucceedsIfOnTheSameRowAsTheFirstLetterInTheQueue() {
+        b.getSquare(7, 7).placeLetter(let);
+        for (int x = 0; x < 15; x++) {
+            if (x == 8) {
+                continue;
+            }
+            LetterQueue queue = new LetterQueue();
+            assertEquals(true, queue.addLetterToQueue(let, new Point(8, 8), b));
+            p.setLocation(x, 8);
+            assertEquals(true, queue.addLetterToQueue(new Letter(LetterType.LETTER_E), p, b));
+            assertEquals(2, queue.getLetterQueue().size());
+        }
+    }
+
+    @Test
+    public void addingSecondLetterSucceedsIfOnTheSameColumnAsTheFirstLetter() {
+        b.getSquare(7, 7).placeLetter(let);
+        for (int y = 0; y < 15; y++) {
+            if (y == 8) {
+                continue;
+            }
+            LetterQueue queue = new LetterQueue();
+            assertEquals(true, queue.addLetterToQueue(let, new Point(8, 8), b));
+            p.setLocation(8, y);
+            assertEquals(true, queue.addLetterToQueue(new Letter(LetterType.LETTER_E), p, b));
+            assertEquals(2, queue.getLetterQueue().size());
+        }
+    }
+
+    @Test
+    public void addingMoreLettersThanTwoFailsIfHorizontalDirectionNotRespected() {
+        b.getSquare(7, 7).placeLetter(let);
+        assertEquals(true, q.addLetterToQueue(let, new Point(0, 8), b));
+        assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(1, 8), b));
+        for (int y = 0; y < 15; y++) {
+            if (y == 8) {
+                continue;
+            }
+            p.setLocation(8, y);
+            assertEquals(false, q.addLetterToQueue(new Letter(LetterType.LETTER_E), p, b));
+            assertEquals(2, q.getLetterQueue().size());
+        }
+    }
+
+    @Test
+    public void addingMoreLettersThanTwoFailsIfVerticalDirectionNotRespected() {
+        b.getSquare(7, 7).placeLetter(let);
+        assertEquals(true, q.addLetterToQueue(let, new Point(8, 0), b));
+        assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(8, 1), b));
+        for (int x = 0; x < 15; x++) {
+            if (x == 8) {
+                continue;
+            }
+            p.setLocation(x, 8);
+            assertEquals(false, q.addLetterToQueue(new Letter(LetterType.LETTER_E), p, b));
+            assertEquals(2, q.getLetterQueue().size());
+        }
+    }
+
+    @Test
+    public void addingMoreLettersThanTwoSucceedsIfHorizontalDirectionRespected() {
+        b.getSquare(7, 7).placeLetter(let);
+        assertEquals(true, q.addLetterToQueue(let, new Point(0, 8), b));
+        assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(1, 8), b));
+        for (int x = 2; x < 15; x++) {
+            assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(x, 8), b));
+        }
+        assertEquals(15, q.getLetterQueue().size());
+    }
+
+    @Test
+    public void addingMoreLettersThanTwoSucceedsIfVerticalDirectionRespected() {
+        b.getSquare(7, 7).placeLetter(let);
+        assertEquals(true, q.addLetterToQueue(let, new Point(8, 0), b));
+        assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(8, 1), b));
+        for (int y = 2; y < 15; y++) {
+            assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Point(8, y), b));
+        }
+        assertEquals(15, q.getLetterQueue().size());
+    }
 }

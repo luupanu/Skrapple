@@ -8,15 +8,15 @@ package fi.luupanu.skrapple.core;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  *
  * @author panu
  */
 public class Rack {
-    
-    // TO-DO: switching letters
 
+    // TO-DO: switching letters
     private List<Letter> rack;
     private static final int RACK_MAX_SIZE = 7;
 
@@ -52,5 +52,21 @@ public class Rack {
             return taken;
         }
         return null;
+    }
+
+    public boolean addLetters(Set<Letter> letters) {
+        for (Letter let : letters) {
+            if (!rack.add(let)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean addLetter(Letter let) {
+        if (rack.size() < RACK_MAX_SIZE) {
+            return rack.add(let);
+        }
+        return false;
     }
 }

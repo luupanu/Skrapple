@@ -10,21 +10,21 @@ package fi.luupanu.skrapple.core;
  * @author panu
  */
 public class Letter {
-    
+
     private final LetterType type;
-    
+
     public Letter(LetterType type) {
         this.type = type;
     }
-    
+
     public LetterType getType() {
         return type;
     }
-    
+
     public int getPoints() {
         return type.getPoints();
     }
-    
+
     @Override
     public String toString() {
         return type.getName();
