@@ -41,6 +41,9 @@ public class Square {
 
     @Override
     public String toString() {
-        return type.getValue();
+        if (!occupied) {
+            return type.getValue();
+        }
+        return getLetter().toString();
     }
 }
