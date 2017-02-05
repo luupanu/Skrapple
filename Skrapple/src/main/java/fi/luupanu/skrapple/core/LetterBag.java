@@ -85,10 +85,8 @@ public class LetterBag {
     }
 
     private void placeAllLettersInBag() {
-        for (LetterType lt : LetterType.values()) {
+        for (LetterType t : LetterType.values()) {
             int n = 1; // B, C, D, F, G, W, Ö
-            Letter letter = new Letter(lt);
-            LetterType t = letter.getType();
 
             if (t == LetterType.LETTER_A
                     || t == LetterType.LETTER_I) {
@@ -119,13 +117,13 @@ public class LetterBag {
                 n = 2;
             }
 
-            placeMultipleLettersInBag(letter, n);
+            createAndPlaceMultipleLettersOfTypeInBag(t, n);
         }
     }
 
-    private void placeMultipleLettersInBag(Letter l, int n) {
+    private void createAndPlaceMultipleLettersOfTypeInBag(LetterType t, int n) {
         for (int i = 0; i < n; i++) {
-            placeLetterInBag(l);
+            placeLetterInBag(new Letter(t));
         }
     }
 }
