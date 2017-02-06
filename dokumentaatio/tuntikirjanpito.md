@@ -6,3 +6,5 @@ Päivä | Tunnit | Kuvaus
 31.01.2017 | 4h | Pelilogiikkaluokkien tekoa
 01.02.2017 | 7h | Pelilogiikkaluokkien tekoa, main game loop -"prototyyppi"
 03.02.2017 | 6h | Testien lisäämistä, luokkakaavio
+04.02.2017 | 4h | LetterQueueTestin parantamista, bugien korjausta
+06.02.2017 | 5h | Refaktorointia, uusi luokka LetterQueueValidator
