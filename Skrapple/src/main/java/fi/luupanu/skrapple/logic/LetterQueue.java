@@ -9,7 +9,6 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -29,7 +28,7 @@ public class LetterQueue {
     private boolean direction; // true = horizontal, false = vertical
 
     public LetterQueue() {
-        set = new HashSet<>();
+        set = new HashSet<>(); // the LetterQueue
         checks = new LetterQueueChecks(this);
     }
     
@@ -47,7 +46,7 @@ public class LetterQueue {
     
     public boolean addLetterToQueue(Letter let, Coord c, Board board) {
         if (checks.letterCanBeAddedToQueue(let, c, board)) {
-            let.setCoordinate(c.getX(), c.getY());
+            let.setCoord(c.getX(), c.getY());
             set.add(let);
             return true;
         }
@@ -66,7 +65,7 @@ public class LetterQueue {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Letter let : set) {
-            Coord c = let.getCoordinate();
+            Coord c = let.getCoord();
             sb.append(c).append(" - ");
         }
         return sb.toString();

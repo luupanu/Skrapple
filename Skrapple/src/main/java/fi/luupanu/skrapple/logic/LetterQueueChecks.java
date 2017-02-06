@@ -17,8 +17,11 @@ import java.util.Set;
  */
 public class LetterQueueChecks {
 
-    private LetterQueue q;
-    private Set<Letter> set;
+    /*  This class houses checks that are performed to all letters before they 
+        are added to the LetterQueue. */
+    
+    private final LetterQueue q;
+    private final Set<Letter> set;
 
     public LetterQueueChecks(LetterQueue queue) {
         this.q = queue;
@@ -34,14 +37,13 @@ public class LetterQueueChecks {
             return false;
         }
 
-        // check that the board doesn't already have a letter at the coordinates
-        Square s = board.getContents()[x][y];
-        if (s.hasLetter()) {
+        // check that the board doesn't already have a letter at the coordinate
+        if (board.getSquare(x, y).hasLetter()) {
             return false;
         }
 
         // the first letter of the first word must be at x = 7 OR y = 7
-        if (boardHasNoLetters(board) && set.isEmpty()) {            
+        if (board.hasNoLetters() && set.isEmpty()) {            
             return x == 7 || y == 7;
         }
         
@@ -72,7 +74,7 @@ public class LetterQueueChecks {
             rest of the letters (a player can either place a word vertically or
             horizontally on the board, not both at the same time) */
         for (Letter let : set) {
-            Coord firstLetterCoord = let.getCoordinate();
+            Coord firstLetterCoord = let.getCoord();
             if (firstLetterCoord.getX() == c.getX() && firstLetterCoord.getY() == c.getY()) {
                 return false;
             } else if (firstLetterCoord.getX() == c.getX()) {
@@ -88,7 +90,7 @@ public class LetterQueueChecks {
 
     private boolean checkRemainingLettersCorrectPlacement(Coord c, Board board, boolean direction) {
         for (Letter let : set) {
-            Coord coordinate = let.getCoordinate();
+            Coord coordinate = let.getCoord();
             if (c.getY() == coordinate.getY() && c.getX() == coordinate.getX()) {
                 return false; // don't try to add exact same coordinates
             }
@@ -139,28 +141,14 @@ public class LetterQueueChecks {
         return false;
     }
 
-    private boolean boardHasNoLetters(Board board) {
-        Square[][] b = board.getContents();
-
-        for (int y = 0; y < b.length; y++) {
-            for (int x = 0; x < b[y].length; x++) {
-                Square s = b[x][y];
-                if (s.hasLetter()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     private boolean isValidCoordinate(int x, int y) {
         return x >= 0 && x < 15 && y >= 0 && y < 15;
     }
 
     private boolean queueHasCoordinate(int x, int y) {
         for (Letter let : set) {
-            if (let.getCoordinate().getX() == x
-                    && let.getCoordinate().getY() == y) {
+            if (let.getCoord().getX() == x
+                    && let.getCoord().getY() == y) {
                 return true;
             }
         }

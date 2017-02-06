@@ -55,20 +55,31 @@ public class LetterQueueTest {
         assertEquals(false, q.addLetterToQueue(new Letter(LetterType.LETTER_F), new Coord(0, 0), b));
         assertEquals(0, q.getLetterQueue().size());
     }
-    
+
     @Test
     public void removingALetterWorks() {
         assertEquals(true, q.addLetterToQueue(let, new Coord(7, 7), b));
         assertEquals(true, q.removeLetterFromQueue(let));
         assertEquals(0, q.getLetterQueue().size());
     }
-    
+
     @Test
-    public void addingTheSameLetterTwiceIfRemovedFirstSucceeds() {
+    public void addingTheSameLetterTwiceToSameCoordinatesSucceedsIfRemovedFirst() {
         assertEquals(true, q.addLetterToQueue(let, new Coord(7, 7), b));
         assertEquals(true, q.removeLetterFromQueue(let));
         assertEquals(true, q.addLetterToQueue(let, new Coord(7, 7), b));
         assertEquals(1, q.getLetterQueue().size());
+    }
+
+    @Test
+    public void changingDirectionSucceeds() {
+        assertEquals(true, q.addLetterToQueue(let, new Coord(7, 7), b));
+        assertEquals(true, q.addLetterToQueue(let, new Coord(7, 8), b));
+        assertEquals(false, q.getDirection());
+        assertEquals(true, q.removeLetterFromQueue(let));
+        assertEquals(true, q.addLetterToQueue(let, new Coord(7, 7), b));
+        assertEquals(true, q.addLetterToQueue(let, new Coord(8, 7), b));
+        assertEquals(true, q.getDirection());
     }
 
     @Test

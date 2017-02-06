@@ -37,7 +37,7 @@ public class Board {
     public Square[][] getContents() {
         return board;
     }
-    
+
     public Square getSquare(int x, int y) {
         if (x >= 0 && x < 15 && y >= 0 && y < 15) {
             return board[y][x];
@@ -66,5 +66,16 @@ public class Board {
                 board[y][x] = new Square(type);
             }
         }
+    }
+
+    public boolean hasNoLetters() {
+        for (int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board[y].length; x++) {
+                if (getSquare(x, y).hasLetter()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

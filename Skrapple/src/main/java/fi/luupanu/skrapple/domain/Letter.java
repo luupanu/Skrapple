@@ -28,11 +28,11 @@ public class Letter {
         return type.getPoints();
     }
 
-    public Coord getCoordinate() {
+    public Coord getCoord() {
         return coord;
     }
 
-    public void setCoordinate(int x, int y) {
+    public void setCoord(int x, int y) {
         this.coord = new Coord(x, y);
     }
 
