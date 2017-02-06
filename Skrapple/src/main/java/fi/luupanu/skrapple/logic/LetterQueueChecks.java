@@ -1,0 +1,169 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fi.luupanu.skrapple.logic;
+
+import fi.luupanu.skrapple.domain.Board;
+import fi.luupanu.skrapple.domain.Coord;
+import fi.luupanu.skrapple.domain.Letter;
+import fi.luupanu.skrapple.domain.Square;
+import java.util.Set;
+
+/**
+ *
+ * @author panu
+ */
+public class LetterQueueChecks {
+
+    private LetterQueue q;
+    private Set<Letter> set;
+
+    public LetterQueueChecks(LetterQueue queue) {
+        this.q = queue;
+        this.set = queue.getLetterQueue();
+    }
+
+    public boolean letterCanBeAddedToQueue(Letter let, Coord c, Board board) {
+        int x = c.getX();
+        int y = c.getY();
+
+        // preliminary checks
+        if (!isValidCoordinate(x, y) || queueHasCoordinate(x, y) || let == null) {
+            return false;
+        }
+
+        // check that the board doesn't already have a letter at the coordinates
+        Square s = board.getContents()[x][y];
+        if (s.hasLetter()) {
+            return false;
+        }
+
+        // the first letter of the first word must be at x = 7 OR y = 7
+        if (boardHasNoLetters(board) && set.isEmpty()) {            
+            return x == 7 || y == 7;
+        }
+        
+        // check that the first letter of the queue is placed correctly
+        if (set.isEmpty()) {
+            return checkFirstLetterCorrectPlacement(c, board);
+        }
+        
+        // check that the second letter of the queue is placed correctly
+        if (set.size() == 1) {
+            return checkSecondLetterCorrectPlacement(c, board);
+        }
+        
+        // now that we have a direction for the word, we can check the rest
+        return checkRemainingLettersCorrectPlacement(c, board, q.getDirection());
+    }
+
+    private boolean checkFirstLetterCorrectPlacement(Coord c, Board board) {
+        /*  First letter of the word must be on the same row or column as an
+            existing letter on the board, or on the neighbouring row/column */
+        return rowOrNeighbouringRowHasLetter(c.getY(), board)
+                || columnOrNeighbouringColumnHasLetter(c.getX(), board);
+    }
+
+    private boolean checkSecondLetterCorrectPlacement(Coord c, Board board) {
+        /*  Second letter of the word must be on the same row or column as the
+            first letter. The second letter gives us the direction for all the 
+            rest of the letters (a player can either place a word vertically or
+            horizontally on the board, not both at the same time) */
+        for (Letter let : set) {
+            Coord firstLetterCoord = let.getCoordinate();
+            if (firstLetterCoord.getX() == c.getX() && firstLetterCoord.getY() == c.getY()) {
+                return false;
+            } else if (firstLetterCoord.getX() == c.getX()) {
+                q.setDirection(false); // vertical
+                return true;
+            } else if (firstLetterCoord.getY() == c.getY()) {
+                q.setDirection(true); // horizontal
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkRemainingLettersCorrectPlacement(Coord c, Board board, boolean direction) {
+        for (Letter let : set) {
+            Coord coordinate = let.getCoordinate();
+            if (c.getY() == coordinate.getY() && c.getX() == coordinate.getX()) {
+                return false; // don't try to add exact same coordinates
+            }
+            if (direction) { // horizontal
+                if (c.getY() != coordinate.getY()) {
+                    return false;
+                }
+            } else if (!direction) { // vertical
+                if (c.getX() != coordinate.getX()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean rowOrNeighbouringRowHasLetter(int row, Board board) {
+        Square[][] b = board.getContents();
+
+        for (int y = row - 1; y <= row + 1; y++) {
+            for (int x = 0; x < 15; x++) {
+                if (!isValidCoordinate(x, y)) {
+                    continue;
+                }
+                Square s = b[x][y];
+                if (s.hasLetter()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean columnOrNeighbouringColumnHasLetter(int col, Board board) {
+        Square[][] b = board.getContents();
+
+        for (int y = 0; y < 15; y++) {
+            for (int x = col - 1; x < col + 1; x++) {
+                if (!isValidCoordinate(x, y)) {
+                    continue;
+                }
+                Square s = b[x][y];
+                if (s.hasLetter()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean boardHasNoLetters(Board board) {
+        Square[][] b = board.getContents();
+
+        for (int y = 0; y < b.length; y++) {
+            for (int x = 0; x < b[y].length; x++) {
+                Square s = b[x][y];
+                if (s.hasLetter()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isValidCoordinate(int x, int y) {
+        return x >= 0 && x < 15 && y >= 0 && y < 15;
+    }
+
+    private boolean queueHasCoordinate(int x, int y) {
+        for (Letter let : set) {
+            if (let.getCoordinate().getX() == x
+                    && let.getCoordinate().getY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

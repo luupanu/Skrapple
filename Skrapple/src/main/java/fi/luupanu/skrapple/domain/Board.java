@@ -3,10 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.core;
-
-import fi.luupanu.skrapple.core.SquareType;
-import java.util.List;
+package fi.luupanu.skrapple.domain;
 
 /**
  *

@@ -5,6 +5,9 @@
  */
 package fi.luupanu.skrapple.core;
 
+import fi.luupanu.skrapple.domain.SquareType;
+import fi.luupanu.skrapple.domain.Board;
+import fi.luupanu.skrapple.domain.Square;
 import java.awt.Point;
 import java.util.ArrayList;
 import org.junit.After;

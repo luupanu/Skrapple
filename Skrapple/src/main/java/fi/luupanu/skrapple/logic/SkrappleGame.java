@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.core;
+package fi.luupanu.skrapple.logic;
+
+import fi.luupanu.skrapple.domain.Board;
+import fi.luupanu.skrapple.domain.Player;
 
 /**
  *

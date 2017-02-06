@@ -5,6 +5,9 @@
  */
 package fi.luupanu.skrapple.core;
 
+import fi.luupanu.skrapple.domain.Letter;
+import fi.luupanu.skrapple.domain.LetterBag;
+import fi.luupanu.skrapple.domain.LetterType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.junit.After;

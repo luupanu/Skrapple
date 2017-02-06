@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.core;
+package fi.luupanu.skrapple.domain;
+
+import java.util.Objects;
 
 /**
  *
@@ -12,6 +14,7 @@ package fi.luupanu.skrapple.core;
 public class Letter {
 
     private final LetterType type;
+    private Coord coord;
 
     public Letter(LetterType type) {
         this.type = type;
@@ -23,6 +26,14 @@ public class Letter {
 
     public int getPoints() {
         return type.getPoints();
+    }
+
+    public Coord getCoordinate() {
+        return coord;
+    }
+
+    public void setCoordinate(int x, int y) {
+        this.coord = new Coord(x, y);
     }
 
     @Override
