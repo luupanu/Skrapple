@@ -32,23 +32,25 @@ public class LetterQueueValidator {
             return false;
         }
 
-        boolean direction = q.getDirection();
-
-        if (set.size() == 1) {
-            atLeastOneLetterTouchesANeighbour(board);
-        } else if (direction) {
-            if (horizontalQueueIsValid(board)) {
-                return atLeastOneLetterTouchesANeighbour(board);
-            }
-        } else if (!direction) {
-            if (verticalQueueIsValid(board)) {
-                return atLeastOneLetterTouchesANeighbour(board);
-            }
+        if (set.size() != 1 && queueHasNoGaps(board)) {
+            return atLeastOneLetterTouchesANeighbour(board);
         }
-        return false;
+        return atLeastOneLetterTouchesANeighbour(board);
     }
 
-    private boolean horizontalQueueIsValid(Board board) {
+    private boolean queueHasNoGaps(Board board) {
+        boolean direction = q.getDirection();
+
+        if (direction) {
+            return horizontalQueueHasNoGaps(board);
+        } else if (!direction) {
+            return verticalQueueHasNoGaps(board);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean horizontalQueueHasNoGaps(Board board) {
         /*  find the leftmost & rightmost letters in the queue, check that all 
             the squares between them are either occupied or in the queue as well */
 
@@ -65,7 +67,7 @@ public class LetterQueueValidator {
         return true;
     }
 
-    private boolean verticalQueueIsValid(Board board) {
+    private boolean verticalQueueHasNoGaps(Board board) {
         /*  find the topmost & bottommost letters in the queue, check that all
             the squares between them are either occupied or in the queue as well */
 
@@ -97,26 +99,19 @@ public class LetterQueueValidator {
         if (board.hasNoLetters()) {
             return true; // don't need to touch a letter if there's none
         }
-        for (Letter let : set) { // bad
-            int x = let.getCoord().getX();
-            int y = let.getCoord().getY();
-            for (int i = y - 1; i <= y + 1; i += 2) {
-                for (int j = x - 1; j <= x + 1; j+= 2) {
-                    if (!isValidCoordinate(i, j)) {
-                        continue;
-                    }
-                    System.out.print(j + " " + y + ", ");
-                    System.out.println(x + " " + i);
-                    if (board.getSquare(j, y).hasLetter()
-                        || board.getSquare(x, i).hasLetter()) {
-                        return true;
-                    }
+        int[][] neighbours = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
+        for (Letter let : set) {
+            for (int[] offset : neighbours) {
+                int x = let.getCoord().getX() + offset[0];
+                int y = let.getCoord().getY() + offset[1];
+                if (isValidCoordinate(x, y) && board.getSquare(x, y).hasLetter()) {
+                    return true;
                 }
             }
         }
         return false;
-    }    
-    
+    }
+
     private boolean isValidCoordinate(int x, int y) {
         return x >= 0 && x < 15 && y >= 0 && y < 15;
     }
