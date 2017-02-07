@@ -20,15 +20,15 @@ import java.util.logging.Logger;
 public class FileReader {
 
     public List<String> readFile(String filename) {
-        ArrayList<String> wordlist = new ArrayList<>(84420);
+        ArrayList<String> list = new ArrayList<>(84420);
         try (Scanner s = new Scanner(new File(filename))) {
             while (s.hasNextLine()) {
-                wordlist.add(s.nextLine());
+                list.add(s.nextLine());
             }
             s.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return wordlist;
+        return list;
     }
 }
