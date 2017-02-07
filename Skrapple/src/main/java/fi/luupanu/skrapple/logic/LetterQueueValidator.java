@@ -6,11 +6,8 @@
 package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.domain.Board;
-import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
-import java.util.Comparator;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 /**
  *
