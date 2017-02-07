@@ -8,3 +8,4 @@ Päivä | Tunnit | Kuvaus
 03.02.2017 | 6h | Testien lisäämistä, luokkakaavio
 04.02.2017 | 4h | LetterQueueTestin parantamista, bugien korjausta
 06.02.2017 | 5h | Refaktorointia, uusi luokka LetterQueueValidator
+07.02.2017 | 5h | Kotuksen sanalistan lisääminen, hikoilua sanojen luonnin kanssa
