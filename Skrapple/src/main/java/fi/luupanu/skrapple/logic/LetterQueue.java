@@ -16,13 +16,12 @@ import java.util.Set;
  * @author panu
  */
 public class LetterQueue {
-    
+
     /*  LetterQueue has a set of letters to be paired with coordinates so that
         they can be then added to the board. This class helps the user so that
         it's (almost) impossible to make invalid letter placements. The whole
         queue can then be canceled so that the board remains unchanged if the
         user makes an invalid move. */
-    
     private final LetterQueueChecks checks;
     private final Set<Letter> set;
     private boolean direction; // true = horizontal, false = vertical
@@ -31,19 +30,19 @@ public class LetterQueue {
         set = new HashSet<>(); // the LetterQueue
         checks = new LetterQueueChecks(this);
     }
-    
+
     public Set<Letter> getLetterQueue() {
         return set;
     }
-    
+
     public boolean getDirection() {
         return direction;
     }
-    
+
     public void setDirection(boolean bool) {
         direction = bool;
     }
-    
+
     public boolean addLetterToQueue(Letter let, Coord c, Board board) {
         if (checks.letterCanBeAddedToQueue(let, c, board)) {
             let.setCoord(c.getX(), c.getY());
@@ -52,7 +51,7 @@ public class LetterQueue {
         }
         return false;
     }
-    
+
     public boolean removeLetterFromQueue(Letter let) {
         if (set.contains(let) && let != null) {
             set.remove(let);
@@ -60,7 +59,31 @@ public class LetterQueue {
         }
         return false;
     }
-    
+
+    public Letter getLetterByCoordinate(int x, int y) {
+        for (Letter let : set) {
+            if (let.getCoord().getX() == x
+                    && let.getCoord().getY() == y) {
+                return let;
+            }
+        }
+        return null;
+    }
+
+    public boolean isValidCoordinate(int x, int y) {
+        return x >= 0 && x < 15 && y >= 0 && y < 15;
+    }
+
+    public boolean hasCoord(int x, int y) {
+        for (Letter let : set) {
+            if (let.getCoord().getX() == x
+                    && let.getCoord().getY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
