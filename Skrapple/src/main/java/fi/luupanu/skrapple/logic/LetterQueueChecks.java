@@ -33,7 +33,7 @@ public class LetterQueueChecks {
         int y = c.getY();
 
         // preliminary checks
-        if (!isValidCoordinate(x, y) || queueHasCoordinate(x, y) || let == null) {
+        if (!q.isValidCoordinate(x, y) || q.hasCoord(x, y) || let == null) {
             return false;
         }
 
@@ -112,7 +112,7 @@ public class LetterQueueChecks {
 
         for (int y = row - 1; y <= row + 1; y++) {
             for (int x = 0; x < 15; x++) {
-                if (!isValidCoordinate(x, y)) {
+                if (!q.isValidCoordinate(x, y)) {
                     continue;
                 }
                 Square s = b[x][y];
@@ -129,27 +129,13 @@ public class LetterQueueChecks {
 
         for (int y = 0; y < 15; y++) {
             for (int x = col - 1; x < col + 1; x++) {
-                if (!isValidCoordinate(x, y)) {
+                if (!q.isValidCoordinate(x, y)) {
                     continue;
                 }
                 Square s = b[x][y];
                 if (s.hasLetter()) {
                     return true;
                 }
-            }
-        }
-        return false;
-    }
-
-    private boolean isValidCoordinate(int x, int y) {
-        return x >= 0 && x < 15 && y >= 0 && y < 15;
-    }
-
-    private boolean queueHasCoordinate(int x, int y) {
-        for (Letter let : set) {
-            if (let.getCoord().getX() == x
-                    && let.getCoord().getY() == y) {
-                return true;
             }
         }
         return false;
