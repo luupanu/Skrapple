@@ -35,6 +35,32 @@ public class LetterQueueValidatorTest {
         this.b = new Board();
     }
 
+    public void firstWordOfTheGameMustTouchCenterSquare() {
+        for (int x = 0; x < 7; x++) {
+            assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(x, 7), b));
+        }
+        assertEquals(false, v.letterQueueIsValid(b));
+        q.getLetterQueue().clear();
+
+        for (int x = 8; x < 15; x++) {
+            assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(x, 7), b));
+        }
+        assertEquals(false, v.letterQueueIsValid(b));
+        q.getLetterQueue().clear();
+
+        for (int y = 0; y < 7; y++) {
+            assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(7, y), b));
+        }
+        assertEquals(false, v.letterQueueIsValid(b));
+        q.getLetterQueue().clear();
+
+        for (int y = 8; y < 15; y++) {
+            assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(7, y), b));
+        }
+        assertEquals(false, v.letterQueueIsValid(b));
+        q.getLetterQueue().clear();
+    }
+
     public void validHorizontalLetterQueueIsValid() {
         for (int x = 0; x < 15; x++) {
             assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(x, 7), b));
