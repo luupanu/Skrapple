@@ -6,7 +6,9 @@
 package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.domain.Board;
+import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,24 +16,39 @@ import java.util.Set;
  * @author panu
  */
 public class LetterQueueValidator {
+    
+    // Maybe another class to handle creation of neighbours?
 
     /*  The final judge whether or not we accept the LetterQueue as valid. */
     private final LetterQueue q;
     private final Set<Letter> set;
+    private Set<Coord> horizontalNeighbours;
+    private Set<Coord> verticalNeighbours;
 
     public LetterQueueValidator(LetterQueue queue) {
         this.q = queue;
         this.set = queue.getLetterQueue();
+        horizontalNeighbours = new HashSet<>();
+        verticalNeighbours = new HashSet<>();
     }
 
     public boolean letterQueueIsValid(Board board) {
+        // preliminary check: discard empty queues
         if (set.size() < 1) {
             return false;
         }
 
+        // first word of the game: must touch the center square
+        if (board.hasNoLetters()) {
+            return atLeastOneLetterTouchesTheCenterSquare(board);
+        }
+
+        // the letters in the queue cannot leave a gap
         if (set.size() != 1 && queueHasNoGaps(board)) {
             return atLeastOneLetterTouchesANeighbour(board);
         }
+
+        // if only one letter is in the queue, don't need to check for gaps
         return atLeastOneLetterTouchesANeighbour(board);
     }
 
@@ -57,7 +74,7 @@ public class LetterQueueValidator {
         int y = set.stream().findFirst().get().getCoord().getY();
 
         for (int x = left + 1; x < right; x++) {
-            if (!queueHasCoord(x, y) && (!board.getSquare(x, y).hasLetter())) {
+            if (!q.hasCoord(x, y) && (!board.getSquare(x, y).hasLetter())) {
                 return false;
             }
         }
@@ -74,17 +91,16 @@ public class LetterQueueValidator {
         int x = set.stream().findFirst().get().getCoord().getX();
 
         for (int y = top + 1; y < bottom; y++) {
-            if (!queueHasCoord(x, y) && (!board.getSquare(x, y).hasLetter())) {
+            if (!q.hasCoord(x, y) && (!board.getSquare(x, y).hasLetter())) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean queueHasCoord(int x, int y) {
+    private boolean atLeastOneLetterTouchesTheCenterSquare(Board board) {
         for (Letter let : set) {
-            if (x == let.getCoord().getX()
-                    && y == let.getCoord().getY()) {
+            if (let.getCoord().getX() == 7 && let.getCoord().getY() == 7) {
                 return true;
             }
         }
@@ -93,23 +109,56 @@ public class LetterQueueValidator {
 
     private boolean atLeastOneLetterTouchesANeighbour(Board board) {
         // neighbour = x-1, x+1, y-1, y+1. Needs to be already placed on the board.
-        if (board.hasNoLetters()) {
-            return true; // don't need to touch a letter if there's none
-        }
+        boolean returnable = false;
+        boolean direction;
+
         int[][] neighbours = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
         for (Letter let : set) {
             for (int[] offset : neighbours) {
+                if (offset[1] == 0) {
+                    direction = true; // horizontal
+                } else {
+                    direction = false; // vertical
+                }
                 int x = let.getCoord().getX() + offset[0];
                 int y = let.getCoord().getY() + offset[1];
-                if (isValidCoordinate(x, y) && board.getSquare(x, y).hasLetter()) {
-                    return true;
+                if (q.isValidCoordinate(x, y) && board.getSquare(x, y).hasLetter()) {
+                    if (direction && !horizontalNeighboursContainRow(y)) {
+                        horizontalNeighbours.add(new Coord(x, y));
+                    } else if (!direction && !verticalNeighboursContainColumn(x)) {
+                        verticalNeighbours.add(new Coord(x, y));
+                    }
+                    returnable = true;
                 }
+            }
+        }
+        return returnable;
+    }
+
+    private boolean horizontalNeighboursContainRow(int y) {
+        for (Coord c : horizontalNeighbours) {
+            if (c.getY() == y) {
+                return true;
             }
         }
         return false;
     }
 
-    private boolean isValidCoordinate(int x, int y) {
-        return x >= 0 && x < 15 && y >= 0 && y < 15;
+    private boolean verticalNeighboursContainColumn(int x) {
+        for (Coord c : verticalNeighbours) {
+            if (c.getX() == x) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    public Set<Coord> getHorizontalNeighbours() {
+        return horizontalNeighbours;
+    }
+
+    public Set<Coord> getVerticalNeighbours() {
+        return verticalNeighbours;
+    }
+
 }
