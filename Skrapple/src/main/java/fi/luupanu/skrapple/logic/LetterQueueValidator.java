@@ -6,9 +6,7 @@
 package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.domain.Board;
-import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,20 +14,18 @@ import java.util.Set;
  * @author panu
  */
 public class LetterQueueValidator {
-    
+
     // Maybe another class to handle creation of neighbours?
 
     /*  The final judge whether or not we accept the LetterQueue as valid. */
     private final LetterQueue q;
     private final Set<Letter> set;
-    private Set<Coord> horizontalNeighbours;
-    private Set<Coord> verticalNeighbours;
+    private final Neighbours n;
 
     public LetterQueueValidator(LetterQueue queue) {
         this.q = queue;
         this.set = queue.getLetterQueue();
-        horizontalNeighbours = new HashSet<>();
-        verticalNeighbours = new HashSet<>();
+        this.n = new Neighbours(queue);
     }
 
     public boolean letterQueueIsValid(Board board) {
@@ -40,16 +36,18 @@ public class LetterQueueValidator {
 
         // first word of the game: must touch the center square
         if (board.hasNoLetters()) {
-            return atLeastOneLetterTouchesTheCenterSquare(board);
+            return set.size() != 1
+                    && atLeastOneLetterTouchesTheCenterSquare(board)
+                    && queueHasNoGaps(board);
         }
 
         // the letters in the queue cannot leave a gap
         if (set.size() != 1 && queueHasNoGaps(board)) {
-            return atLeastOneLetterTouchesANeighbour(board);
+            return n.findAllNeighbours(board);
         }
 
         // if only one letter is in the queue, don't need to check for gaps
-        return atLeastOneLetterTouchesANeighbour(board);
+        return n.findAllNeighbours(board);
     }
 
     private boolean queueHasNoGaps(Board board) {
@@ -106,59 +104,4 @@ public class LetterQueueValidator {
         }
         return false;
     }
-
-    private boolean atLeastOneLetterTouchesANeighbour(Board board) {
-        // neighbour = x-1, x+1, y-1, y+1. Needs to be already placed on the board.
-        boolean returnable = false;
-        boolean direction;
-
-        int[][] neighbours = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-        for (Letter let : set) {
-            for (int[] offset : neighbours) {
-                if (offset[1] == 0) {
-                    direction = true; // horizontal
-                } else {
-                    direction = false; // vertical
-                }
-                int x = let.getCoord().getX() + offset[0];
-                int y = let.getCoord().getY() + offset[1];
-                if (q.isValidCoordinate(x, y) && board.getSquare(x, y).hasLetter()) {
-                    if (direction && !horizontalNeighboursContainRow(y)) {
-                        horizontalNeighbours.add(new Coord(x, y));
-                    } else if (!direction && !verticalNeighboursContainColumn(x)) {
-                        verticalNeighbours.add(new Coord(x, y));
-                    }
-                    returnable = true;
-                }
-            }
-        }
-        return returnable;
-    }
-
-    private boolean horizontalNeighboursContainRow(int y) {
-        for (Coord c : horizontalNeighbours) {
-            if (c.getY() == y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean verticalNeighboursContainColumn(int x) {
-        for (Coord c : verticalNeighbours) {
-            if (c.getX() == x) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Set<Coord> getHorizontalNeighbours() {
-        return horizontalNeighbours;
-    }
-
-    public Set<Coord> getVerticalNeighbours() {
-        return verticalNeighbours;
-    }
-
 }

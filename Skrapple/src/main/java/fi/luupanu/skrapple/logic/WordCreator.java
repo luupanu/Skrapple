@@ -8,7 +8,7 @@ package fi.luupanu.skrapple.logic;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
-import java.util.HashSet;
+import fi.luupanu.skrapple.domain.Word;
 import java.util.Set;
 
 /**
@@ -34,82 +34,96 @@ public class WordCreator {
      */
     private final LetterQueue q;
     private final Set<Letter> set;
-    private final LetterQueueValidator v;
-    private int points;
+    private final Neighbours n;
 
-    public WordCreator(LetterQueue queue, LetterQueueValidator v) {
+    public WordCreator(LetterQueue queue, Neighbours n) {
         this.q = queue;
         this.set = queue.getLetterQueue();
-        this.v = v;
-        this.points = 0;
+        this.n = n;
     }
 
-    public void function(Board board) {
-        constructHorizontalWords(board);
-        constructVerticalWords(board);
+    public void constructWords(Board board) {
+        if (board.hasNoLetters()) {
+            constructFirstWordOfTheGame(board);
+        } else {
+            constructHorizontalWords(board);
+            constructVerticalWords(board);
+        }
+    }
+
+    private void constructFirstWordOfTheGame(Board board) {
+        if (q.getDirection()) {
+            Coord c = q.getLetterQueue().stream().findFirst().get().getCoord();
+            n.addHorizontalNeighbour(c);
+            constructHorizontalWords(board);
+        } else if (!q.getDirection()) {
+            Coord c = q.getLetterQueue().stream().findFirst().get().getCoord();
+            n.addVerticalNeighbour(c);
+            constructVerticalWords(board);
+        }
     }
 
     private void constructHorizontalWords(Board board) {
-        StringBuilder word = new StringBuilder();
-
-        for (Coord c : v.getHorizontalNeighbours()) {
-            int left = c.getX();
+        for (Coord c : n.getHorizontalNeighbours()) {
             int y = c.getY();
-            for (int x = left; x >= 0; x--) {
-                if (q.hasCoord(x, y) || board.getSquare(x, y).hasLetter()) {
-                    left = x;
-                } else {
-                    break;
-                }
-            }
+            int left = getLeftMostCoordinate(c.getX(), y, board);
+            Word word = new Word();
             for (int x = left; x < 15; x++) {
                 if (q.hasCoord(x, y)) {
                     Letter let = q.getLetterByCoordinate(x, y);
-                    word.append(let);
-                    points += let.getPoints();
+                    word.addLetter(let, board, true);
                 } else if (board.getSquare(x, y).hasLetter()) {
                     Letter let = board.getSquare(x, y).getLetter();
-                    word.append(let);
-                    points += let.getPoints();
+                    word.addLetter(let, board, false);
                 } else {
                     break;
                 }
             }
-            word.append(", ").append(points).append("| ");
             System.out.println(word.toString());
-            points = 0;
+            System.out.println(word.getPoints());
         }
     }
 
     private void constructVerticalWords(Board board) {
-        StringBuilder word = new StringBuilder();
-
-        for (Coord c : v.getVerticalNeighbours()) {
-            int top = c.getY();
+        for (Coord c : n.getVerticalNeighbours()) {
             int x = c.getX();
-            for (int y = top; y >= 0; y--) {
-                if (q.hasCoord(x, y) || board.getSquare(x, y).hasLetter()) {
-                    top = y;
-                } else {
-                    break;
-                }
-            }
+            int top = getTopMostCoordinate(x, c.getY(), board);
+            Word word = new Word();
             for (int y = top; y < 15; y++) {
                 if (q.hasCoord(x, y)) {
                     Letter let = q.getLetterByCoordinate(x, y);
-                    word.append(let);
-                    points += let.getPoints();
+                    word.addLetter(let, board, true);
                 } else if (board.getSquare(x, y).hasLetter()) {
                     Letter let = board.getSquare(x, y).getLetter();
-                    word.append(let);
-                    points += let.getPoints();
+                    word.addLetter(let, board, false);
                 } else {
                     break;
                 }
             }
-            word.append(", ").append(points).append("| ");
             System.out.println(word.toString());
-            points = 0;
+            System.out.println(word.getPoints());
         }
+    }
+
+    private int getLeftMostCoordinate(int left, int y, Board board) {
+        for (int x = left; x >= 0; x--) {
+            if (q.hasCoord(x, y) || board.getSquare(x, y).hasLetter()) {
+                left = x;
+            } else {
+                break;
+            }
+        }
+        return left;
+    }
+
+    private int getTopMostCoordinate(int x, int top, Board board) {
+        for (int y = top; y >= 0; y--) {
+            if (q.hasCoord(x, y) || board.getSquare(x, y).hasLetter()) {
+                top = y;
+            } else {
+                break;
+            }
+        }
+        return top;
     }
 }
