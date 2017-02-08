@@ -5,8 +5,6 @@
  */
 package fi.luupanu.skrapple.domain;
 
-import java.util.Objects;
-
 /**
  *
  * @author panu

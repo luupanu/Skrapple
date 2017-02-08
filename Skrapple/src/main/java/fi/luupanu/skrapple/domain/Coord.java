@@ -11,8 +11,8 @@ package fi.luupanu.skrapple.domain;
  */
 public class Coord {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Coord(int x, int y) {
         this.x = x;

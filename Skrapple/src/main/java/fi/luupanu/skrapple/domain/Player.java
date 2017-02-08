@@ -13,7 +13,7 @@ public class Player {
     
     private final String name;
     private int points;
-    private Rack rack;
+    private final Rack rack;
     
     public Player(String name) {
         this.name = name;

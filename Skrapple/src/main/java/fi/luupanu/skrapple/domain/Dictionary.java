@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Dictionary {
     
-    private List<String> wordlist;
+    private final List<String> wordlist;
     
     public Dictionary() {
         this.wordlist = new FileReader().readFile("kotus-wordlist-fi");

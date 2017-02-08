@@ -14,8 +14,8 @@ import fi.luupanu.skrapple.domain.Player;
  */
 public class SkrappleGame {
 
-    private Player p1;
-    private Player p2;
+    private final Player p1;
+    private final Player p2;
     private Board board;
     private SkrappleGameState state;
     private boolean whoseTurn;

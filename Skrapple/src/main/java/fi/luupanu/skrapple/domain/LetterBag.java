@@ -16,8 +16,8 @@ import java.util.Random;
  */
 public class LetterBag {
 
-    private List<Letter> bag;
-    private Random random;
+    private final List<Letter> bag;
+    private final Random random;
 
     public LetterBag() {
         this.bag = new ArrayList<>(101);

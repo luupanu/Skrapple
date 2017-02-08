@@ -7,7 +7,6 @@ package fi.luupanu.skrapple.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -17,7 +16,7 @@ import java.util.Set;
 public class Rack {
 
     // TO-DO: switching letters
-    private List<Letter> rack;
+    private final List<Letter> rack;
     private static final int RACK_MAX_SIZE = 7;
 
     public Rack() {

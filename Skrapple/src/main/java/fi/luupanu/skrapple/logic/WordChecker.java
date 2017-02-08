@@ -17,7 +17,7 @@ public class WordChecker {
         to-be-added words actually form something meaningful using a dictionary.
     */
     
-    private Dictionary d;
+    private final Dictionary d;
     
     public WordChecker(Dictionary d) {
         this.d = d;
