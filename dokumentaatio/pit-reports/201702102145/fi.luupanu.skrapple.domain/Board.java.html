@@ -1,0 +1,1505 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+	border: 1px solid #dddddd;
+	padding-top: 10px;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-family: Consolas, Courier, monospace;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+
+.pop {outline:none; }
+.pop strong {line-height:30px;}
+.pop {text-decoration:none;}
+.pop span { z-index:10;display:none; padding:14px 20px; margin-top:-30px; margin-left:28px; width:800px; line-height:16px; word-wrap:break-word; }
+.pop:hover span{ display:inline; position:absolute; color:#111; border:1px solid #DCA; background:#fffAF0;}
+
+.pop span { border-radius:4px; -moz-border-radius: 4px; -webkit-border-radius: 4px; -moz-box-shadow: 5px 5px 8px #CCC; -webkit-box-shadow: 5px 5px 8px #CCC; box-shadow: 5px 5px 8px #CCC; }
+</style>
+
+</head>
+<body>
+
+
+<h1>Board.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_1'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_2'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * To change this license header, choose License Headers in Project Properties.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_3'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * To change this template file, choose Tools | Templates</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_4'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * and open the template in the editor.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_5'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_6'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package fi.luupanu.skrapple.domain;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_7'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_8'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import fi.luupanu.skrapple.constants.SquareType;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_9'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_10'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_11'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Board is the main board used by the game. Board has 15x15 = total 225 Squares,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_12'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * including 164 normal, 24 double letter, 17 double word, 12 triple letter and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_13'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * 8 triple word bonus squares.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_14'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * </span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_15'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * @author panu</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_16'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_17'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class Board {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_18'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_19'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private final String[] layout = {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_20'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;W..l...W...l..W&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_21'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;.w...L...L...w.&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_22'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;..w...l.l...w..&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_23'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;l..w...l...w..l&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_24'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;....w.....w....&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_25'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;.L...L...L...L.&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_26'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;..l...l.l...l..&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_27'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;W..l...w...l..W&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_28'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;..l...l.l...l..&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_29'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;.L...L...L...L.&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_30'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;....w.....w....&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_31'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;l..w...l...w..l&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_32'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;..w...l.l...w..&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_33'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;.w...L...L...w.&#34;,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_34'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        &#34;W..l...W...l..W&#34;};</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_35'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_36'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Square[][] board;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_37'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_38'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public Board() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_39'/>
+39
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_39'>1</a>
+<span>
+1. <init> : removed call to fi/luupanu/skrapple/domain/Board::createDefaultBoard &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        createDefaultBoard();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_40'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_41'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_42'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Square[][] getContents() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_43'/>
+43
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_43'>1</a>
+<span>
+1. getContents : mutated return of Object value for fi/luupanu/skrapple/domain/Board::getContents to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return board;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_44'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_45'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_46'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Square getSquare(int x, int y) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_47'/>
+47
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_47'>8</a>
+<span>
+1. getSquare : changed conditional boundary &rarr; SURVIVED<br/>
+2. getSquare : changed conditional boundary &rarr; SURVIVED<br/>
+3. getSquare : changed conditional boundary &rarr; KILLED<br/>
+4. getSquare : changed conditional boundary &rarr; KILLED<br/>
+5. getSquare : negated conditional &rarr; KILLED<br/>
+6. getSquare : negated conditional &rarr; KILLED<br/>
+7. getSquare : negated conditional &rarr; KILLED<br/>
+8. getSquare : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (x &#62;= 0 &#38;&#38; x &#60; 15 &#38;&#38; y &#62;= 0 &#38;&#38; y &#60; 15) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_48'>1</a>
+<span>
+1. getSquare : mutated return of Object value for fi/luupanu/skrapple/domain/Board::getSquare to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            return board[y][x];</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_49'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_50'>1</a>
+<span>
+1. getSquare : mutated return of Object value for fi/luupanu/skrapple/domain/Board::getSquare to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_51'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_52'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_53'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public boolean hasNoLetters() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_54'/>
+54
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_54'>3</a>
+<span>
+1. hasNoLetters : changed conditional boundary &rarr; KILLED<br/>
+2. hasNoLetters : Changed increment from 1 to -1 &rarr; KILLED<br/>
+3. hasNoLetters : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int y = 0; y &#60; board.length; y++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_55'/>
+55
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_55'>3</a>
+<span>
+1. hasNoLetters : changed conditional boundary &rarr; KILLED<br/>
+2. hasNoLetters : Changed increment from 1 to -1 &rarr; KILLED<br/>
+3. hasNoLetters : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            for (int x = 0; x &#60; board[y].length; x++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_56'/>
+56
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_56'>1</a>
+<span>
+1. hasNoLetters : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                if (getSquare(x, y).hasLetter()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_57'/>
+57
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_57'>1</a>
+<span>
+1. hasNoLetters : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                    return false;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_58'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_59'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_60'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_61'/>
+61
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_61'>1</a>
+<span>
+1. hasNoLetters : replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return true;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_62'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_63'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_64'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void createDefaultBoard() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_65'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        board = new Square[15][15];</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_66'/>
+66
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_66'>3</a>
+<span>
+1. createDefaultBoard : changed conditional boundary &rarr; KILLED<br/>
+2. createDefaultBoard : Changed increment from 1 to -1 &rarr; KILLED<br/>
+3. createDefaultBoard : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int y = 0; y &#60; board.length; y++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_67'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            String row = layout[y];</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_68'>3</a>
+<span>
+1. createDefaultBoard : changed conditional boundary &rarr; KILLED<br/>
+2. createDefaultBoard : Changed increment from 1 to -1 &rarr; KILLED<br/>
+3. createDefaultBoard : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            for (int x = 0; x &#60; board[y].length; x++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_69'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                SquareType type;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_70'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                char c = row.charAt(x);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_71'/>
+71
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_71'>1</a>
+<span>
+1. createDefaultBoard : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                if (c == &#39;.&#39;) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_72'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    type = SquareType.SQUARE_NORMAL;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_73'/>
+73
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_73'>1</a>
+<span>
+1. createDefaultBoard : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                } else if (c == &#39;l&#39;) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_74'/>
+74
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_74'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    type = SquareType.SQUARE_BONUS_LETTER_2X;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_75'/>
+75
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_75'>1</a>
+<span>
+1. createDefaultBoard : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                } else if (c == &#39;w&#39;) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_76'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    type = SquareType.SQUARE_BONUS_WORD_2X;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_77'/>
+77
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_77'>1</a>
+<span>
+1. createDefaultBoard : negated conditional &rarr; KILLED<br/>
+
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                } else if (c == &#39;L&#39;) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_78'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    type = SquareType.SQUARE_BONUS_LETTER_3X;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_79'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                } else {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_80'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                    type = SquareType.SQUARE_BONUS_WORD_3X;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_81'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_82'/>
+82
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_82'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                board[y][x] = new Square(type);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_83'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_84'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_85'></a>
+<span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@b55f5b7_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_86'></a>
+<span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_39'>39</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_39'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b><init><br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> removed call to fi/luupanu/skrapple/domain/Board::createDefaultBoard &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_43'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getContents<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> mutated return of Object value for fi/luupanu/skrapple/domain/Board::getContents to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.tripleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.tripleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='SURVIVED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>none</span></span> changed conditional boundary &rarr; SURVIVED</p> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.doubleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.doubleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>7.<span><b>7</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.doubleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> <p class='KILLED'><span class='pop'>8.<span><b>8</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.doubleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.doubleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest)</span></span> mutated return of Object value for fi/luupanu/skrapple/domain/Board::getSquare to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getSquare<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.getSquareReturnsNullOutOfBounds(fi.luupanu.skrapple.domain.BoardTest)</span></span> mutated return of Object value for fi/luupanu/skrapple/domain/Board::getSquare to ( if (x != null) null else throw new RuntimeException ) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_54'>54</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_54'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> Changed increment from 1 to -1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueSucceedsIfOnTheSameRowOrColumnOrNeighbouringRowOrColumnAsTheWordOnTheBoard(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_55'>55</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_55'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> Changed increment from 1 to -1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueSucceedsIfOnTheSameRowOrColumnOrNeighbouringRowOrColumnAsTheWordOnTheBoard(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_56'>56</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_56'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_57'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueSucceedsIfOnTheSameRowOrColumnOrNeighbouringRowOrColumnAsTheWordOnTheBoard(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_61'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>hasNoLetters<br/><b>Killed by : </b>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest)</span></span> replaced return of integer sized value with (x == 0 ? 1 : 0) &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_66'>66</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_66'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> Changed increment from 1 to -1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> changed conditional boundary &rarr; KILLED</p> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> Changed increment from 1 to -1 &rarr; KILLED</p> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_71'>71</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_71'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_73'>73</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_73'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_75'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@b55f5b7_77'>77</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@b55f5b7_77'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>createDefaultBoard<br/><b>Killed by : </b>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfTripleBonusLetterSquares(fi.luupanu.skrapple.domain.BoardTest)</span></span> negated conditional &rarr; KILLED</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+<li class='mutator'>MATH_MUTATOR</li>
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>fi.luupanu.skrapple.domain.RackTest.canReturnACanceledLetterQueueToRack(fi.luupanu.skrapple.domain.RackTest) (16 ms)</li><li>fi.luupanu.skrapple.logic.SkrappleGameTest.getCurrentPlayerReturnsPlayerOneWhenGameStarted(fi.luupanu.skrapple.logic.SkrappleGameTest) (139 ms)</li><li>fi.luupanu.skrapple.logic.actions.ResignTest.playerTwoResignWorks(fi.luupanu.skrapple.logic.actions.ResignTest) (182 ms)</li><li>fi.luupanu.skrapple.logic.SkrappleGameTest.winnerReturnedCorrectlyWhenResigned(fi.luupanu.skrapple.logic.SkrappleGameTest) (105 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueWhenBoardIsEmptySucceedsIfTheWordIsConstructedTowardsTheCenterSquareVertically(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.invalidVerticalLetterQueueIsInvalid(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (0 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.tripleBonusLetterSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueWhenBoardIsEmptySucceedsIfTheWordIsConstructedTowardsTheCenterSquareHorizontally(fi.luupanu.skrapple.logic.LetterQueueTest) (4 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.invalidHorizontalLetterQueueIsInvalid(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.correctPointsIfBothQueueAndBoardLettersUsed(fi.luupanu.skrapple.domain.WordTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.SkrappleGameTest.winnerReturnsNullWhenGameIsDrawn(fi.luupanu.skrapple.logic.SkrappleGameTest) (149 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.cancelingAQueueReturnsSameLetters(fi.luupanu.skrapple.logic.LetterQueueTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.WordCreatorTest.constructingHorizontalWordWorks(fi.luupanu.skrapple.logic.WordCreatorTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.takeLetterFromQueueReturnsNullIfLetterNotFound(fi.luupanu.skrapple.logic.LetterQueueTest) (0 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingSecondLetterSucceedsIfOnTheSameRowAsTheFirstLetterInTheQueue(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.correctPointsIfOnlyQueueLettersUsed(fi.luupanu.skrapple.domain.WordTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.WordCreatorTest.constructingVerticalWordWorks(fi.luupanu.skrapple.logic.WordCreatorTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.verticalLetterQueueWithGapIsValidWhenGapIsOccupied(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.addingQueueLetterFailsIfNoCoordinates(fi.luupanu.skrapple.domain.WordTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.takingALetterWorks(fi.luupanu.skrapple.logic.LetterQueueTest) (0 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfTripleBonusLetterSquares(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.WordCreatorTest.constructingFirstWordOfTheGameWorksVertically(fi.luupanu.skrapple.logic.WordCreatorTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusLetterSquares(fi.luupanu.skrapple.domain.BoardTest) (2 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.addingBoardLetterWorks(fi.luupanu.skrapple.domain.WordTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingMoreLettersThanTwoSucceedsIfHorizontalDirectionRespected(fi.luupanu.skrapple.logic.LetterQueueTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.isValidCoordinateReturnsFalseWithOutOfBoundsValues(fi.luupanu.skrapple.logic.LetterQueueTest) (0 ms)</li><li>fi.luupanu.skrapple.logic.SkrappleGameTest.winnerReturnedCorrectlyWhenGameOver(fi.luupanu.skrapple.logic.SkrappleGameTest) (87 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.tripleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.changingDirectionSucceeds(fi.luupanu.skrapple.logic.LetterQueueTest) (0 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.boardSizeIsCorrect(fi.luupanu.skrapple.domain.BoardTest) (11 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.firstWordOfTheGameMustTouchCenterSquare(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingMoreLettersThanTwoFailsIfHorizontalDirectionNotRespected(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueFailsIfNotOnTheSameRowOrColumnOrNeighbouringRowOrColumnAsTheWordOnTheBoard(fi.luupanu.skrapple.logic.LetterQueueTest) (14 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.addingQueueLetterSucceeds(fi.luupanu.skrapple.domain.WordTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.WordCheckerTest.cantFindMadeUpWordsFromWordList(fi.luupanu.skrapple.logic.WordCheckerTest) (87 ms)</li><li>fi.luupanu.skrapple.logic.SkrappleGameTest.switchingTurnWorks(fi.luupanu.skrapple.logic.SkrappleGameTest) (113 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.emptyQueueIsInvalid(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueWithBadCoordinatesFails(fi.luupanu.skrapple.logic.LetterQueueTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.getSquareReturnsNullOutOfBounds(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.doubleBonusWordSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.validHorizontalLetterQueueIsValid(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (0 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfDoubleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.letterQueueIsEmptyWhenCreated(fi.luupanu.skrapple.logic.LetterQueueTest) (0 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfTripleBonusWordSquares(fi.luupanu.skrapple.domain.BoardTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.horizontalLetterQueueWithGapIsValidWhenGapIsOccupied(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (90 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingMoreLettersThanTwoSucceedsIfVerticalDirectionRespected(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueValidatorTest.validVerticalLetterQueueIsValid(fi.luupanu.skrapple.logic.LetterQueueValidatorTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingMoreLettersThanTwoFailsIfVerticalDirectionNotRespected(fi.luupanu.skrapple.logic.LetterQueueTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.correctAmountOfNormalSquares(fi.luupanu.skrapple.domain.BoardTest) (1 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.test2xLetterBonus(fi.luupanu.skrapple.domain.WordTest) (0 ms)</li><li>fi.luupanu.skrapple.domain.BoardTest.doubleBonusLetterSquaresAreCorrectlyPlaced(fi.luupanu.skrapple.domain.BoardTest) (3 ms)</li><li>fi.luupanu.skrapple.domain.WordTest.noBonusPointsIfOnlyBoardLettersUsed(fi.luupanu.skrapple.domain.WordTest) (0 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueWhenSquareIsOccupiedFails(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.actions.ResignTest.playerOneResignWorks(fi.luupanu.skrapple.logic.actions.ResignTest) (85 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueSucceedsIfOnTheSameRowOrColumnOrNeighbouringRowOrColumnAsTheWordOnTheBoard(fi.luupanu.skrapple.logic.LetterQueueTest) (1 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToQueueWhenBoardIsEmptyFailsIfTheWordIsNotConstructedTowardsTheCenterSquare(fi.luupanu.skrapple.logic.LetterQueueTest) (7 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.getLetterByCoordinateWorks(fi.luupanu.skrapple.logic.LetterQueueTest) (0 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingSecondLetterFailsIfNotOnTheSameRowOrColumnAsTheFirstLetterInTheQueue(fi.luupanu.skrapple.logic.LetterQueueTest) (4 ms)</li><li>fi.luupanu.skrapple.logic.WordCreatorTest.constructingFirstWordOfTheGameWorksHorizontally(fi.luupanu.skrapple.logic.WordCreatorTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingSecondLetterSucceedsIfOnTheSameColumnAsTheFirstLetter(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingTheSameLetterTwiceToSameCoordinatesSucceedsIfRemovedFirst(fi.luupanu.skrapple.logic.LetterQueueTest) (5 ms)</li><li>fi.luupanu.skrapple.logic.LetterQueueTest.addingALetterToSameCoordinatesFails(fi.luupanu.skrapple.logic.LetterQueueTest) (2 ms)</li><li>fi.luupanu.skrapple.logic.WordCheckerTest.canFindWordsFromWordList(fi.luupanu.skrapple.logic.WordCheckerTest) (104 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 1.1.8
+
+</body>
+</html>
