@@ -7,7 +7,6 @@ package fi.luupanu.skrapple.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Every player has a unique rack that stores up to 7 letters. Using the letters

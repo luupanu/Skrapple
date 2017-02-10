@@ -9,9 +9,7 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * LetterQueue has a set of letters paired with coordinates so that they can

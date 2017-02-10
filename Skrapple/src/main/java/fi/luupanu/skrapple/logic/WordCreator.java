@@ -11,7 +11,6 @@ import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Word;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * WordCreator takes letters from the LetterQueue and tries to form a word or

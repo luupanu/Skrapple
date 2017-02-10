@@ -10,7 +10,6 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Square;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This class houses checks that are performed to all letters before they are
