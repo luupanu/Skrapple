@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 /**
  * FileReader is used to create a Dictionary from a file.
- * 
+ *
  * @author panu
  */
 public class FileReader {
@@ -21,10 +21,10 @@ public class FileReader {
     public List<String> readFile(String filename) throws FileNotFoundException {
         ArrayList<String> list = new ArrayList<>(84420);
         Scanner s = new Scanner(new File(filename));
-            while (s.hasNextLine()) {
-                list.add(s.nextLine());
-            }
-            s.close();
+        while (s.hasNextLine()) {
+            list.add(s.nextLine());
+        }
+        s.close();
         return list;
     }
 }
