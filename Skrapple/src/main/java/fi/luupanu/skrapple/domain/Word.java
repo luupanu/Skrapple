@@ -5,11 +5,16 @@
  */
 package fi.luupanu.skrapple.domain;
 
+import fi.luupanu.skrapple.constants.SquareType;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Words are made of letters. This class is also used to update the score total
+ * of a word. The score of a word is the sum of the scores of its letters, each
+ * multiplied according to any letter bonus squares newly covered, then finally
+ * multiplied according to any word bonus squares newly covered.
+ * 
  * @author panu
  */
 public class Word {

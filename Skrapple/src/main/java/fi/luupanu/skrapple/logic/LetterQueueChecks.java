@@ -12,14 +12,13 @@ import fi.luupanu.skrapple.domain.Square;
 import java.util.Set;
 
 /**
+ * This class houses checks that are performed to all letters before they are
+ * added to the LetterQueue.
  *
  * @author panu
  */
 public class LetterQueueChecks {
 
-    /*  This class houses checks that are performed to all letters before they 
-        are added to the LetterQueue. */
-    
     private final LetterQueue q;
     private final Set<Letter> set;
 
@@ -43,20 +42,20 @@ public class LetterQueueChecks {
         }
 
         // the first letter of the first word must be at x = 7 OR y = 7
-        if (board.hasNoLetters() && set.isEmpty()) {            
+        if (board.hasNoLetters() && set.isEmpty()) {
             return x == 7 || y == 7;
         }
-        
+
         // check that the first letter of the queue is placed correctly
         if (set.isEmpty()) {
             return checkFirstLetterCorrectPlacement(c, board);
         }
-        
+
         // check that the second letter of the queue is placed correctly
         if (set.size() == 1) {
             return checkSecondLetterCorrectPlacement(c, board);
         }
-        
+
         // now that we have a direction for the word, we can check the rest
         return checkRemainingLettersCorrectPlacement(c, board, q.getDirection());
     }

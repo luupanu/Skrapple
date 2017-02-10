@@ -5,8 +5,13 @@
  */
 package fi.luupanu.skrapple.domain;
 
+import fi.luupanu.skrapple.constants.SquareType;
+
 /**
- *
+ * Board is the main board used by the game. Board has 15x15 = total 225 Squares,
+ * including 164 normal, 24 double letter, 17 double word, 12 triple letter and
+ * 8 triple word bonus squares.
+ * 
  * @author panu
  */
 public class Board {
@@ -45,6 +50,17 @@ public class Board {
         return null;
     }
 
+    public boolean hasNoLetters() {
+        for (int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board[y].length; x++) {
+                if (getSquare(x, y).hasLetter()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     private void createDefaultBoard() {
         board = new Square[15][15];
         for (int y = 0; y < board.length; y++) {
@@ -66,16 +82,5 @@ public class Board {
                 board[y][x] = new Square(type);
             }
         }
-    }
-
-    public boolean hasNoLetters() {
-        for (int y = 0; y < board.length; y++) {
-            for (int x = 0; x < board[y].length; x++) {
-                if (getSquare(x, y).hasLetter()) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 }

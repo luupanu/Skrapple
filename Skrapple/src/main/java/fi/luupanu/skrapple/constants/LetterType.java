@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.domain;
+package fi.luupanu.skrapple.constants;
 
 /**
- *
+ * LetterType contains the different types of letters available in the game.
+ * 
  * @author panu
  */
 public enum LetterType {

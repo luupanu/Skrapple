@@ -5,8 +5,13 @@
  */
 package fi.luupanu.skrapple.domain;
 
+import fi.luupanu.skrapple.constants.SquareType;
+
 /**
- *
+ * Board is comprised of 225 Squares. A player can place exactly one letter on
+ * a square. There are various type of squares with the possibility to score
+ * bonus points.
+ * 
  * @author panu
  */
 public class Square {

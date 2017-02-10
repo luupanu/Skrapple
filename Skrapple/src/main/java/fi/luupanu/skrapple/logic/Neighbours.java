@@ -12,7 +12,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- *
+ * Neighbours is a class used to keep track of letters in the LetterQueue that
+ * touch existing letters on the board. The rules of the game state that if it's
+ * not the first word of the game that is being played, each word must touch
+ * existing words either horizontally or vertically. If a letter that touches
+ * an existing letter on the board is found, it's added to a set based on the
+ * direction.
+ * 
  * @author panu
  */
 public class Neighbours {

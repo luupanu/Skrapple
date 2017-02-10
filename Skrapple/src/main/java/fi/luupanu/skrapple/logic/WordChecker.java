@@ -6,26 +6,26 @@
 package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.domain.Dictionary;
+import fi.luupanu.skrapple.domain.Word;
 import java.util.List;
 
 /**
+ * WordChecker checks if the to-be-added words actually form something
+ * meaningful using a Dictionary.
  *
  * @author panu
  */
 public class WordChecker {
-    /*  TO-DO: a working class WordChecker. WordChecker will check if the
-        to-be-added words actually form something meaningful using a dictionary.
-    */
-    
+
     private final Dictionary d;
-    
+
     public WordChecker(Dictionary d) {
         this.d = d;
     }
-    
-    public boolean allWordsExistInDictionary(List<String> words) {
-        for (String w : words) {
-            if (!d.containsWord(w)) {
+
+    public boolean allWordsExistInDictionary(List<Word> words) {
+        for (Word w : words) {
+            if (!d.containsWord(w.toString().toLowerCase())) {
                 return false;
             }
         }

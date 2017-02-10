@@ -5,7 +5,11 @@
  */
 package fi.luupanu.skrapple.domain;
 
+import fi.luupanu.skrapple.constants.LetterType;
+
 /**
+ * The Letter class is a representation of letter tiles in Skrapple. Different
+ * letters give various amounts of points when placed on the Board.
  *
  * @author panu
  */
@@ -30,8 +34,8 @@ public class Letter {
         return coord;
     }
 
-    public void setCoord(int x, int y) {
-        this.coord = new Coord(x, y);
+    public void setCoord(Coord c) {
+        this.coord = c;
     }
 
     @Override

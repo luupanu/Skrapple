@@ -5,12 +5,16 @@
  */
 package fi.luupanu.skrapple.domain;
 
+import fi.luupanu.skrapple.constants.LetterType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 /**
+ * LetterBag stores 101 Letters as per the rules of the game. After placing a
+ * word a player can then fill her rack again with random letters. Alternatively
+ * it's also possible to exchange letters without making a move.
  *
  * @author panu
  */

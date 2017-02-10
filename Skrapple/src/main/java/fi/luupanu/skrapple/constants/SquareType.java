@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.domain;
+package fi.luupanu.skrapple.constants;
 
 /**
- *
+ * SquareType contains the different types of square tiles included in the game.
+ * 
  * @author panu
  */
 public enum SquareType {

@@ -10,25 +10,21 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
+ * FileReader is used to create a Dictionary from a file.
+ * 
  * @author panu
  */
 public class FileReader {
 
-    public List<String> readFile(String filename) {
+    public List<String> readFile(String filename) throws FileNotFoundException {
         ArrayList<String> list = new ArrayList<>(84420);
-        try (Scanner s = new Scanner(new File(filename))) {
+        Scanner s = new Scanner(new File(filename));
             while (s.hasNextLine()) {
                 list.add(s.nextLine());
             }
             s.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(FileReader.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return list;
     }
 }

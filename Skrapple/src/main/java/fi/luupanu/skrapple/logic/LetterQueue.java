@@ -12,23 +12,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * LetterQueue has a set of letters paired with coordinates so that they can
+ * then be added to the board. This class helps the user so that it's (almost)
+ * impossible to make invalid letter placements. The whole queue can then be
+ * canceled so that the board still remains unchanged if the user makes an
+ * invalid move.
  *
  * @author panu
  */
 public class LetterQueue {
 
-    /*  LetterQueue has a set of letters to be paired with coordinates so that
-        they can be then added to the board. This class helps the user so that
-        it's (almost) impossible to make invalid letter placements. The whole
-        queue can then be canceled so that the board remains unchanged if the
-        user makes an invalid move. */
     private final LetterQueueChecks checks;
     private final Set<Letter> set;
     private boolean direction; // true = horizontal, false = vertical
+    private final Neighbours n;
 
     public LetterQueue() {
         set = new HashSet<>(); // the LetterQueue
         checks = new LetterQueueChecks(this);
+        n = new Neighbours(this);
     }
 
     public Set<Letter> getLetterQueue() {
@@ -42,10 +44,14 @@ public class LetterQueue {
     public void setDirection(boolean bool) {
         direction = bool;
     }
+    
+    public Neighbours getNeighbours() {
+        return n;
+    }
 
     public boolean addLetterToQueue(Letter let, Coord c, Board board) {
         if (checks.letterCanBeAddedToQueue(let, c, board)) {
-            let.setCoord(c.getX(), c.getY());
+            let.setCoord(c);
             set.add(let);
             return true;
         }

@@ -9,7 +9,7 @@ import fi.luupanu.skrapple.logic.LetterQueue;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
-import fi.luupanu.skrapple.domain.LetterType;
+import fi.luupanu.skrapple.constants.LetterType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

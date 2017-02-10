@@ -9,46 +9,39 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Word;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
+ * WordCreator takes letters from the LetterQueue and tries to form a word or
+ * multiple words based on their respectful positions. This class utilizes the
+ * two sets of neighbours to create either horizontal or vertical Words.
  *
  * @author panu
  */
 public class WordCreator {
 
-    /*  TO-DO: a working class WordCreator. WordCreator takes the LetterQueue
-        and tries to form a word or multiple words based on the letter positions.
-        
-        - Need to check if there is at least one letter that touches
-        an existing letter on the board. (Unless first word of the game!)
-        - Need to check whether the found letter touches an existing letter
-        vertically or horizontally.
-        - If the letter touches both vertically & horizontally, both directions
-        have a word to be created.
-        - Horizontally aligned words are always from left to right.
-        - Vertically aligned words are always from top to bottom.
-    
-        Maybe split to two classes, e.g. "LetterQueueValidator" and
-        WordCreator?
-     */
     private final LetterQueue q;
     private final Set<Letter> set;
     private final Neighbours n;
+    private final List<Word> words;
 
-    public WordCreator(LetterQueue queue, Neighbours n) {
+    public WordCreator(LetterQueue queue) {
         this.q = queue;
         this.set = queue.getLetterQueue();
-        this.n = n;
+        this.n = queue.getNeighbours();
+        this.words = new ArrayList<>();
     }
 
-    public void constructWords(Board board) {
+    public List<Word> constructWords(Board board) {
         if (board.hasNoLetters()) {
             constructFirstWordOfTheGame(board);
         } else {
             constructHorizontalWords(board);
             constructVerticalWords(board);
         }
+        return words;
     }
 
     private void constructFirstWordOfTheGame(Board board) {
@@ -79,8 +72,7 @@ public class WordCreator {
                     break;
                 }
             }
-            System.out.println(word.toString());
-            System.out.println(word.getPoints());
+            words.add(word);
         }
     }
 
@@ -100,8 +92,7 @@ public class WordCreator {
                     break;
                 }
             }
-            System.out.println(word.toString());
-            System.out.println(word.getPoints());
+            words.add(word);
         }
     }
 

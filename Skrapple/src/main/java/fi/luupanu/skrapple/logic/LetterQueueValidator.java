@@ -10,14 +10,15 @@ import fi.luupanu.skrapple.domain.Letter;
 import java.util.Set;
 
 /**
- *
+ * LetterQueueValidator is the final judge whether or not the LetterQueue is 
+ * accepted as valid. If the queue is empty, contains gaps (with no letters), or
+ * if it's the first word of the game and no letters touch the center square,
+ * the LetterQueue is discarded.
+ * 
  * @author panu
  */
 public class LetterQueueValidator {
 
-    // Maybe another class to handle creation of neighbours?
-
-    /*  The final judge whether or not we accept the LetterQueue as valid. */
     private final LetterQueue q;
     private final Set<Letter> set;
     private final Neighbours n;
@@ -25,7 +26,7 @@ public class LetterQueueValidator {
     public LetterQueueValidator(LetterQueue queue) {
         this.q = queue;
         this.set = queue.getLetterQueue();
-        this.n = new Neighbours(queue);
+        this.n = queue.getNeighbours();
     }
 
     public boolean letterQueueIsValid(Board board) {

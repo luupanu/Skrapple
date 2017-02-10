@@ -5,10 +5,10 @@
  */
 package fi.luupanu.skrapple.core;
 
-import fi.luupanu.skrapple.domain.SquareType;
+import fi.luupanu.skrapple.constants.SquareType;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Square;
-import fi.luupanu.skrapple.domain.LetterType;
+import fi.luupanu.skrapple.constants.LetterType;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

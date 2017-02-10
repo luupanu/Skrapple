@@ -6,6 +6,8 @@
 package fi.luupanu.skrapple.domain;
 
 /**
+ * Each letter to be placed on the Board has a Coord(inate), a (x,y)
+ * destination.
  *
  * @author panu
  */
@@ -26,7 +28,7 @@ public class Coord {
     public int getY() {
         return y;
     }
-    
+
     @Override
     public String toString() {
         return "[" + x + ", " + y + "]";
