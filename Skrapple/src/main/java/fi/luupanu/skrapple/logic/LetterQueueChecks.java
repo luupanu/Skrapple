@@ -9,6 +9,7 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Square;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,11 +21,11 @@ import java.util.Set;
 public class LetterQueueChecks {
 
     private final LetterQueue q;
-    private final Set<Letter> set;
+    private final List<Letter> list;
 
     public LetterQueueChecks(LetterQueue queue) {
         this.q = queue;
-        this.set = queue.getLetterQueue();
+        this.list = queue.getLetterQueue();
     }
 
     public boolean letterCanBeAddedToQueue(Letter let, Coord c, Board board) {
@@ -42,17 +43,17 @@ public class LetterQueueChecks {
         }
 
         // the first letter of the first word must be at x = 7 OR y = 7
-        if (board.hasNoLetters() && set.isEmpty()) {
+        if (board.hasNoLetters() && list.isEmpty()) {
             return x == 7 || y == 7;
         }
 
         // check that the first letter of the queue is placed correctly
-        if (set.isEmpty()) {
+        if (list.isEmpty()) {
             return checkFirstLetterCorrectPlacement(c, board);
         }
 
         // check that the second letter of the queue is placed correctly
-        if (set.size() == 1) {
+        if (list.size() == 1) {
             return checkSecondLetterCorrectPlacement(c, board);
         }
 
@@ -72,7 +73,7 @@ public class LetterQueueChecks {
             first letter. The second letter gives us the direction for all the 
             rest of the letters (a player can either place a word vertically or
             horizontally on the board, not both at the same time) */
-        for (Letter let : set) {
+        for (Letter let : list) {
             Coord firstLetterCoord = let.getCoord();
             if (firstLetterCoord.getX() == c.getX() && firstLetterCoord.getY() == c.getY()) {
                 return false;
@@ -88,7 +89,7 @@ public class LetterQueueChecks {
     }
 
     private boolean checkRemainingLettersCorrectPlacement(Coord c, Board board, boolean direction) {
-        for (Letter let : set) {
+        for (Letter let : list) {
             Coord coordinate = let.getCoord();
             if (c.getY() == coordinate.getY() && c.getX() == coordinate.getX()) {
                 return false; // don't try to add exact same coordinates

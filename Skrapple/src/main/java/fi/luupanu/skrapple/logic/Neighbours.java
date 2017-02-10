@@ -9,6 +9,7 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,13 +25,13 @@ import java.util.Set;
 public class Neighbours {
 
     private final LetterQueue q;
-    private final Set<Letter> set;
+    private final List<Letter> list;
     private final Set<Coord> horizontalNeighbours;
     private final Set<Coord> verticalNeighbours;
 
     public Neighbours(LetterQueue queue) {
         this.q = queue;
-        this.set = queue.getLetterQueue();
+        this.list = queue.getLetterQueue();
         horizontalNeighbours = new HashSet<>();
         verticalNeighbours = new HashSet<>();
     }
@@ -41,7 +42,7 @@ public class Neighbours {
         boolean direction;
 
         int[][] neighbours = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-        for (Letter let : set) {
+        for (Letter let : list) {
             for (int[] offset : neighbours) {
                 if (offset[1] == 0) {
                     direction = true; // horizontal

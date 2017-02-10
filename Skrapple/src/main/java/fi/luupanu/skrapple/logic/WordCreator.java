@@ -23,13 +23,13 @@ import java.util.Set;
 public class WordCreator {
 
     private final LetterQueue q;
-    private final Set<Letter> set;
+    private final List<Letter> list;
     private final Neighbours n;
     private final List<Word> words;
 
     public WordCreator(LetterQueue queue) {
         this.q = queue;
-        this.set = queue.getLetterQueue();
+        this.list = queue.getLetterQueue();
         this.n = queue.getNeighbours();
         this.words = new ArrayList<>();
     }

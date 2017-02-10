@@ -29,9 +29,13 @@ public class Word {
         wordCoefficient = 1;
     }
 
-    public void addLetter(Letter let, Board board, boolean isQueueLetter) {
+    public boolean addLetter(Letter let, Board board, boolean isQueueLetter) {
+        if (isQueueLetter && let.getCoord() == null) {
+            return false;
+        }
         updatePoints(let, board, isQueueLetter);
         word.add(let);
+        return true;
     }
     
     public int getPoints() {

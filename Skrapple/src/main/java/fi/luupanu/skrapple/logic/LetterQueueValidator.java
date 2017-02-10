@@ -7,7 +7,7 @@ package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Letter;
-import java.util.Set;
+import java.util.List;
 
 /**
  * LetterQueueValidator is the final judge whether or not the LetterQueue is 
@@ -20,30 +20,30 @@ import java.util.Set;
 public class LetterQueueValidator {
 
     private final LetterQueue q;
-    private final Set<Letter> set;
+    private final List<Letter> list;
     private final Neighbours n;
 
     public LetterQueueValidator(LetterQueue queue) {
         this.q = queue;
-        this.set = queue.getLetterQueue();
+        this.list = queue.getLetterQueue();
         this.n = queue.getNeighbours();
     }
 
     public boolean letterQueueIsValid(Board board) {
         // preliminary check: discard empty queues
-        if (set.size() < 1) {
+        if (list.size() < 1) {
             return false;
         }
 
         // first word of the game: must touch the center square
         if (board.hasNoLetters()) {
-            return set.size() != 1
+            return list.size() != 1
                     && atLeastOneLetterTouchesTheCenterSquare(board)
                     && queueHasNoGaps(board);
         }
 
         // the letters in the queue cannot leave a gap
-        if (set.size() != 1 && queueHasNoGaps(board)) {
+        if (list.size() != 1 && queueHasNoGaps(board)) {
             return n.findAllNeighbours(board);
         }
 
@@ -68,9 +68,9 @@ public class LetterQueueValidator {
             the squares between them are either occupied or in the queue as well */
 
         // lambda fun
-        int left = set.stream().mapToInt(x -> x.getCoord().getX()).min().orElse(-1);
-        int right = set.stream().mapToInt(x -> x.getCoord().getX()).max().orElse(-1);
-        int y = set.stream().findFirst().get().getCoord().getY();
+        int left = list.stream().mapToInt(x -> x.getCoord().getX()).min().orElse(-1);
+        int right = list.stream().mapToInt(x -> x.getCoord().getX()).max().orElse(-1);
+        int y = list.stream().findFirst().get().getCoord().getY();
 
         for (int x = left + 1; x < right; x++) {
             if (!q.hasCoord(x, y) && (!board.getSquare(x, y).hasLetter())) {
@@ -85,9 +85,9 @@ public class LetterQueueValidator {
             the squares between them are either occupied or in the queue as well */
 
         // lambda fun
-        int top = set.stream().mapToInt(y -> y.getCoord().getY()).min().orElse(-1);
-        int bottom = set.stream().mapToInt(y -> y.getCoord().getY()).max().orElse(-1);
-        int x = set.stream().findFirst().get().getCoord().getX();
+        int top = list.stream().mapToInt(y -> y.getCoord().getY()).min().orElse(-1);
+        int bottom = list.stream().mapToInt(y -> y.getCoord().getY()).max().orElse(-1);
+        int x = list.stream().findFirst().get().getCoord().getX();
 
         for (int y = top + 1; y < bottom; y++) {
             if (!q.hasCoord(x, y) && (!board.getSquare(x, y).hasLetter())) {
@@ -98,7 +98,7 @@ public class LetterQueueValidator {
     }
 
     private boolean atLeastOneLetterTouchesTheCenterSquare(Board board) {
-        for (Letter let : set) {
+        for (Letter let : list) {
             if (let.getCoord().getX() == 7 && let.getCoord().getY() == 7) {
                 return true;
             }

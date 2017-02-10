@@ -46,8 +46,7 @@ public class Rack {
     }
 
     public Letter takeLetter(int i) {
-        // onkohan i < RACK_MAX_SIZE turha vai hyvä check varuilta?
-        if (i >= 0 && i < rack.size() && i < RACK_MAX_SIZE) {
+        if (i >= 0 && i < rack.size()) {
             Letter taken = rack.get(i);
             rack.remove(i);
             return taken;
@@ -55,16 +54,17 @@ public class Rack {
         return null;
     }
 
-    public boolean addLetters(Set<Letter> letters) {
+    public boolean addLetters(List<Letter> letters) {
+        if (rack.size() + letters.size() > 7) {
+            return false;
+        }
         for (Letter let : letters) {
-            if (!rack.add(let)) {
-                return false;
-            }
+            rack.add(let);
         }
         return true;
     }
 
-    private boolean addLetter(Letter let) {
+    public boolean addLetter(Letter let) {
         if (rack.size() < RACK_MAX_SIZE) {
             return rack.add(let);
         }

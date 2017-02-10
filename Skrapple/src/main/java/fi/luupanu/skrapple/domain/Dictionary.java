@@ -21,8 +21,8 @@ public class Dictionary {
 
     private final List<String> wordlist;
 
-    public Dictionary() {
-        wordlist = loadWordList("kotus-wordlist-fi");
+    public Dictionary(String filename) {
+        wordlist = loadWordList(filename);
     }
 
     private List<String> loadWordList(String filename) {
@@ -30,8 +30,8 @@ public class Dictionary {
             return new FileReader().readFile(filename);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Dictionary.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return null;
     }
 
     public List<String> getWordList() {

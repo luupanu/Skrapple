@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.core;
+package fi.luupanu.skrapple.domain;
 
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.LetterBag;
@@ -118,6 +118,12 @@ public class LetterBagTest {
         bag.removeAllLettersByType(LetterType.LETTER_A);
         assertEquals(true, bagHasNoLettersOfType(bag, LetterType.LETTER_A));
         assertEquals(91, bag.getSize());
+    }
+    
+    @Test
+    public void removeLetterByTypeReturnsFalseIfNoneRemoved() {
+        bag.removeAllLettersByType(LetterType.LETTER_A);
+        assertEquals(false, bag.removeLetterByType(LetterType.LETTER_A));
     }
     
     @Test

@@ -1,4 +1,4 @@
-package fi.luupanu.skrapple.core;
+package fi.luupanu.skrapple.domain;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,7 +26,7 @@ public class DictionaryTest {
 
     @Before
     public void setUp() {
-        d = new Dictionary();
+        d = new Dictionary("kotus-wordlist-fi");
         words = d.getWordList();
     }
     
@@ -36,16 +36,8 @@ public class DictionaryTest {
     }
     
     @Test
-    public void canFindWordsFromWordList() {
-        assertEquals(true, d.containsWord("öylätti"));
-        assertEquals(true, d.containsWord("aakkonen"));
-        assertEquals(true, d.containsWord("puutarhaneuvos"));
-    }
-    
-    @Test
-    public void cantFindMadeUpWordsFromWordList() {
-        assertEquals(false, d.containsWord("donaldtrump"));
-        assertEquals(false, d.containsWord("pidili"));
-        assertEquals(false, d.containsWord("prumppering"));
+    public void getWordListReturnsNullWhenFileNotFound() {
+        Dictionary dic = new Dictionary("drumpf");
+        assertEquals(null, dic.getWordList());
     }
 }

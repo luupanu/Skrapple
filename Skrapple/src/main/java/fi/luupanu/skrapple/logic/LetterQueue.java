@@ -8,7 +8,9 @@ package fi.luupanu.skrapple.logic;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,18 +25,18 @@ import java.util.Set;
 public class LetterQueue {
 
     private final LetterQueueChecks checks;
-    private final Set<Letter> set;
+    private final List<Letter> list;
     private boolean direction; // true = horizontal, false = vertical
     private final Neighbours n;
 
     public LetterQueue() {
-        set = new HashSet<>(); // the LetterQueue
+        list = new ArrayList<>(7); // the LetterQueue
         checks = new LetterQueueChecks(this);
         n = new Neighbours(this);
     }
 
-    public Set<Letter> getLetterQueue() {
-        return set;
+    public List<Letter> getLetterQueue() {
+        return list;
     }
 
     public boolean getDirection() {
@@ -52,22 +54,28 @@ public class LetterQueue {
     public boolean addLetterToQueue(Letter let, Coord c, Board board) {
         if (checks.letterCanBeAddedToQueue(let, c, board)) {
             let.setCoord(c);
-            set.add(let);
+            list.add(let);
             return true;
         }
         return false;
     }
 
-    public boolean removeLetterFromQueue(Letter let) {
-        if (set.contains(let) && let != null) {
-            set.remove(let);
-            return true;
+    public Letter takeLetterFromQueue(Letter let) {
+        if (list.contains(let) && let != null) {
+            list.remove(let);
+            return let;
         }
-        return false;
+        return null;
+    }
+    
+    public List<Letter> cancelLetterQueue() {
+        List<Letter> canceled = new ArrayList<>(list);
+        list.clear();
+        return canceled;
     }
 
     public Letter getLetterByCoordinate(int x, int y) {
-        for (Letter let : set) {
+        for (Letter let : list) {
             if (let.getCoord().getX() == x
                     && let.getCoord().getY() == y) {
                 return let;
@@ -81,7 +89,7 @@ public class LetterQueue {
     }
 
     public boolean hasCoord(int x, int y) {
-        for (Letter let : set) {
+        for (Letter let : list) {
             if (let.getCoord().getX() == x
                     && let.getCoord().getY() == y) {
                 return true;
@@ -93,7 +101,7 @@ public class LetterQueue {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Letter let : set) {
+        for (Letter let : list) {
             Coord c = let.getCoord();
             sb.append(c).append(" - ");
         }
