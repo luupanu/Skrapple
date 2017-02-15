@@ -11,3 +11,4 @@ Päivä | Tunnit | Kuvaus
 07.02.2017 | 5h | Kotuksen sanalistan lisääminen, hikoilua sanojen luonnin kanssa
 09.02.2017 | 5h | Uusi luokka Word, sanojen luominen toimii
 10.02.2017 | 6h | Testien lisäämistä, paketoinnin selkeyttämistä
+14.02.2017 | 6h | UI:n aloittaminen
