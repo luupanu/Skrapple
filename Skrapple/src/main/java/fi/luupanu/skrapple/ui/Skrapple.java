@@ -63,7 +63,7 @@ public class Skrapple implements Runnable {
     private SkrappleGame s;
 
     public Skrapple() {
-        s = new SkrappleGame(new Player("Dicki"), new Player("Tussu"), new Dictionary("kotus-wordlist-fi"));
+        s = new SkrappleGame(new Player("Jussi Pattitussi"), new Player("Kikka Korea"), new Dictionary("kotus-wordlist-fi"));
         boardSquares = new JButton[15][15];
         rackLetters = new JButton[7];
     }
