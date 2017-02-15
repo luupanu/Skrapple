@@ -11,11 +11,11 @@ package fi.luupanu.skrapple.constants;
  * @author panu
  */
 public enum SquareType {
-    SQUARE_NORMAL("."),
-    SQUARE_BONUS_LETTER_2X("2"),
-    SQUARE_BONUS_LETTER_3X("3"),
-    SQUARE_BONUS_WORD_2X("4"),
-    SQUARE_BONUS_WORD_3X("5");
+    NORMAL("."),
+    BONUS_LETTER_2X("2"),
+    BONUS_LETTER_3X("3"),
+    BONUS_WORD_2X("4"),
+    BONUS_WORD_3X("5");
 
     private final String value;
 

@@ -39,7 +39,7 @@ public class ResignTest {
     @Test
     public void playerOneResignWorks() {
         r.perform(s.getGame());
-        assertEquals(SkrappleGameState.STATE_PLAYER_1_RESIGNED, s.getGame().getGameState());
+        assertEquals(SkrappleGameState.PLAYER_1_RESIGNED, s.getGame().getGameState());
         assertEquals(p2, s.declareWinner());
     }
 
@@ -47,7 +47,7 @@ public class ResignTest {
     public void playerTwoResignWorks() {
         s.getGame().switchTurn();
         r.perform(s.getGame());
-        assertEquals(SkrappleGameState.STATE_PLAYER_2_RESIGNED, s.getGame().getGameState());
+        assertEquals(SkrappleGameState.PLAYER_2_RESIGNED, s.getGame().getGameState());
         assertEquals(p1, s.declareWinner());
     }
 }

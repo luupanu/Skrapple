@@ -22,9 +22,9 @@ public class Resign extends Action {
     @Override
     public void perform(Game game) {
         if (game.getTurn()) {
-            game.setGameState(SkrappleGameState.STATE_PLAYER_1_RESIGNED);
+            game.setGameState(SkrappleGameState.PLAYER_1_RESIGNED);
         } else {
-            game.setGameState(SkrappleGameState.STATE_PLAYER_2_RESIGNED);
+            game.setGameState(SkrappleGameState.PLAYER_2_RESIGNED);
         }
     }
 }

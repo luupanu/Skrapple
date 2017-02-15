@@ -34,16 +34,16 @@ public class SkrappleGame {
     }
 
     public void doAction(Action action) {
-        if (game.getGameState() != SkrappleGameState.STATE_PLAYING) {
+        if (game.getGameState() != SkrappleGameState.PLAYING) {
             action.perform(game);
             game.switchTurn();
         }
     }
 
     public Player declareWinner() {
-        if (game.getGameState() == SkrappleGameState.STATE_PLAYER_2_RESIGNED) {
+        if (game.getGameState() == SkrappleGameState.PLAYER_2_RESIGNED) {
             return p1;
-        } else if (game.getGameState() == SkrappleGameState.STATE_PLAYER_1_RESIGNED) {
+        } else if (game.getGameState() == SkrappleGameState.PLAYER_1_RESIGNED) {
             return p2;
         }
         subtractRemainingLetters();

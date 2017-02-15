@@ -47,27 +47,27 @@ public class BoardTest {
 
     @Test
     public void correctAmountOfNormalSquares() {
-        assertEquals(164, howManySquaresOfDifferentType(SquareType.SQUARE_NORMAL));
+        assertEquals(164, howManySquaresOfDifferentType(SquareType.NORMAL));
     }
 
     @Test
     public void correctAmountOfDoubleBonusLetterSquares() {
-        assertEquals(24, howManySquaresOfDifferentType(SquareType.SQUARE_BONUS_LETTER_2X));
+        assertEquals(24, howManySquaresOfDifferentType(SquareType.BONUS_LETTER_2X));
     }
 
     @Test
     public void correctAmountOfTripleBonusLetterSquares() {
-        assertEquals(12, howManySquaresOfDifferentType(SquareType.SQUARE_BONUS_LETTER_3X));
+        assertEquals(12, howManySquaresOfDifferentType(SquareType.BONUS_LETTER_3X));
     }
 
     @Test
     public void correctAmountOfDoubleBonusWordSquares() {
-        assertEquals(17, howManySquaresOfDifferentType(SquareType.SQUARE_BONUS_WORD_2X));
+        assertEquals(17, howManySquaresOfDifferentType(SquareType.BONUS_WORD_2X));
     }
 
     @Test
     public void correctAmountOfTripleBonusWordSquares() {
-        assertEquals(8, howManySquaresOfDifferentType(SquareType.SQUARE_BONUS_WORD_3X));
+        assertEquals(8, howManySquaresOfDifferentType(SquareType.BONUS_WORD_3X));
     }
 
     @Test
@@ -76,10 +76,10 @@ public class BoardTest {
         for (Point p : validPositions) {
             int y = p.x;
             int x = p.y;
-            assertEquals(SquareType.SQUARE_BONUS_LETTER_2X, board.getSquare(x, y).getType());
-            assertEquals(SquareType.SQUARE_BONUS_LETTER_2X, board.getSquare(x, 14 - y).getType());
-            assertEquals(SquareType.SQUARE_BONUS_LETTER_2X, board.getSquare(14 - x, y).getType());
-            assertEquals(SquareType.SQUARE_BONUS_LETTER_2X, board.getSquare(14 - x, 14 - y).getType());
+            assertEquals(SquareType.BONUS_LETTER_2X, board.getSquare(x, y).getType());
+            assertEquals(SquareType.BONUS_LETTER_2X, board.getSquare(x, 14 - y).getType());
+            assertEquals(SquareType.BONUS_LETTER_2X, board.getSquare(14 - x, y).getType());
+            assertEquals(SquareType.BONUS_LETTER_2X, board.getSquare(14 - x, 14 - y).getType());
         }
     }
 
@@ -91,7 +91,7 @@ public class BoardTest {
                         || (x == 13 && (y == 1 || y == 13))) {
                     continue;
                 }
-                assertEquals(SquareType.SQUARE_BONUS_LETTER_3X, board.getSquare(x, y).getType());
+                assertEquals(SquareType.BONUS_LETTER_3X, board.getSquare(x, y).getType());
             }
         }
     }
@@ -103,8 +103,8 @@ public class BoardTest {
                 continue;
             }
             int x = y;
-            assertEquals(SquareType.SQUARE_BONUS_WORD_2X, board.getSquare(x, y).getType());
-            assertEquals(SquareType.SQUARE_BONUS_WORD_2X, board.getSquare(x, 14 - y).getType());
+            assertEquals(SquareType.BONUS_WORD_2X, board.getSquare(x, y).getType());
+            assertEquals(SquareType.BONUS_WORD_2X, board.getSquare(x, 14 - y).getType());
         }
     }
 
@@ -115,7 +115,7 @@ public class BoardTest {
                 if (x == 7 && y == 7) {
                     continue;
                 }
-                assertEquals(SquareType.SQUARE_BONUS_WORD_3X, board.getSquare(x, y).getType());
+                assertEquals(SquareType.BONUS_WORD_3X, board.getSquare(x, y).getType());
             }
         }
     }

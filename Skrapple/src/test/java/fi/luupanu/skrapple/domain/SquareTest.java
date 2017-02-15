@@ -27,7 +27,7 @@ public class SquareTest {
 
     @Before
     public void setUp() {
-        normal = new Square(SquareType.SQUARE_NORMAL);
+        normal = new Square(SquareType.NORMAL);
         let = new Letter(LetterType.LETTER_E);
     }
 

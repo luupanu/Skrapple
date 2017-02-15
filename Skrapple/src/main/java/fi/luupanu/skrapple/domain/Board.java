@@ -69,15 +69,15 @@ public class Board {
                 SquareType type;
                 char c = row.charAt(x);
                 if (c == '.') {
-                    type = SquareType.SQUARE_NORMAL;
+                    type = SquareType.NORMAL;
                 } else if (c == 'l') {
-                    type = SquareType.SQUARE_BONUS_LETTER_2X;
+                    type = SquareType.BONUS_LETTER_2X;
                 } else if (c == 'w') {
-                    type = SquareType.SQUARE_BONUS_WORD_2X;
+                    type = SquareType.BONUS_WORD_2X;
                 } else if (c == 'L') {
-                    type = SquareType.SQUARE_BONUS_LETTER_3X;
+                    type = SquareType.BONUS_LETTER_3X;
                 } else {
-                    type = SquareType.SQUARE_BONUS_WORD_3X;
+                    type = SquareType.BONUS_WORD_3X;
                 }
                 board[y][x] = new Square(type);
             }

@@ -52,15 +52,15 @@ public class Word {
             int x = let.getCoord().getX();
             int y = let.getCoord().getY();
             SquareType t = board.getSquare(x, y).getType();
-            if (t == SquareType.SQUARE_NORMAL) {
+            if (t == SquareType.NORMAL) {
                 letterCoefficient = 1;
-            } else if (t == SquareType.SQUARE_BONUS_LETTER_2X) {
+            } else if (t == SquareType.BONUS_LETTER_2X) {
                 letterCoefficient = 2;
-            } else if (t == SquareType.SQUARE_BONUS_WORD_2X) {
+            } else if (t == SquareType.BONUS_WORD_2X) {
                 wordCoefficient *= 2;
-            } else if (t == SquareType.SQUARE_BONUS_LETTER_3X) {
+            } else if (t == SquareType.BONUS_LETTER_3X) {
                 letterCoefficient = 3;
-            } else if (t == SquareType.SQUARE_BONUS_WORD_3X) {
+            } else if (t == SquareType.BONUS_WORD_3X) {
                 wordCoefficient *= 3;
             }
         }

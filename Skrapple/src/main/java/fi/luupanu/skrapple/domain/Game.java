@@ -72,6 +72,14 @@ public class Game {
             return p2;
         }
     }
+    
+    public Player getPlayerOne() {
+        return p1;
+    }
+    
+    public Player getPlayerTwo() {
+        return p2;
+    }
 
     public boolean getTurn() {
         return whoseTurn;
@@ -90,7 +98,7 @@ public class Game {
     }
 
     private void createGame() {
-        state = SkrappleGameState.STATE_PLAYING;
+        state = SkrappleGameState.PLAYING;
         whoseTurn = true; // true = player one's turn
     }
 

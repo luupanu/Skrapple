@@ -35,9 +35,9 @@ public class SkrappleGameTest {
     
     @Test
     public void winnerReturnedCorrectlyWhenResigned() {
-        s.getGame().setGameState(SkrappleGameState.STATE_PLAYER_1_RESIGNED);
+        s.getGame().setGameState(SkrappleGameState.PLAYER_1_RESIGNED);
         assertEquals(p2, s.declareWinner());
-        s.getGame().setGameState(SkrappleGameState.STATE_PLAYER_2_RESIGNED);
+        s.getGame().setGameState(SkrappleGameState.PLAYER_2_RESIGNED);
         assertEquals(p1, s.declareWinner());
     }
     
@@ -45,7 +45,7 @@ public class SkrappleGameTest {
     public void winnerReturnedCorrectlyWhenGameOver() {
         p1.addPoints(25);
         p2.addPoints(20);
-        s.getGame().setGameState(SkrappleGameState.STATE_GAMEOVER);
+        s.getGame().setGameState(SkrappleGameState.GAMEOVER);
         assertEquals(p1, s.declareWinner());
         p1.getPlayerRack().refillRack(new LetterBag());
         assertEquals(p2, s.declareWinner());
@@ -53,7 +53,7 @@ public class SkrappleGameTest {
     
     @Test
     public void winnerReturnsNullWhenGameIsDrawn() {
-        s.getGame().setGameState(SkrappleGameState.STATE_GAMEOVER);
+        s.getGame().setGameState(SkrappleGameState.GAMEOVER);
         assertEquals(null, s.declareWinner());
     }
     
