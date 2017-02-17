@@ -12,3 +12,5 @@ Päivä | Tunnit | Kuvaus
 09.02.2017 | 5h | Uusi luokka Word, sanojen luominen toimii
 10.02.2017 | 6h | Testien lisäämistä, paketoinnin selkeyttämistä
 14.02.2017 | 6h | UI:n aloittaminen
+15.02.2017 | 4h | UI:n jatkamista
+17.02.2017 | 2h | JavaDocien lisäämistä
