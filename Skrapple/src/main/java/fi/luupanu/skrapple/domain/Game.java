@@ -64,7 +64,11 @@ public class Game {
     public WordCreator getWordCreator() {
         return wordCreator;
     }
-       
+    
+    /**
+     * This method returns the current player.
+     * @return the current player
+     */
     public Player getCurrentPlayer() {
         if (getTurn()) {
             return p1;

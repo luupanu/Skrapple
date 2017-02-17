@@ -30,6 +30,27 @@ public class Letter {
         return type.getPoints();
     }
 
+    /**
+     * This method is a "dirty" way of getting the points to show up on the
+     * bottom right corner of a letter in the GUI.
+     *
+     * @return points as a small Unicode subscript representation
+     */  
+    public String getPointsAsUnicodeSubScript() {
+        String number = String.valueOf(getPoints());
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < number.length(); i++) {
+            char u = 8320;
+            int x = Integer.parseInt(number.substring(i, i + 1));
+            for (int j = 0; j < x; j++) {
+                u++;
+            }
+            sb.append(Character.toString(u));
+        }
+        return sb.toString();
+    }
+
     public Coord getCoord() {
         return coord;
     }

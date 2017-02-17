@@ -14,7 +14,7 @@ import java.util.List;
  * of a word. The score of a word is the sum of the scores of its letters, each
  * multiplied according to any letter bonus squares newly covered, then finally
  * multiplied according to any word bonus squares newly covered.
- * 
+ *
  * @author panu
  */
 public class Word {
@@ -29,19 +29,34 @@ public class Word {
         wordCoefficient = 1;
     }
 
+    /**
+     * Adds a letter to the word and updates the total points the word will
+     * score. The boolean isQueueLetter is used for scoring purposes - only
+     * newly placed letters will benefit from the bonus squares of the board.
+     *
+     * @param let
+     * @param board
+     * @param isQueueLetter true if the letter was a newly placed one
+     * @return true if the letter could be added to the word
+     */
     public boolean addLetter(Letter let, Board board, boolean isQueueLetter) {
         if (isQueueLetter && let.getCoord() == null) {
             return false;
         }
         updatePoints(let, board, isQueueLetter);
-        word.add(let);
-        return true;
+        return word.add(let);
     }
-    
+
+    /**
+     * Returns the points scored by the word. The word bonus coefficient needs
+     * to be calculated in the very end for the scoring to be correct.
+     *
+     * @return the total points the word scores
+     */
     public int getPoints() {
         return points * wordCoefficient;
     }
-    
+
     public List<Letter> getWord() {
         return word;
     }
@@ -66,7 +81,7 @@ public class Word {
         }
         points += let.getPoints() * letterCoefficient;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

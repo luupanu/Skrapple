@@ -10,7 +10,7 @@ import fi.luupanu.skrapple.constants.SkrappleGameState;
 
 /**
  * A player can choose to resign the game during her turn.
- * 
+ *
  * @author panu
  */
 public class Resign extends Action {
@@ -19,6 +19,11 @@ public class Resign extends Action {
         super(game);
     }
 
+    /**
+     * Checks which player's turn it is, and changes the game state accordingly.
+     *
+     * @param game
+     */
     @Override
     public void perform(Game game) {
         if (game.getTurn()) {

@@ -9,40 +9,45 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
  * Neighbours is a class used to keep track of letters in the LetterQueue that
  * touch existing letters on the board. The rules of the game state that if it's
  * not the first word of the game that is being played, each word must touch
- * existing words either horizontally or vertically. If a letter that touches
- * an existing letter on the board is found, it's added to a set based on the
+ * existing words either horizontally or vertically. If a letter that touches an
+ * existing letter on the board is found, it's added to a set based on the
  * direction.
- * 
+ *
  * @author panu
  */
 public class Neighbours {
 
     private final LetterQueue q;
-    private final List<Letter> list;
     private final Set<Coord> horizontalNeighbours;
     private final Set<Coord> verticalNeighbours;
 
     public Neighbours(LetterQueue queue) {
         this.q = queue;
-        this.list = queue.getLetterQueue();
         horizontalNeighbours = new HashSet<>();
         verticalNeighbours = new HashSet<>();
     }
 
+    /**
+     * This method finds all the neighbours the letters in the LetterQueue have
+     * and returns false if none were found. A neighbour is an already placed
+     * letter on the board that touches a letter in the LetterQueue either
+     * vertically or horizontally (x-1, x+1, y-1 or y+1).
+     *
+     * @param board
+     * @return true if at least one neighbour was found, otherwise false
+     */
     public boolean findAllNeighbours(Board board) {
-        // neighbour = x-1, x+1, y-1, y+1. Needs to be already placed on the board.
         boolean returnable = false;
         boolean direction;
 
         int[][] neighbours = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-        for (Letter let : list) {
+        for (Letter let : q.getLetterQueue()) {
             for (int[] offset : neighbours) {
                 if (offset[1] == 0) {
                     direction = true; // horizontal
@@ -64,18 +69,38 @@ public class Neighbours {
         return returnable;
     }
 
+    /**
+     * Adds a horizontal neighbour with coordinates c.
+     *
+     * @param c
+     */
     public void addHorizontalNeighbour(Coord c) {
         horizontalNeighbours.add(c);
     }
 
+    /**
+     * Adds a vertical neighbour with coordinates c.
+     *
+     * @param c
+     */
     public void addVerticalNeighbour(Coord c) {
         verticalNeighbours.add(c);
     }
 
+    /**
+     * Returns all horizontal neighbours' coordinates (x-1 or x+1)
+     *
+     * @return a set of coordinates for all horizontal neighbours
+     */
     public Set<Coord> getHorizontalNeighbours() {
         return horizontalNeighbours;
     }
 
+    /**
+     * Returns all vertical neighbours' coordinates (x-1 or x+1)
+     *
+     * @return a set of coordinates for all vertical neighbours
+     */
     public Set<Coord> getVerticalNeighbours() {
         return verticalNeighbours;
     }

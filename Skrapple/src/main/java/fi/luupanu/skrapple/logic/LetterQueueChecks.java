@@ -27,11 +27,22 @@ public class LetterQueueChecks {
         this.list = queue.getLetterQueue();
     }
 
+    /**
+     * Does a variety of checks to a letter before it is added to the queue. The
+     * checks are used to guide the player in making a valid move. The body of
+     * the method contains more explanations for all the checks.
+     *
+     * @param let
+     * @param c
+     * @param board
+     * @return true if the letter is allowed to be added to the queue
+     */
     public boolean letterCanBeAddedToQueue(Letter let, Coord c, Board board) {
         int x = c.getX();
         int y = c.getY();
 
-        // preliminary checks
+        /*  preliminary checks: is this a valid coordinate, is this a valid
+            letter, does the queue already have a letter at the coordinate? */
         if (!q.isValidCoordinate(x, y) || q.hasCoord(x, y) || let == null) {
             return false;
         }

@@ -33,6 +33,15 @@ public class WordCreator {
         this.words = new ArrayList<>();
     }
 
+    /**
+     * This method constructs all the words from the letters in the LetterQueue.
+     * If the word played is the first word of the game, in order to use the
+     * same methods to construct the words, we first need to create an artifical
+     * Neighbour.
+     *
+     * @param board
+     * @return a list of all the words that were created
+     */
     public List<Word> constructWords(Board board) {
         if (board.hasNoLetters()) {
             constructFirstWordOfTheGame(board);

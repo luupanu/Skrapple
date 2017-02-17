@@ -23,6 +23,13 @@ public class WordChecker {
         this.d = d;
     }
 
+    /**
+     * This method takes a list of Words and checks if all of them were found in
+     * the dictionary.
+     *
+     * @param words
+     * @return true if all words were found in the dictionary
+     */
     public boolean allWordsExistInDictionary(List<Word> words) {
         for (Word w : words) {
             if (!d.containsWord(w.toString().toLowerCase())) {

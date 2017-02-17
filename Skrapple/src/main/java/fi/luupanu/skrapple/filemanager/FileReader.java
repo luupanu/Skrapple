@@ -18,6 +18,12 @@ import java.util.Scanner;
  */
 public class FileReader {
 
+    /**
+     * Reads the dictionary file.
+     * @param filename
+     * @return the read file as a list of strings
+     * @throws FileNotFoundException 
+     */
     public List<String> readFile(String filename) throws FileNotFoundException {
         ArrayList<String> list = new ArrayList<>(84420);
         Scanner s = new Scanner(new File(filename));

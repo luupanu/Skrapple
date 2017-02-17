@@ -37,6 +37,13 @@ public class LetterQueue {
         return list;
     }
 
+    /**
+     * The direction the queue currently has. During a turn a player can only
+     * place letters in one direction, horizontally or vertically, not both at
+     * the same time.
+     *
+     * @return true if horizontal, false if vertical
+     */
     public boolean getDirection() {
         return direction;
     }
@@ -44,20 +51,39 @@ public class LetterQueue {
     public void setDirection(boolean bool) {
         direction = bool;
     }
-    
+
+    /**
+     * Returns the current neighbours the letters of the LetterQueue have.
+     *
+     * @return Neighbours
+     */
     public Neighbours getNeighbours() {
         return n;
     }
 
+    /**
+     * Does a variety of checks in LetterQueueChecks and adds the letter if
+     * everything was fine.
+     *
+     * @param let
+     * @param c
+     * @param board
+     * @return true if the letter was added to LetterQueue
+     */
     public boolean addLetterToQueue(Letter let, Coord c, Board board) {
         if (checks.letterCanBeAddedToQueue(let, c, board)) {
             let.setCoord(c);
-            list.add(let);
-            return true;
+            return list.add(let);
         }
         return false;
     }
 
+    /**
+     * Takes a single letter from the queue.
+     *
+     * @param let
+     * @return the letter taken
+     */
     public Letter takeLetterFromQueue(Letter let) {
         if (list.contains(let) && let != null) {
             list.remove(let);
@@ -65,13 +91,25 @@ public class LetterQueue {
         }
         return null;
     }
-    
+
+    /**
+     * Cancels the whole LetterQueue.
+     *
+     * @return the letters the queue contained as a list
+     */
     public List<Letter> cancelLetterQueue() {
         List<Letter> canceled = new ArrayList<>(list);
         list.clear();
         return canceled;
     }
 
+    /**
+     * Gets a letter from the queue by coordinate.
+     *
+     * @param x
+     * @param y
+     * @return the letter with the same coordinate, null if not found
+     */
     public Letter getLetterByCoordinate(int x, int y) {
         for (Letter let : list) {
             if (let.getCoord().getX() == x
@@ -82,10 +120,24 @@ public class LetterQueue {
         return null;
     }
 
+    /**
+     * Returns true if the coordinate was valid.
+     *
+     * @param x
+     * @param y
+     * @return true if the coordinate was valid
+     */
     public boolean isValidCoordinate(int x, int y) {
         return x >= 0 && x < 15 && y >= 0 && y < 15;
     }
 
+    /**
+     * Returns true if the queue has a letter with the coordinate.
+     *
+     * @param x
+     * @param y
+     * @return true if the queue has a letter with the coordinate
+     */
     public boolean hasCoord(int x, int y) {
         for (Letter let : list) {
             if (let.getCoord().getX() == x

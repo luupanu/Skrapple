@@ -37,7 +37,13 @@ public class Dictionary {
     public List<String> getWordList() {
         return wordlist;
     }
-
+    
+    /**
+     * Returns if the dictionary used by the game contains the word provided.
+     * 
+     * @param word
+     * @return true if the word is found
+     */
     public boolean containsWord(String word) {
         return wordlist.contains(word);
     }

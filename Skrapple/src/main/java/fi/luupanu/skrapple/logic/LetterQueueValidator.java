@@ -10,11 +10,12 @@ import fi.luupanu.skrapple.domain.Letter;
 import java.util.List;
 
 /**
- * LetterQueueValidator is the final judge whether or not the LetterQueue is 
- * accepted as valid. If the queue is empty, contains gaps (with no letters), or
- * if it's the first word of the game and no letters touch the center square,
- * the LetterQueue is discarded.
- * 
+ * LetterQueueValidator is the final judge whether or not the LetterQueue is
+ * accepted as valid. Unless it's the first word of the game, at least one
+ * letter must touch an existing letter on the board. Also - if the queue is
+ * empty, contains gaps (with no letters), or if it's the first word of the game
+ * and no letters touch the center square, the LetterQueue is discarded.
+ *
  * @author panu
  */
 public class LetterQueueValidator {
@@ -29,6 +30,15 @@ public class LetterQueueValidator {
         this.n = queue.getNeighbours();
     }
 
+    /**
+     * Returns if the LetterQueue is valid. If this method returns true, we can
+     * let the player make the move and score her points. This method also uses
+     * the Neighbours class in determining if the queue contains at least one
+     * letter that touches an existing letter on the board.
+     *
+     * @param board
+     * @return true if the LetterQueue is valid
+     */
     public boolean letterQueueIsValid(Board board) {
         // preliminary check: discard empty queues
         if (list.size() < 1) {

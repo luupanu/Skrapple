@@ -12,8 +12,8 @@ import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Player;
 
 /**
- * SkrappleGame is the class that is called to create a new game. It
- * creates a new instance of Game and handles the final declaration of a winner.
+ * SkrappleGame is the class that is called to create a new game. It creates a
+ * new instance of Game and handles the final declaration of a winner.
  *
  * @author panu
  */
@@ -33,6 +33,11 @@ public class SkrappleGame {
         return game;
     }
 
+    /**
+     * Does an action if the game is still going on.
+     *
+     * @param action
+     */
     public void doAction(Action action) {
         if (game.getGameState() != SkrappleGameState.PLAYING) {
             action.perform(game);
@@ -40,6 +45,13 @@ public class SkrappleGame {
         }
     }
 
+    /**
+     * This method returns the winner of the game. If none of the players
+     * resigned, need to subtract all remaining letters in the racks of the
+     * players before comparing scores.
+     *
+     * @return the winning player of the game, null if drawn
+     */
     public Player declareWinner() {
         if (game.getGameState() == SkrappleGameState.PLAYER_2_RESIGNED) {
             return p1;

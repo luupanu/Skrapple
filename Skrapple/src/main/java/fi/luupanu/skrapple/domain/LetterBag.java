@@ -37,6 +37,10 @@ public class LetterBag {
         return bag.size();
     }
 
+    /**
+     * Take one random letter from a bag.
+     * @return a random letter, null if the bag is empty.
+     */
     public Letter takeRandomLetterFromBag() {
         if (bag.size() < 1) {
             return null;
@@ -50,11 +54,14 @@ public class LetterBag {
         return taken;
     }
 
-    // don't need two, remove this function or the next?
+    /**
+     * Remove a letter from the bag with index i. Note: currently unused.
+     * @param i
+     * @return true if the index was within the bag's bounds.
+     */
     public boolean removeLetterByIndex(int i) {
         if (i >= 0 && i < bag.size()) {
             bag.remove(i);
-            return true;
         }
         return false;
     }

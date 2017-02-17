@@ -50,6 +50,12 @@ public class Board {
         return null;
     }
 
+    /**
+     * This method is useful in evaluating if it is the first word of the game.
+     * 
+     * @return true if board has no letters
+     */
+    
     public boolean hasNoLetters() {
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[y].length; x++) {

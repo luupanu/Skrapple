@@ -24,6 +24,13 @@ public class ExchangeLetters extends Action {
         this.indexes = indexes;
     }
 
+    /**
+     * This method exchanges all letters selected by the player. It first puts
+     * the letters to be exchanged aside, refills the rack, and then puts the
+     * letters back to the letter bag.
+     *
+     * @param game
+     */
     @Override
     public void perform(Game game) {
         List<Letter> letters = new ArrayList<>(7);

@@ -7,10 +7,10 @@ package fi.luupanu.skrapple.ui;
 
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
+import fi.luupanu.skrapple.domain.Rack;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -25,9 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
@@ -35,6 +33,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 /**
+ * A giant mess of a graphical UI.
  *
  * @author panu
  */
@@ -141,15 +140,15 @@ public class Skrapple implements Runnable {
 
     private void makeBoard(JPanel board) {
         // set background
-        board.setBackground(new Color(219, 180, 173));
+        board.setBackground(new Color(154, 146, 125));
 
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int y = 0; y < boardSquares.length; y++) {
             for (int x = 0; x < boardSquares[y].length; x++) {
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
-                b.setBorder(new LineBorder(Color.BLACK));
-                
+                b.setBorder(new LineBorder(Color.WHITE));
+
                 if (layout[y].charAt(x) == 'l') {
                     b.setIcon(new ImageIcon("bonus_letter_2_46x46.png"));
                 } else if (layout[y].charAt(x) == 'w') {
@@ -164,16 +163,20 @@ public class Skrapple implements Runnable {
             }
         }
     }
-    
-    private void makeRack(JPanel rack) {
 
-        
-        //Insets buttonMargin = new Insets(0, 0, 0, 0);
+    private void makeRack(JPanel rack) {
+        Rack playerOneRack = s.getGame().getPlayerOne().getPlayerRack();
+        playerOneRack.refillRack(s.getGame().getLetterBag());
         for (int x = 0; x < rackLetters.length; x++) {
-            JButton b = new JButton();
+            JButtonLetter b = new JButtonLetter(playerOneRack.getContents().get(x));
             b.setBorder(new LineBorder(Color.BLACK));
             b.setIcon(new ImageIcon("lettertile_46x46.png"));
-            
+            b.setFont(new Font("serif", Font.BOLD, 20));
+            b.setLayout(new BorderLayout());
+
+            b.setHorizontalTextPosition(JButton.CENTER);
+            b.setVerticalTextPosition(JButton.CENTER);
+
             rackLetters[x] = b;
             rack.add(rackLetters[x]);
         }
