@@ -10,21 +10,29 @@ import fi.luupanu.skrapple.domain.Game;
 /**
  * The abstract class Action. A player can make one of four different actions
  * during a turn:
- * 
- * - make a Move (place words on the board) - x points
- * - exchange letters - 0 points
- * - skip the turn - 0 points
- * - resign
- * 
+ *
+ * - make a Move (place words on the board) - x points - exchange letters - 0
+ * points - skip the turn - 0 points - resign
+ *
  * @author panu
  */
 public abstract class Action {
 
     private final Game game;
 
+    /**
+     * Create a new action.
+     *
+     * @param game the game that is being played
+     */
     public Action(Game game) {
         this.game = game;
     }
 
+    /**
+     * Perform an abstract action.
+     *
+     * @param game the game that is being played
+     */
     public abstract void perform(Game game);
 }

@@ -19,6 +19,11 @@ public class WordChecker {
 
     private final Dictionary d;
 
+    /**
+     * Creates a new WordChecker.
+     *
+     * @param d the dictionary used by the game
+     */
     public WordChecker(Dictionary d) {
         this.d = d;
     }
@@ -27,7 +32,7 @@ public class WordChecker {
      * This method takes a list of Words and checks if all of them were found in
      * the dictionary.
      *
-     * @param words
+     * @param words a list of words to be checked
      * @return true if all words were found in the dictionary
      */
     public boolean allWordsExistInDictionary(List<Word> words) {

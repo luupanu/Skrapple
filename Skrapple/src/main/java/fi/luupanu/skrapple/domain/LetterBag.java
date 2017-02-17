@@ -23,6 +23,10 @@ public class LetterBag {
     private final List<Letter> bag;
     private final Random random;
 
+    /**
+     * Creates a new LetterBag with 101 letters inside as per the rules of the
+     * game. Also creates a new Random used by takeRandomLetterFromBag().
+     */
     public LetterBag() {
         this.bag = new ArrayList<>(101);
         placeAllLettersInBag();
@@ -39,6 +43,7 @@ public class LetterBag {
 
     /**
      * Take one random letter from a bag.
+     *
      * @return a random letter, null if the bag is empty.
      */
     public Letter takeRandomLetterFromBag() {
@@ -56,7 +61,8 @@ public class LetterBag {
 
     /**
      * Remove a letter from the bag with index i. Note: currently unused.
-     * @param i
+     *
+     * @param i index of the letter
      * @return true if the index was within the bag's bounds.
      */
     public boolean removeLetterByIndex(int i) {
@@ -67,7 +73,12 @@ public class LetterBag {
         return false;
     }
 
-    // don't need two, remove this function or the previous?
+    /**
+     * Remove a letter from the bag by letter type.
+     *
+     * @param t the letter type of the letter to be removed
+     * @return true if the removal succeeded
+     */
     public boolean removeLetterByType(LetterType t) {
         for (Letter let : bag) {
             if (let.getType() == t) {
@@ -77,9 +88,13 @@ public class LetterBag {
         return false;
     }
 
-    // optional method for banning certain letters
+    /**
+     * Optional method for banning certain letters from the game.
+     *
+     * @param t the letter type
+     * @return how many letters were removed
+     */
     public int removeAllLettersByType(LetterType t) {
-        // returns how many were removed
         int i = 0;
         Iterator<Letter> iter = bag.iterator();
         while (iter.hasNext()) {
@@ -92,6 +107,11 @@ public class LetterBag {
         return i;
     }
 
+    /**
+     * Place a letter in the bag.
+     *
+     * @param l the letter to be added
+     */
     public void placeLetterInBag(Letter l) {
         bag.add(l);
     }

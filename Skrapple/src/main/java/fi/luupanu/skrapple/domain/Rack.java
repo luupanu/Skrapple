@@ -20,8 +20,11 @@ public class Rack {
     private final List<Letter> rack;
     private static final int RACK_MAX_SIZE = 7;
 
+    /**
+     * Create a new rack. Maximum size of the rack is 7.
+     */
     public Rack() {
-        this.rack = new ArrayList<>(7);
+        this.rack = new ArrayList<>(RACK_MAX_SIZE);
     }
 
     public List<Letter> getContents() {
@@ -47,7 +50,7 @@ public class Rack {
      * Refills the rack so that the player always has the maximum (7) letters in
      * her rack, if possible.
      *
-     * @param bag
+     * @param bag the letter bag
      */
     public void refillRack(LetterBag bag) {
         while (bag.getSize() > 0 && rack.size() < RACK_MAX_SIZE) {
@@ -59,7 +62,7 @@ public class Rack {
     /**
      * Takes a letter from the rack with index i.
      *
-     * @param i
+     * @param i index of the letter to be taken
      * @return the letter taken
      */
     public Letter takeLetter(int i) {
@@ -75,7 +78,7 @@ public class Rack {
      * Adds a list of letters back to the rack. This method is used when
      * canceling a LetterQueue.
      *
-     * @param letters
+     * @param letters a list of letters to be added
      * @return true only if all letters can be added
      */
     public boolean addLetters(List<Letter> letters) {
@@ -91,7 +94,7 @@ public class Rack {
     /**
      * Adds a single letter back to the rack.
      *
-     * @param let
+     * @param let a single letter to be added
      * @return true if the letter could be added to the rack
      */
     public boolean addLetter(Letter let) {

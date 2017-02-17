@@ -14,7 +14,7 @@ import java.util.List;
  * accepted as valid. Unless it's the first word of the game, at least one
  * letter must touch an existing letter on the board. Also - if the queue is
  * empty, contains gaps (with no letters), or if it's the first word of the game
- * and no letters touch the center square, the LetterQueue is discarded.
+ * and no letters touch the center square - the LetterQueue will be discarded.
  *
  * @author panu
  */
@@ -24,6 +24,11 @@ public class LetterQueueValidator {
     private final List<Letter> list;
     private final Neighbours n;
 
+    /**
+     * Creates a new LetterQueueValidator.
+     *
+     * @param queue the letter queue used by the game
+     */
     public LetterQueueValidator(LetterQueue queue) {
         this.q = queue;
         this.list = queue.getLetterQueue();
@@ -36,7 +41,7 @@ public class LetterQueueValidator {
      * the Neighbours class in determining if the queue contains at least one
      * letter that touches an existing letter on the board.
      *
-     * @param board
+     * @param board the game board
      * @return true if the LetterQueue is valid
      */
     public boolean letterQueueIsValid(Board board) {

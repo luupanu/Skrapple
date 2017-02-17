@@ -22,6 +22,12 @@ public class LetterQueueChecks {
     private final LetterQueue q;
     private final List<Letter> list;
 
+    /**
+     * Creates the class that checks all the letters to be added to the
+     * LetterQueue.
+     *
+     * @param queue the letter queue used by the game
+     */
     public LetterQueueChecks(LetterQueue queue) {
         this.q = queue;
         this.list = queue.getLetterQueue();
@@ -32,9 +38,9 @@ public class LetterQueueChecks {
      * checks are used to guide the player in making a valid move. The body of
      * the method contains more explanations for all the checks.
      *
-     * @param let
-     * @param c
-     * @param board
+     * @param let the letter to be added
+     * @param c the coordinates for the letter
+     * @param board the game board
      * @return true if the letter is allowed to be added to the queue
      */
     public boolean letterCanBeAddedToQueue(Letter let, Coord c, Board board) {

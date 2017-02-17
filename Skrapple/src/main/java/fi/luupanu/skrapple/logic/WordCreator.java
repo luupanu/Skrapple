@@ -26,6 +26,11 @@ public class WordCreator {
     private final Neighbours n;
     private final List<Word> words;
 
+    /**
+     * Creates a new WordCreator.
+     *
+     * @param queue the letter queue used by the game
+     */
     public WordCreator(LetterQueue queue) {
         this.q = queue;
         this.list = queue.getLetterQueue();
@@ -39,7 +44,7 @@ public class WordCreator {
      * same methods to construct the words, we first need to create an artifical
      * Neighbour.
      *
-     * @param board
+     * @param board the game board
      * @return a list of all the words that were created
      */
     public List<Word> constructWords(Board board) {

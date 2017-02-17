@@ -17,6 +17,11 @@ public class Player {
     private int points;
     private final Rack rack;
 
+    /**
+     * Create a new player with 0 points and her own Rack.
+     *
+     * @param name the player name
+     */
     public Player(String name) {
         this.name = name;
         this.points = 0;
@@ -35,6 +40,11 @@ public class Player {
         return rack;
     }
 
+    /**
+     * This method is used to add or subtract points from a player.
+     *
+     * @param n the amount of points to be added or subtracted
+     */
     public void addPoints(int n) {
         points += n;
     }

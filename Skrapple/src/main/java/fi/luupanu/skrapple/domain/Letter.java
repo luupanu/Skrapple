@@ -21,7 +21,7 @@ public class Letter {
     /**
      * Creates a new letter with the letter type provided.
      *
-     * @param type
+     * @param type the letter type
      */
     public Letter(LetterType type) {
         this.type = type;

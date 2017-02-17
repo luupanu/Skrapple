@@ -23,6 +23,13 @@ public class SkrappleGame {
     private final Player p1;
     private final Player p2;
 
+    /**
+     * Creates a new SkrappleGame.
+     *
+     * @param p1 player one
+     * @param p2 player two
+     * @param d the dictionary
+     */
     public SkrappleGame(Player p1, Player p2, Dictionary d) {
         this.p1 = p1;
         this.p2 = p2;
@@ -34,9 +41,9 @@ public class SkrappleGame {
     }
 
     /**
-     * Does an action if the game is still going on.
+     * Performs an action if the game is still going on.
      *
-     * @param action
+     * @param action the action to be performed
      */
     public void doAction(Action action) {
         if (game.getGameState() != SkrappleGameState.PLAYING) {

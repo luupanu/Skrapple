@@ -19,6 +19,12 @@ public class ExchangeLetters extends Action {
 
     private final List<Integer> indexes;
 
+    /**
+     * Creates a new action ExchangeLetters.
+     *
+     * @param game the game being played
+     * @param indexes the (rack's) indexes of the letters to be exchanged
+     */
     public ExchangeLetters(Game game, List<Integer> indexes) {
         super(game);
         this.indexes = indexes;
@@ -29,7 +35,7 @@ public class ExchangeLetters extends Action {
      * the letters to be exchanged aside, refills the rack, and then puts the
      * letters back to the letter bag.
      *
-     * @param game
+     * @param game the game that is being played
      */
     @Override
     public void perform(Game game) {

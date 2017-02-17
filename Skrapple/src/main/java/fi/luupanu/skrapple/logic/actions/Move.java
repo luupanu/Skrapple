@@ -22,6 +22,11 @@ import fi.luupanu.skrapple.domain.Game;
  */
 public class Move extends Action {
 
+    /**
+     * Creates a new action Move.
+     * 
+     * @param game the game that is being played
+     */
     public Move(Game game) {
         super(game);
     }

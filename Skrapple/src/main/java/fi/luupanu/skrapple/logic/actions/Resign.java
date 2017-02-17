@@ -15,6 +15,11 @@ import fi.luupanu.skrapple.constants.SkrappleGameState;
  */
 public class Resign extends Action {
 
+    /**
+     * Creates a new action Resign.
+     *
+     * @param game the game that is being played
+     */
     public Resign(Game game) {
         super(game);
     }
@@ -22,7 +27,7 @@ public class Resign extends Action {
     /**
      * Checks which player's turn it is, and changes the game state accordingly.
      *
-     * @param game
+     * @param game the game being played
      */
     @Override
     public void perform(Game game) {

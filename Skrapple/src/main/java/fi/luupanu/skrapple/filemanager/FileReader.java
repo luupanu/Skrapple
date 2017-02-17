@@ -20,7 +20,7 @@ public class FileReader {
 
     /**
      * Reads the dictionary file.
-     * @param filename
+     * @param filename the file name
      * @return the read file as a list of strings
      * @throws FileNotFoundException 
      */

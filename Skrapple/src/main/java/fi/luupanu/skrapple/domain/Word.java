@@ -23,6 +23,11 @@ public class Word {
     private int points;
     private int wordCoefficient;
 
+    /**
+     * Creates a new word. Words can have a maximum size of 15 (the size of the
+     * board). Sets the points for a new word to be 0, and the bonus word
+     * coefficient to be 1.
+     */
     public Word() {
         word = new ArrayList<>(15);
         points = 0;
@@ -34,8 +39,8 @@ public class Word {
      * score. The boolean isQueueLetter is used for scoring purposes - only
      * newly placed letters will benefit from the bonus squares of the board.
      *
-     * @param let
-     * @param board
+     * @param let the letter to be added
+     * @param board the game board
      * @param isQueueLetter true if the letter was a newly placed one
      * @return true if the letter could be added to the word
      */

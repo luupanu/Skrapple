@@ -27,6 +27,11 @@ public class Neighbours {
     private final Set<Coord> horizontalNeighbours;
     private final Set<Coord> verticalNeighbours;
 
+    /**
+     * Creates a new Neighbours class.
+     *
+     * @param queue the letter queue used by the game
+     */
     public Neighbours(LetterQueue queue) {
         this.q = queue;
         horizontalNeighbours = new HashSet<>();
@@ -39,7 +44,7 @@ public class Neighbours {
      * letter on the board that touches a letter in the LetterQueue either
      * vertically or horizontally (x-1, x+1, y-1 or y+1).
      *
-     * @param board
+     * @param board the game board
      * @return true if at least one neighbour was found, otherwise false
      */
     public boolean findAllNeighbours(Board board) {
@@ -72,7 +77,7 @@ public class Neighbours {
     /**
      * Adds a horizontal neighbour with coordinates c.
      *
-     * @param c
+     * @param c the coordinates of the found neighbour
      */
     public void addHorizontalNeighbour(Coord c) {
         horizontalNeighbours.add(c);
@@ -81,14 +86,14 @@ public class Neighbours {
     /**
      * Adds a vertical neighbour with coordinates c.
      *
-     * @param c
+     * @param c the coordinates of the found neighbour
      */
     public void addVerticalNeighbour(Coord c) {
         verticalNeighbours.add(c);
     }
 
     /**
-     * Returns all horizontal neighbours' coordinates (x-1 or x+1)
+     * Returns all horizontal neighbours' coordinates (x-1 or x+1).
      *
      * @return a set of coordinates for all horizontal neighbours
      */
@@ -97,7 +102,7 @@ public class Neighbours {
     }
 
     /**
-     * Returns all vertical neighbours' coordinates (x-1 or x+1)
+     * Returns all vertical neighbours' coordinates (x-1 or x+1).
      *
      * @return a set of coordinates for all vertical neighbours
      */

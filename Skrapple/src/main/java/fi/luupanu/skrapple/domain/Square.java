@@ -20,6 +20,11 @@ public class Square {
     private boolean occupied;
     private Letter letter;
 
+    /**
+     * Creates a new empty square of the given type.
+     *
+     * @param type the square type (normal or a bonus square)
+     */
     public Square(SquareType type) {
         this.type = type;
         occupied = false;
@@ -35,8 +40,9 @@ public class Square {
 
     /**
      * Places a letter on the Square only if the square isn't already occupied.
+     * Sets the occupied status to be true.
      *
-     * @param letter
+     * @param letter the letter to be placed
      */
     public void placeLetter(Letter letter) {
         if (!occupied) {

@@ -27,6 +27,11 @@ public class LetterQueue {
     private boolean direction; // true = horizontal, false = vertical
     private final Neighbours n;
 
+    /**
+     * Creates a new LetterQueue with the appropriate checks and the class
+     * Neighbours. A letter queue can have a maximum of 7 letters (every single
+     * letter from the rack).
+     */
     public LetterQueue() {
         list = new ArrayList<>(7); // the LetterQueue
         checks = new LetterQueueChecks(this);
@@ -65,9 +70,9 @@ public class LetterQueue {
      * Does a variety of checks in LetterQueueChecks and adds the letter if
      * everything was fine.
      *
-     * @param let
-     * @param c
-     * @param board
+     * @param let the letter to be added
+     * @param c the coordinates of the letter
+     * @param board the game board
      * @return true if the letter was added to LetterQueue
      */
     public boolean addLetterToQueue(Letter let, Coord c, Board board) {
@@ -81,7 +86,7 @@ public class LetterQueue {
     /**
      * Takes a single letter from the queue.
      *
-     * @param let
+     * @param let the letter to be taken
      * @return the letter taken
      */
     public Letter takeLetterFromQueue(Letter let) {
@@ -106,8 +111,8 @@ public class LetterQueue {
     /**
      * Gets a letter from the queue by coordinate.
      *
-     * @param x
-     * @param y
+     * @param x the x coordinate
+     * @param y the y coordinate
      * @return the letter with the same coordinate, null if not found
      */
     public Letter getLetterByCoordinate(int x, int y) {
@@ -123,8 +128,8 @@ public class LetterQueue {
     /**
      * Returns true if the coordinate was valid.
      *
-     * @param x
-     * @param y
+     * @param x the x coordinate
+     * @param y the y coordinate
      * @return true if the coordinate was valid
      */
     public boolean isValidCoordinate(int x, int y) {
@@ -134,8 +139,8 @@ public class LetterQueue {
     /**
      * Returns true if the queue has a letter with the coordinate.
      *
-     * @param x
-     * @param y
+     * @param x the x coordinate
+     * @param y the y coordinate
      * @return true if the queue has a letter with the coordinate
      */
     public boolean hasCoord(int x, int y) {

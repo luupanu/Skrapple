@@ -17,15 +17,20 @@ public class JButtonLetter extends JButton {
 
     private Letter let;
 
+    /**
+     * Creates a new custom JButton JButtonLetter.
+     *
+     * @param let the letter used by the JButton
+     */
     public JButtonLetter(Letter let) {
         setLetter(let);
     }
 
     /**
-     * Sets the letter to this JButton, sets the correct text (the letter and
+     * Sets a letter to this JButton, sets the correct text (the letter and
      * the points as a Unicode subscript).
      *
-     * @param let
+     * @param let the letter to be set
      */
     public void setLetter(Letter let) {
         this.let = let;
