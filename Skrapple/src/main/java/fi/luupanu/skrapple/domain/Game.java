@@ -13,7 +13,7 @@ import fi.luupanu.skrapple.logic.WordCreator;
 
 /**
  * Game stores and returns all the classes required for a SkrappleGame.
- * 
+ *
  * @author panu
  */
 public class Game {
@@ -29,6 +29,13 @@ public class Game {
     private SkrappleGameState state;
     private boolean whoseTurn;
 
+    /**
+     * A new two player game.
+     *
+     * @param p1 player one
+     * @param p2 player two
+     * @param d the dictionary
+     */
     public Game(Player p1, Player p2, Dictionary d) {
         this.p1 = p1;
         this.p2 = p2;
@@ -64,9 +71,10 @@ public class Game {
     public WordCreator getWordCreator() {
         return wordCreator;
     }
-    
+
     /**
      * This method returns the current player.
+     *
      * @return the current player
      */
     public Player getCurrentPlayer() {
@@ -76,11 +84,11 @@ public class Game {
             return p2;
         }
     }
-    
+
     public Player getPlayerOne() {
         return p1;
     }
-    
+
     public Player getPlayerTwo() {
         return p2;
     }
@@ -89,6 +97,9 @@ public class Game {
         return whoseTurn;
     }
 
+    /**
+     * Switches the turn.
+     */
     public void switchTurn() {
         whoseTurn = !getTurn();
     }

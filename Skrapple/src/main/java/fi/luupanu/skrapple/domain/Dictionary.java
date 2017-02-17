@@ -21,6 +21,11 @@ public class Dictionary {
 
     private final List<String> wordlist;
 
+    /**
+     * Loads the word list used by the dictionary.
+     *
+     * @param filename the file location
+     */
     public Dictionary(String filename) {
         wordlist = loadWordList(filename);
     }
@@ -37,11 +42,11 @@ public class Dictionary {
     public List<String> getWordList() {
         return wordlist;
     }
-    
+
     /**
      * Returns if the dictionary used by the game contains the word provided.
-     * 
-     * @param word
+     *
+     * @param word the word to be checked
      * @return true if the word is found
      */
     public boolean containsWord(String word) {

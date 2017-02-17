@@ -16,6 +16,12 @@ public class Coord {
     private final int x;
     private final int y;
 
+    /**
+     * X and Y coordinates for a Letter.
+     *
+     * @param x the x coordinate
+     * @param y the y coordinate
+     */
     public Coord(int x, int y) {
         this.x = x;
         this.y = y;

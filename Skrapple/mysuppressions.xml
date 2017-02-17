@@ -6,4 +6,6 @@
 
 <suppressions>
     <suppress files="ManualTests.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="Skrapple.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="Main.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>

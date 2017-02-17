@@ -18,6 +18,11 @@ public class Letter {
     private final LetterType type;
     private Coord coord;
 
+    /**
+     * Creates a new letter with the letter type provided.
+     *
+     * @param type
+     */
     public Letter(LetterType type) {
         this.type = type;
     }
@@ -35,7 +40,7 @@ public class Letter {
      * bottom right corner of a letter in the GUI.
      *
      * @return points as a small Unicode subscript representation
-     */  
+     */
     public String getPointsAsUnicodeSubScript() {
         String number = String.valueOf(getPoints());
         StringBuilder sb = new StringBuilder();
