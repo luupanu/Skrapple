@@ -62,6 +62,7 @@ public class LetterBag {
     public boolean removeLetterByIndex(int i) {
         if (i >= 0 && i < bag.size()) {
             bag.remove(i);
+            return true;
         }
         return false;
     }
