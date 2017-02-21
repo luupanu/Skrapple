@@ -115,6 +115,7 @@ public class Game {
     private void createGame() {
         state = SkrappleGameState.PLAYING;
         whoseTurn = true; // true = player one's turn
+        getCurrentPlayer().getPlayerRack().refillRack(bag);
     }
 
 }
