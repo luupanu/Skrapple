@@ -75,7 +75,11 @@ public class JButtonLetter extends JButton {
                 setIcon(new ImageIcon("lettertile_sel_46x46.png"));
             } else {
                 setBorder(new LineBorder(Color.WHITE));
-                setIcon(new ImageIcon("lettertile_46x46.png"));
+                if (isBoardLetter) {
+                    setIcon(new ImageIcon("lettertile_sel_46x46.png"));
+                } else {
+                    setIcon(new ImageIcon("lettertile_46x46.png"));
+                }
             }
         }
     }
