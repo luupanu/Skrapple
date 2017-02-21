@@ -55,21 +55,23 @@ public class Rack {
     public void refillRack(LetterBag bag) {
         while (bag.getSize() > 0 && rack.size() < RACK_MAX_SIZE) {
             Letter taken = bag.takeRandomLetterFromBag();
-            rack.add(taken);
+            addLetter(taken);
         }
     }
 
     /**
-     * Takes a letter from the rack with index i.
+     * Takes a letter from the rack.
      *
-     * @param i index of the letter to be taken
-     * @return the letter taken
+     * @param let the letter to be taken
+     * @return the letter taken, null if not found
      */
-    public Letter takeLetter(int i) {
-        if (i >= 0 && i < rack.size()) {
-            Letter taken = rack.get(i);
-            rack.remove(i);
-            return taken;
+    public Letter takeLetter(Letter let) {
+        for (Letter l : rack) {
+            if (l == let) {
+                Letter taken = let;
+                rack.remove(let);
+                return taken;
+            }
         }
         return null;
     }
