@@ -72,9 +72,9 @@ public class Skrapple implements Runnable {
 
     private void addComponents(Container contentPane) {
         // create ActionListener
-        cal = new CustomActionListener(s, boardSquares, rackLetters, move, skip,
-                exchange, resign);
-        
+        cal = new CustomActionListener(s, frame, boardSquares, rackLetters,
+                move, skip, exchange, resign);
+
         // set layout
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
@@ -143,11 +143,11 @@ public class Skrapple implements Runnable {
                 JButtonLetter b = new JButtonLetter(true);
                 b.setCoord(new Coord(x, y));
                 b.setMargin(buttonMargin);
-                
+
                 b.paintBoardIcon(layout);
-                
+
                 b.addActionListener(cal);
-                
+
                 boardSquares[x][y] = b;
                 board.add(boardSquares[x][y]);
             }
@@ -163,7 +163,7 @@ public class Skrapple implements Runnable {
 
             b.setLetter(s.getGame().getCurrentPlayer().getPlayerRack().getContents().get(x));
             b.addActionListener(cal);
-            
+
             rackLetters[x] = b;
             rack.add(rackLetters[x]);
         }
@@ -289,6 +289,11 @@ public class Skrapple implements Runnable {
         skip = new JButton("Skip turn");
         exchange = new JButton("Exchange letters");
         resign = new JButton("Resign");
+        
+        move.addActionListener(cal);
+        skip.addActionListener(cal);
+        exchange.addActionListener(cal);
+        resign.addActionListener(cal);
 
         // add buttons
         sidePanelButtons.add(move);

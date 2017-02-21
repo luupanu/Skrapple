@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -25,6 +27,7 @@ public class CustomActionListener implements ActionListener {
     private Border greenBorder = new LineBorder(Color.GREEN);
     private Border whiteBorder = new LineBorder(Color.WHITE);
 
+    private JFrame frame;
     private JButton move;
     private JButton skip;
     private JButton exchange;
@@ -34,10 +37,11 @@ public class CustomActionListener implements ActionListener {
     private JButtonLetter selected;
     private SkrappleGame s;
 
-    public CustomActionListener(SkrappleGame s, JButtonLetter[][] boardSquares,
+    public CustomActionListener(SkrappleGame s, JFrame frame, JButtonLetter[][] boardSquares,
             JButtonLetter[] rackLetters, JButton move, JButton skip, JButton exchange,
             JButton resign) {
         this.s = s;
+        this.frame = frame;
         this.boardSquares = boardSquares;
         this.rackLetters = rackLetters;
         this.move = move;
@@ -91,7 +95,6 @@ public class CustomActionListener implements ActionListener {
             // if a rack letter has been selected, try to place it in the board
             if (selected != null) {
                 Letter let = selected.getLetter();
-                System.out.println(b.getCoord());
                 if (s.getGame().getLetterQueue().addLetterToQueue(let, b.getCoord(), s.getGame().getBoard())) {
                     s.getGame().getCurrentPlayer().getPlayerRack().takeLetter(let);
                     b.setLetter(let);
@@ -101,7 +104,18 @@ public class CustomActionListener implements ActionListener {
                     paintValidMoves();
                 }
             }
+        } else if (e.getSource().equals(move)) {
+            System.out.println("wut1");
+        } else if (e.getSource() == skip) {
+            System.out.println("wut2");
+            askConfirmation("Skip turn");
+        } else if (e.getSource() == exchange) {
+            System.out.println("wut3");
+        } else if (e.getSource() == resign) {
+            System.out.println("wut4");
+            askConfirmation("Resign");
         }
+        askConfirmation("Resign");
     }
 
     private void paintValidMoves() {
@@ -117,6 +131,19 @@ public class CustomActionListener implements ActionListener {
                     boardSquares[x][y].setBorder(whiteBorder);
                 }
             }
+        }
+    }
+
+    private void askConfirmation(String msg) {
+        String defaultMessage = "Are you sure you want to " + msg.toLowerCase() + "?";
+        int response = JOptionPane.showConfirmDialog(frame, defaultMessage, msg + "?",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.NO_OPTION) {
+            System.out.println("No!");
+        } else if (response == JOptionPane.YES_OPTION) {
+            System.out.println("Yes!");
+        } else if (response == JOptionPane.CLOSED_OPTION) {
+            System.out.println("Closed!");
         }
     }
 }
