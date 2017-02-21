@@ -17,17 +17,17 @@ import java.util.List;
  */
 public class ExchangeLetters extends Action {
 
-    private final List<Integer> indexes;
+    private final List<Letter> letters;
 
     /**
      * Creates a new action ExchangeLetters.
      *
      * @param game the game being played
-     * @param indexes the (rack's) indexes of the letters to be exchanged
+     * @param letters the (rack's) indexes of the letters to be exchanged
      */
-    public ExchangeLetters(Game game, List<Integer> indexes) {
+    public ExchangeLetters(Game game, List<Letter> letters) {
         super(game);
-        this.indexes = indexes;
+        this.letters = letters;
     }
 
     /**
@@ -40,8 +40,8 @@ public class ExchangeLetters extends Action {
     @Override
     public void perform(Game game) {
         List<Letter> letters = new ArrayList<>(7);
-        for (Integer i : indexes) {
-            letters.add(game.getCurrentPlayer().getPlayerRack().takeLetter(i));
+        for (Letter let : letters) {
+            letters.add(game.getCurrentPlayer().getPlayerRack().takeLetter(let));
         }
         game.getCurrentPlayer().getPlayerRack().refillRack(game.getLetterBag());
         for (Letter let : letters) {
