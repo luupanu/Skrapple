@@ -104,7 +104,7 @@ public class CustomActionListener implements ActionListener {
                     paintValidMoves();
                 }
             }
-        } else if (e.getSource().equals(move)) {
+        } else if (e.getSource() == move) {
             System.out.println("wut1");
         } else if (e.getSource() == skip) {
             System.out.println("wut2");
