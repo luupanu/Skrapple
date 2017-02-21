@@ -45,6 +45,10 @@ public class Board {
     public Square[][] getContents() {
         return board;
     }
+    
+    public String[] getLayout() {
+        return layout;
+    }
 
     /**
      * Returns a square based on coordinates if they are valid.
