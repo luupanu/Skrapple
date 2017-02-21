@@ -70,31 +70,38 @@ public class RackTest {
         assertEquals(2, rack.getContents().size());
     }
 
-    @Test
-    public void takeLetterReturnsNullWhenTakingFromEmptyRack() {
-        assertEquals(null, rack.takeLetter(0));
-    }
-
-    @Test
-    public void takeLetterReturnsNullWhenTakingOutOfBounds() {
-        assertEquals(null, rack.takeLetter(-1));
-        assertEquals(null, rack.takeLetter(8));
-    }
-
+//    @Test
+//    public void takeLetterReturnsNullWhenTakingFromEmptyRack() {
+//        assertEquals(null, rack.takeLetter(0));
+//    }
+//
+//    @Test
+//    public void takeLetterReturnsNullWhenTakingOutOfBounds() {
+//        assertEquals(null, rack.takeLetter(-1));
+//        assertEquals(null, rack.takeLetter(8));
+//    }
     @Test
     public void takeLetterReturnsLetter() {
         Letter let = new Letter(LetterType.LETTER_E);
         bag.placeLetterInBag(let);
         rack.refillRack(bag);
-        assertEquals(let, rack.takeLetter(0));
+        assertEquals(let, rack.takeLetter(let));
     }
 
+//    @Test
+//    public void takeLetterReturnsNullWhenIndexHasNoLetter() {
+//        Letter let = new Letter(LetterType.LETTER_E);
+//        bag.placeLetterInBag(let);
+//        rack.refillRack(bag);
+//        assertEquals(null, rack.takeLetter(1));
+//    }
+    
     @Test
-    public void takeLetterReturnsNullWhenIndexHasNoLetter() {
+    public void takeLetterReturnsNullWhenRackHasNoLetter() {
         Letter let = new Letter(LetterType.LETTER_E);
         bag.placeLetterInBag(let);
         rack.refillRack(bag);
-        assertEquals(null, rack.takeLetter(1));
+        assertEquals(null, rack.takeLetter(new Letter(LetterType.LETTER_E)));
     }
 
     @Test
@@ -105,7 +112,8 @@ public class RackTest {
         LetterQueue q = new LetterQueue();
         Board b = new Board();
         for (int x = 0; x < 7; x++) {
-            assertEquals(true, q.addLetterToQueue(rack.takeLetter(0), new Coord(x, 7), b));
+            Letter let = rack.takeLetter(rack.getContents().get(0));
+            assertEquals(true, q.addLetterToQueue(let, new Coord(x, 7), b));
         }
         List<Letter> canceled = q.cancelLetterQueue();
         assertEquals(true, rack.addLetters(canceled));
