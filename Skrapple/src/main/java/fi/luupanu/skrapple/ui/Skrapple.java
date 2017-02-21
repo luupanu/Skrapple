@@ -5,9 +5,9 @@
  */
 package fi.luupanu.skrapple.ui;
 
+import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
-import fi.luupanu.skrapple.domain.Rack;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,13 +23,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 /**
@@ -39,32 +39,20 @@ import javax.swing.border.TitledBorder;
  */
 public class Skrapple implements Runnable {
 
-    private final String[] layout = {
-        "W..l...W...l..W",
-        ".w...L...L...w.",
-        "..w...l.l...w..",
-        "l..w...l...w..l",
-        "....w.....w....",
-        ".L...L...L...L.",
-        "..l...l.l...l..",
-        "W..l...w...l..W",
-        "..l...l.l...l..",
-        ".L...L...L...L.",
-        "....w.....w....",
-        "l..w...l...w..l",
-        "..w...l.l...w..",
-        ".w...L...L...w.",
-        "W..l...W...l..W"};
-
+    private CustomActionListener cal;
     private JFrame frame;
-    private JButton[][] boardSquares;
-    private JButton[] rackLetters;
+    private JButton move;
+    private JButton skip;
+    private JButton exchange;
+    private JButton resign;
+    private JButtonLetter[][] boardSquares;
+    private JButtonLetter[] rackLetters;
     private SkrappleGame s;
 
     public Skrapple() {
         s = new SkrappleGame(new Player("Jussi Pattitussi"), new Player("Kikka Korea"), new Dictionary("kotus-wordlist-fi"));
-        boardSquares = new JButton[15][15];
-        rackLetters = new JButton[7];
+        boardSquares = new JButtonLetter[15][15];
+        rackLetters = new JButtonLetter[7];
     }
 
     @Override
@@ -81,6 +69,10 @@ public class Skrapple implements Runnable {
     }
 
     private void addComponents(Container contentPane) {
+        // create ActionListener
+        cal = new CustomActionListener(s, boardSquares, rackLetters, move, skip,
+                exchange, resign);
+        
         // set layout
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
@@ -91,7 +83,7 @@ public class Skrapple implements Runnable {
         makeSidePanel(sidePanel);
 
         // create right-side panel with the board and rack
-        JPanel boardPanel = new JPanel();
+        JLayeredPane boardPanel = new JLayeredPane();
         makeBoardPanel(boardPanel);
 
         // add left-side panel
@@ -106,7 +98,7 @@ public class Skrapple implements Runnable {
         frame.add(boardPanel, gbc);
     }
 
-    private void makeBoardPanel(JPanel boardPanel) {
+    private void makeBoardPanel(JLayeredPane boardPanel) {
         /*board.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createRaisedBevelBorder(),
                 BorderFactory.createLoweredBevelBorder()));*/
@@ -143,21 +135,17 @@ public class Skrapple implements Runnable {
         board.setBackground(new Color(154, 146, 125));
 
         Insets buttonMargin = new Insets(0, 0, 0, 0);
+        String[] layout = s.getGame().getBoard().getLayout();
         for (int y = 0; y < boardSquares.length; y++) {
             for (int x = 0; x < boardSquares[y].length; x++) {
-                JButton b = new JButton();
+                JButtonLetter b = new JButtonLetter(true);
+                b.setCoord(new Coord(x, y));
                 b.setMargin(buttonMargin);
-                b.setBorder(new LineBorder(Color.WHITE));
-
-                if (layout[y].charAt(x) == 'l') {
-                    b.setIcon(new ImageIcon("bonus_letter_2_46x46.png"));
-                } else if (layout[y].charAt(x) == 'w') {
-                    b.setIcon(new ImageIcon("bonus_word_2_46x46.png"));
-                } else if (layout[y].charAt(x) == 'L') {
-                    b.setIcon(new ImageIcon("bonus_letter_3_46x46.png"));
-                } else if (layout[y].charAt(x) == 'W') {
-                    b.setIcon(new ImageIcon("bonus_word_3_46x46.png"));
-                }
+                
+                b.paintBoardIcon(layout);
+                
+                b.addActionListener(cal);
+                
                 boardSquares[x][y] = b;
                 board.add(boardSquares[x][y]);
             }
@@ -165,18 +153,13 @@ public class Skrapple implements Runnable {
     }
 
     private void makeRack(JPanel rack) {
-        Rack playerOneRack = s.getGame().getPlayerOne().getPlayerRack();
-        playerOneRack.refillRack(s.getGame().getLetterBag());
         for (int x = 0; x < rackLetters.length; x++) {
-            JButtonLetter b = new JButtonLetter(playerOneRack.getContents().get(x));
-            b.setBorder(new LineBorder(Color.BLACK));
+            JButtonLetter b = new JButtonLetter(false);
             b.setIcon(new ImageIcon("lettertile_46x46.png"));
-            b.setFont(new Font("serif", Font.BOLD, 20));
-            b.setLayout(new BorderLayout());
 
-            b.setHorizontalTextPosition(JButton.CENTER);
-            b.setVerticalTextPosition(JButton.CENTER);
-
+            b.setLetter(s.getGame().getCurrentPlayer().getPlayerRack().getContents().get(x));
+            b.addActionListener(cal);
+            
             rackLetters[x] = b;
             rack.add(rackLetters[x]);
         }
@@ -297,10 +280,10 @@ public class Skrapple implements Runnable {
         sidePanelButtons.setLayout(layout);
 
         // create buttons
-        JButton move = new JButton("Confirm move");
-        JButton skip = new JButton("Skip turn");
-        JButton exchange = new JButton("Exchange letters");
-        JButton resign = new JButton("Resign");
+        move = new JButton("Confirm move");
+        skip = new JButton("Skip turn");
+        exchange = new JButton("Exchange letters");
+        resign = new JButton("Resign");
 
         // add buttons
         sidePanelButtons.add(move);
