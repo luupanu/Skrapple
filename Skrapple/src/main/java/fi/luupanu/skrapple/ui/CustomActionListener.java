@@ -115,7 +115,6 @@ public class CustomActionListener implements ActionListener {
             System.out.println("wut4");
             askConfirmation("Resign");
         }
-        askConfirmation("Resign");
     }
 
     private void paintValidMoves() {
