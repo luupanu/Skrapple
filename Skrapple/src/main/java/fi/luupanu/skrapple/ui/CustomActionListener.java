@@ -12,8 +12,8 @@ import fi.luupanu.skrapple.logic.SkrappleGame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 /**
@@ -21,6 +21,9 @@ import javax.swing.border.LineBorder;
  * @author panu
  */
 public class CustomActionListener implements ActionListener {
+
+    private Border greenBorder = new LineBorder(Color.GREEN);
+    private Border whiteBorder = new LineBorder(Color.WHITE);
 
     private JButton move;
     private JButton skip;
@@ -102,20 +105,18 @@ public class CustomActionListener implements ActionListener {
     }
 
     private void paintValidMoves() {
-        Letter fakeLetter = new Letter(LetterType.LETTER_E);
-        LineBorder greenBorder = new LineBorder(Color.GREEN);
-        LineBorder whiteBorder = new LineBorder(Color.WHITE);
-        for (int y = 0; y < boardSquares.length; y++) {
-            for (int x = 0; x < boardSquares[y].length; x++) {
-                if (selected != null) {
-                    if (s.getGame().getLetterQueue().addLetterToQueue(fakeLetter, new Coord(x, y), s.getGame().getBoard())) {
-                        boardSquares[x][y].setBorder(greenBorder);
-                        s.getGame().getLetterQueue().takeLetterFromQueue(fakeLetter);
-                    }
-                } else {
-                    boardSquares[x][y].setBorder(whiteBorder);
-                }
-            }
-        }
+//        Letter fakeLetter = new Letter(LetterType.LETTER_E);
+//        for (int y = 0; y < boardSquares.length; y++) {
+//            for (int x = 0; x < boardSquares[y].length; x++) {
+//                if (selected != null) {
+//                    if (s.getGame().getLetterQueue().addLetterToQueue(fakeLetter, new Coord(x, y), s.getGame().getBoard())) {
+//                        boardSquares[x][y].setBorder(greenBorder);
+//                        s.getGame().getLetterQueue().takeLetterFromQueue(fakeLetter);
+//                    }
+//                } else if (boardSquares[x][y].getBorder() == greenBorder) {
+//                    boardSquares[x][y].setBorder(whiteBorder);
+//                }
+//            }
+//        }
     }
 }
