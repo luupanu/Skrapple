@@ -89,6 +89,9 @@ public class LetterQueueChecks {
             first letter. The second letter gives us the direction for all the 
             rest of the letters (a player can either place a word vertically or
             horizontally on the board, not both at the same time) */
+        if (board.hasNoLetters() && c.getX() != 7 && c.getY() != 7) {
+            return false;
+        }
         for (Letter let : list) {
             Coord firstLetterCoord = let.getCoord();
             if (firstLetterCoord.getX() == c.getX() && firstLetterCoord.getY() == c.getY()) {
