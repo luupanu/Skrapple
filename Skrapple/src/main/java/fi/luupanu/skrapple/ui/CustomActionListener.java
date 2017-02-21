@@ -105,18 +105,18 @@ public class CustomActionListener implements ActionListener {
     }
 
     private void paintValidMoves() {
-//        Letter fakeLetter = new Letter(LetterType.LETTER_E);
-//        for (int y = 0; y < boardSquares.length; y++) {
-//            for (int x = 0; x < boardSquares[y].length; x++) {
-//                if (selected != null) {
-//                    if (s.getGame().getLetterQueue().addLetterToQueue(fakeLetter, new Coord(x, y), s.getGame().getBoard())) {
-//                        boardSquares[x][y].setBorder(greenBorder);
-//                        s.getGame().getLetterQueue().takeLetterFromQueue(fakeLetter);
-//                    }
-//                } else if (boardSquares[x][y].getBorder() == greenBorder) {
-//                    boardSquares[x][y].setBorder(whiteBorder);
-//                }
-//            }
-//        }
+        Letter fakeLetter = new Letter(LetterType.LETTER_E);
+        for (int y = 0; y < boardSquares.length; y++) {
+            for (int x = 0; x < boardSquares[y].length; x++) {
+                if (selected != null) {
+                    if (s.getGame().getLetterQueue().addLetterToQueue(fakeLetter, new Coord(x, y), s.getGame().getBoard())) {
+                        boardSquares[x][y].setBorder(greenBorder);
+                        s.getGame().getLetterQueue().takeLetterFromQueue(fakeLetter);
+                    }
+                } else if (boardSquares[x][y].getBorder() == greenBorder) {
+                    boardSquares[x][y].setBorder(whiteBorder);
+                }
+            }
+        }
     }
 }
