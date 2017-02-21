@@ -14,3 +14,4 @@ Päivä | Tunnit | Kuvaus
 14.02.2017 | 6h | UI:n aloittaminen
 15.02.2017 | 4h | UI:n jatkamista
 17.02.2017 | 2h | JavaDocien lisäämistä
+21.02.2017 | 9h | UI: Rackin ja Boardin välinen yhteys tehty, oma ActionListener
