@@ -13,12 +13,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -117,7 +119,7 @@ public class Skrapple implements Runnable {
         makeBoard(board);
 
         // create rack
-        JPanel rack = new JPanel();
+        JPanel rack = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         makeRack(rack);
 
         gbc.fill = GridBagConstraints.BOTH;
@@ -153,9 +155,11 @@ public class Skrapple implements Runnable {
     }
 
     private void makeRack(JPanel rack) {
+        Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int x = 0; x < rackLetters.length; x++) {
             JButtonLetter b = new JButtonLetter(false);
             b.setIcon(new ImageIcon("lettertile_46x46.png"));
+            b.setMargin(buttonMargin);
 
             b.setLetter(s.getGame().getCurrentPlayer().getPlayerRack().getContents().get(x));
             b.addActionListener(cal);
@@ -163,6 +167,7 @@ public class Skrapple implements Runnable {
             rackLetters[x] = b;
             rack.add(rackLetters[x]);
         }
+        rack.add(Box.createVerticalStrut(80));
     }
 
     private void makeSidePanel(JPanel sidePanel) {
