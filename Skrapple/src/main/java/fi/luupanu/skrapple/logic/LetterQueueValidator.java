@@ -31,7 +31,7 @@ public class LetterQueueValidator {
      */
     public LetterQueueValidator(LetterQueue queue) {
         this.q = queue;
-        this.list = queue.getLetterQueue();
+        this.list = queue.getContents();
         this.n = queue.getNeighbours();
     }
 
