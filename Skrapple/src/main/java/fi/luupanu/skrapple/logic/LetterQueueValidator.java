@@ -52,8 +52,7 @@ public class LetterQueueValidator {
 
         // first word of the game: must touch the center square
         if (board.hasNoLetters()) {
-            return list.size() != 1
-                    && atLeastOneLetterTouchesTheCenterSquare(board)
+            return atLeastOneLetterTouchesTheCenterSquare(board)
                     && queueHasNoGaps(board);
         }
 
