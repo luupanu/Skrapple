@@ -5,6 +5,16 @@
  */
 package fi.luupanu.skrapple.ui;
 
+import fi.luupanu.skrapple.ui.components.PlayerPoints;
+import fi.luupanu.skrapple.ui.components.PlayerName;
+import fi.luupanu.skrapple.ui.components.LetterTile;
+import fi.luupanu.skrapple.utils.Announcer;
+import fi.luupanu.skrapple.ui.listeners.EndTurnActionListener;
+import fi.luupanu.skrapple.ui.listeners.ResignActionListener;
+import fi.luupanu.skrapple.ui.listeners.MoveActionListener;
+import fi.luupanu.skrapple.ui.listeners.LetterTileActionListener;
+import fi.luupanu.skrapple.constants.Announcement;
+import fi.luupanu.skrapple.constants.SkrappleImageIcon;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
@@ -21,15 +31,14 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
@@ -39,22 +48,36 @@ import javax.swing.border.TitledBorder;
  *
  * @author panu
  */
-public class Skrapple implements Runnable {
+public class SkrappleGUI implements Runnable, Updateable {
 
-    private CustomActionListener cal;
+    private Font normal;
+    private Font bolded;
+
+    private Announcer announcer;
+    private LetterTileActionListener cal;
     private JFrame frame;
-    private JButton move;
-    private JButton skip;
-    private JButton exchange;
-    private JButton resign;
-    private JButtonLetter[][] boardSquares;
-    private JButtonLetter[] rackLetters;
+    private JButton moveButton;
+    private JButton endTurnButton;
+    private JButton exchangeButton;
+    private JButton resignButton;
+    private JButton undoQueueButton;
+    private LetterTile[][] boardSquares;
+    private LetterTile[] rackLetters;
+    private JTextArea infoField;
+    private PlayerName playerOneName;
+    private PlayerName playerTwoName;
+    private PlayerPoints playerOnePoints;
+    private PlayerPoints playerTwoPoints;
     private SkrappleGame s;
 
-    public Skrapple() {
+    public SkrappleGUI() {
         s = new SkrappleGame(new Player("Jussi Pattitussi"), new Player("Kikka Korea"), new Dictionary("kotus-wordlist-fi"));
-        boardSquares = new JButtonLetter[15][15];
-        rackLetters = new JButtonLetter[7];
+        boardSquares = new LetterTile[15][15];
+        rackLetters = new LetterTile[7];
+        normal = new Font("Lucida Grande", Font.PLAIN, 13);
+        bolded = new Font(normal.getName(), Font.BOLD, normal.getSize());
+        announcer = new Announcer(s);
+        UIManager.put("Button.disabledText", new Color(130, 0, 0));
     }
 
     @Override
@@ -65,6 +88,7 @@ public class Skrapple implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         addComponents(frame.getContentPane());
+        initializeGameGUI();
 
         frame.pack();
         frame.setVisible(true);
@@ -72,8 +96,8 @@ public class Skrapple implements Runnable {
 
     private void addComponents(Container contentPane) {
         // create ActionListener
-        cal = new CustomActionListener(s, frame, boardSquares, rackLetters,
-                move, skip, exchange, resign);
+        cal = new LetterTileActionListener(s, frame, boardSquares, rackLetters,
+                moveButton, endTurnButton, exchangeButton, resignButton);
 
         // set layout
         GridBagLayout layout = new GridBagLayout();
@@ -84,7 +108,7 @@ public class Skrapple implements Runnable {
         JPanel sidePanel = new JPanel();
         makeSidePanel(sidePanel);
 
-        // create right-side panel with the board and rack
+        // create right-side panel with the board and the rack
         JLayeredPane boardPanel = new JLayeredPane();
         makeBoardPanel(boardPanel);
 
@@ -140,7 +164,7 @@ public class Skrapple implements Runnable {
         String[] layout = s.getGame().getBoard().getLayout();
         for (int y = 0; y < boardSquares.length; y++) {
             for (int x = 0; x < boardSquares[y].length; x++) {
-                JButtonLetter b = new JButtonLetter(true);
+                LetterTile b = new LetterTile(true);
                 b.setCoord(new Coord(x, y));
                 b.setMargin(buttonMargin);
 
@@ -155,18 +179,18 @@ public class Skrapple implements Runnable {
     }
 
     private void makeRack(JPanel rack) {
-        Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int x = 0; x < rackLetters.length; x++) {
-            JButtonLetter b = new JButtonLetter(false);
-            b.setIcon(new ImageIcon("lettertile_46x46.png"));
-            b.setMargin(buttonMargin);
+            LetterTile b = new LetterTile(false);
+            b.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
 
-            b.setLetter(s.getGame().getCurrentPlayer().getPlayerRack().getContents().get(x));
             b.addActionListener(cal);
 
             rackLetters[x] = b;
             rack.add(rackLetters[x]);
         }
+        undoQueueButton = new JButton("Undo");
+        undoQueueButton.setVisible(false);
+        rack.add(undoQueueButton);
         rack.add(Box.createVerticalStrut(80));
     }
 
@@ -184,15 +208,15 @@ public class Skrapple implements Runnable {
 
         // create top-left player infobox
         JPanel sidePanelPlayers = new JPanel();
-        makePlayerInfoBox(sidePanelPlayers);
+        makePlayerInfo(sidePanelPlayers);
 
         // create center-left move history infobox
         JPanel sidePanelMoves = new JPanel(new BorderLayout());
-        makeMoveHistoryInfoBox(sidePanelMoves);
+        makeInfoBox(sidePanelMoves);
 
         // create bottom-left buttons
         JPanel sidePanelButtons = new JPanel();
-        makeButtonsInfoBox(sidePanelButtons);
+        makeSidePanelButtons(sidePanelButtons);
 
         // add all to side panel
         sidePanel.add(sidePanelPlayers);
@@ -200,53 +224,38 @@ public class Skrapple implements Runnable {
         sidePanel.add(sidePanelButtons);
     }
 
-    private void makePlayerInfoBox(JPanel sidePanelPlayers) {
+    private void makePlayerInfo(JPanel sidePanelPlayerInfo) {
         // set layout
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
-        sidePanelPlayers.setLayout(layout);
+        sidePanelPlayerInfo.setLayout(layout);
 
         // create player one name
-        JLabel playerOne = new JLabel(s.getGame().getPlayerOne().getPlayerName());
-        playerOne.setHorizontalAlignment(SwingConstants.RIGHT);
+        playerOneName = new PlayerName(s, s.getGame().getPlayerOne(), normal);
+        playerOneName.setHorizontalAlignment(SwingConstants.RIGHT);
+        playerOneName.setFont(bolded);
 
         // create player two name
-        JLabel playerTwo = new JLabel(s.getGame().getPlayerTwo().getPlayerName());
-        playerTwo.setHorizontalAlignment(SwingConstants.LEFT);
-
-        // bolded test
-        Font normal = playerOne.getFont();
-        Font bolded = new Font(normal.getName(), Font.BOLD, normal.getSize());
-        if (s.getGame().getTurn()) {
-            playerOne.setFont(bolded);
-            playerTwo.setFont(normal);
-        } else {
-            playerOne.setFont(normal);
-            playerTwo.setFont(bolded);
-        }
-
-        // points test
-        s.getGame().getPlayerOne().addPoints(150);
-        s.getGame().getPlayerTwo().addPoints(100);
+        playerTwoName = new PlayerName(s, s.getGame().getPlayerTwo(), normal);
+        playerTwoName.setHorizontalAlignment(SwingConstants.LEFT);
+        playerTwoName.setFont(normal);
 
         // create player one points
-        JLabel playerOnePoints = new JLabel(Integer.toString(s.getGame().getPlayerOne().getPlayerPoints())
-                + " points");
+        playerOnePoints = new PlayerPoints(s, s.getGame().getPlayerOne());
         playerOnePoints.setHorizontalAlignment(SwingConstants.LEFT);
 
         // create player two points
-        JLabel playerTwoPoints = new JLabel(Integer.toString(s.getGame().getPlayerTwo().getPlayerPoints())
-                + " points");
+        playerTwoPoints = new PlayerPoints(s, s.getGame().getPlayerTwo());
         playerTwoPoints.setHorizontalAlignment(SwingConstants.RIGHT);
 
         // add player one name
         gbc.weighty = 0.2;
         gbc.insets = new Insets(0, 5, 0, 5);
-        sidePanelPlayers.add(playerOne, gbc);
+        sidePanelPlayerInfo.add(playerOneName, gbc);
 
         // add player two name
         gbc.gridx = 1;
-        sidePanelPlayers.add(playerTwo, gbc);
+        sidePanelPlayerInfo.add(playerTwoName, gbc);
 
         // add player one points
         gbc.weighty = 0.8;
@@ -254,51 +263,113 @@ public class Skrapple implements Runnable {
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridy = 1;
-        sidePanelPlayers.add(playerOnePoints, gbc);
+        sidePanelPlayerInfo.add(playerOnePoints, gbc);
 
         // add player two points
         gbc.gridx = 1;
-        sidePanelPlayers.add(playerTwoPoints, gbc);
+        sidePanelPlayerInfo.add(playerTwoPoints, gbc);
     }
 
-    private void makeMoveHistoryInfoBox(JPanel sidePanelMoves) {
+    private void makeInfoBox(JPanel sidePanelInfo) {
         // set background & border
-        sidePanelMoves.setBackground(Color.LIGHT_GRAY);
-        sidePanelMoves.setBorder(BorderFactory.createLoweredBevelBorder());
+        sidePanelInfo.setBackground(Color.LIGHT_GRAY);
+        sidePanelInfo.setBorder(BorderFactory.createLoweredBevelBorder());
 
-        // create move history text area
-        JTextArea moveHistory = new JTextArea("here be dragons");
-        moveHistory.setEnabled(false);
+        // create info field text area
+        infoField = new JTextArea();
+        infoField.setEnabled(false);
+        infoField.setLineWrap(true);
+        infoField.setWrapStyleWord(true);
 
         // create vertical scrollpane
-        JScrollPane sp = new JScrollPane(moveHistory,
+        JScrollPane sp = new JScrollPane(infoField,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         // add text area with scrollpane
-        sidePanelMoves.add(sp);
+        sidePanelInfo.add(sp);
     }
 
-    private void makeButtonsInfoBox(JPanel sidePanelButtons) {
+    private void makeSidePanelButtons(JPanel sidePanelButtons) {
         // set layout
         GridLayout layout = new GridLayout(4, 1);
         sidePanelButtons.setLayout(layout);
 
         // create buttons
-        move = new JButton("Confirm move");
-        skip = new JButton("Skip turn");
-        exchange = new JButton("Exchange letters");
-        resign = new JButton("Resign");
-        
-        move.addActionListener(cal);
-        skip.addActionListener(cal);
-        exchange.addActionListener(cal);
-        resign.addActionListener(cal);
+        moveButton = new JButton("Confirm move");
+        endTurnButton = new JButton("End turn");
+        exchangeButton = new JButton("Exchange letters");
+        resignButton = new JButton("Resign");
+
+        // add ActionListeners
+        moveButton.addActionListener(new MoveActionListener(announcer, this, s, frame,
+                moveButton, exchangeButton));
+        endTurnButton.addActionListener(new EndTurnActionListener(announcer, this, s,
+                frame, endTurnButton, moveButton, exchangeButton));
+        exchangeButton.addActionListener(cal);
+        resignButton.addActionListener(new ResignActionListener(s, frame, resignButton,
+        playerOneName, playerTwoName, playerOnePoints, playerTwoPoints));
 
         // add buttons
-        sidePanelButtons.add(move);
-        sidePanelButtons.add(skip);
-        sidePanelButtons.add(exchange);
-        sidePanelButtons.add(resign);
+        sidePanelButtons.add(moveButton);
+        sidePanelButtons.add(endTurnButton);
+        sidePanelButtons.add(exchangeButton);
+        sidePanelButtons.add(resignButton);
+    }
+
+    public void updateBoardLettersColour() {
+        for (LetterTile[] jbls : boardSquares) {
+            for (LetterTile jbl : jbls) {
+                if (jbl.getLetter() != null) {
+                    jbl.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
+                }
+            }
+        }
+    }
+
+    @Override
+    public void update(String message) {
+        infoField.append(message);
+    }
+
+    public void updateSetLetterTilesEnabled(boolean bool) {
+        for (LetterTile jbl : rackLetters) {
+            jbl.setDisabledIcon(jbl.getIcon());
+            jbl.setEnabled(bool);
+        }
+        for (LetterTile[] jbls : boardSquares) {
+            for (LetterTile jbl : jbls) {
+                jbl.setDisabledIcon(jbl.getIcon());
+                jbl.setEnabled(bool);
+            }
+        }
+    }
+
+    public void updatePlayerNames() {
+        playerOneName.updatePlayerName();
+        playerTwoName.updatePlayerName();
+    }
+
+    public void updatePlayerPoints() {
+        playerOnePoints.updatePlayerPoints();
+        playerTwoPoints.updatePlayerPoints();
+    }
+
+    public void updatePlayerRack() {
+        for (int x = 0; x < rackLetters.length; x++) {
+            rackLetters[x].setLetter(s.getGame().getCurrentPlayer().
+                    getPlayerRack().getContents().get(x));
+        }
+    }
+
+    public void updateRemoveAddedLettersMessage() {
+        infoField.setText(infoField.getText().replaceAll(".*Added new letters .* to the rack.", ""));
+    }
+    
+    private void initializeGameGUI() {
+        update(announcer.announce(Announcement.WELCOME_MESSAGE));
+        update(announcer.announce(Announcement.TURN_START_MESSAGE));
+        updatePlayerPoints();
+        updatePlayerRack();
     }
 }
