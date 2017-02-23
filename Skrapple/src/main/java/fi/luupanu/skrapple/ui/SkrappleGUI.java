@@ -19,7 +19,7 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
-import fi.luupanu.skrapple.ui.components.GUIRack;
+import fi.luupanu.skrapple.ui.components.RackPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -144,7 +144,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         makeBoard(board);
 
         // create rack
-        GUIRack rack = new GUIRack(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        RackPanel rack = new RackPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         makeRack(rack);
 
         gbc.fill = GridBagConstraints.BOTH;
@@ -179,7 +179,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         }
     }
 
-    private void makeRack(GUIRack rack) {
+    private void makeRack(RackPanel rack) {
         for (int x = 0; x < rackLetters.length; x++) {
             LetterTile b = new LetterTile(false);
             b.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
