@@ -40,7 +40,7 @@ public class LetterQueueTest {
 
     @Test
     public void letterQueueIsEmptyWhenCreated() {
-        assertEquals(0, q.getLetterQueue().size());
+        assertEquals(0, q.getContents().size());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class LetterQueueTest {
         for (int y = -1; y < 16; y += 16) {
             for (int x = -1; x < 16; x += 16) {
                 assertEquals(false, q.addLetterToQueue(let1, new Coord(x, y), b));
-                assertEquals(0, q.getLetterQueue().size());
+                assertEquals(0, q.getContents().size());
             }
         }
     }
@@ -57,14 +57,14 @@ public class LetterQueueTest {
     public void addingALetterToQueueWhenSquareIsOccupiedFails() {
         b.getSquare(0, 0).placeLetter(let1);
         assertEquals(false, q.addLetterToQueue(let2, new Coord(0, 0), b));
-        assertEquals(0, q.getLetterQueue().size());
+        assertEquals(0, q.getContents().size());
     }
 
     @Test
     public void takingALetterWorks() {
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
         assertEquals(let1, q.takeLetterFromQueue(let1));
-        assertEquals(0, q.getLetterQueue().size());
+        assertEquals(0, q.getContents().size());
     }
 
     @Test
@@ -74,16 +74,16 @@ public class LetterQueueTest {
         List<Letter> canceled = q.cancelLetterQueue();
         assertEquals(true, canceled.contains(let1));
         assertEquals(true, canceled.contains(let2));
-        assertEquals(0, q.getLetterQueue().size());
+        assertEquals(0, q.getContents().size());
     }
 
     @Test
     public void addingTheSameLetterTwiceToSameCoordinatesSucceedsIfRemovedFirst() {
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
         assertEquals(let1, q.takeLetterFromQueue(let1));
-        assertEquals(0, q.getLetterQueue().size());
+        assertEquals(0, q.getContents().size());
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
-        assertEquals(1, q.getLetterQueue().size());
+        assertEquals(1, q.getContents().size());
     }
     
     @Test
@@ -112,7 +112,7 @@ public class LetterQueueTest {
                     continue;
                 }
                 assertEquals(false, q.addLetterToQueue(let1, new Coord(x, y), b));
-                assertEquals(0, q.getLetterQueue().size());
+                assertEquals(0, q.getContents().size());
             }
         }
     }
@@ -122,7 +122,7 @@ public class LetterQueueTest {
         for (int y = 0; y < 15; y++) {
             LetterQueue queue = new LetterQueue();
             assertEquals(true, queue.addLetterToQueue(let1, new Coord(7, y), b));
-            assertEquals(1, queue.getLetterQueue().size());
+            assertEquals(1, queue.getContents().size());
         }
     }
 
@@ -131,7 +131,7 @@ public class LetterQueueTest {
         for (int x = 0; x < 15; x++) {
             LetterQueue queue = new LetterQueue();
             assertEquals(true, queue.addLetterToQueue(let1, new Coord(x, 7), b));
-            assertEquals(1, queue.getLetterQueue().size());
+            assertEquals(1, queue.getContents().size());
         }
     }
 
@@ -186,7 +186,7 @@ public class LetterQueueTest {
             LetterQueue queue = new LetterQueue();
             assertEquals(true, queue.addLetterToQueue(let1, new Coord(8, 8), b));
             assertEquals(true, queue.addLetterToQueue(let2, new Coord(x, 8), b));
-            assertEquals(2, queue.getLetterQueue().size());
+            assertEquals(2, queue.getContents().size());
         }
     }
 
@@ -200,7 +200,7 @@ public class LetterQueueTest {
             LetterQueue queue = new LetterQueue();
             assertEquals(true, queue.addLetterToQueue(let1, new Coord(8, 8), b));
             assertEquals(true, queue.addLetterToQueue(let2, new Coord(8, y), b));
-            assertEquals(2, queue.getLetterQueue().size());
+            assertEquals(2, queue.getContents().size());
         }
     }
 
@@ -214,7 +214,7 @@ public class LetterQueueTest {
                 continue;
             }
             assertEquals(false, q.addLetterToQueue(let2, new Coord(8, y), b));
-            assertEquals(2, q.getLetterQueue().size());
+            assertEquals(2, q.getContents().size());
         }
     }
 
@@ -228,7 +228,7 @@ public class LetterQueueTest {
                 continue;
             }
             assertEquals(false, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(x, 8), b));
-            assertEquals(2, q.getLetterQueue().size());
+            assertEquals(2, q.getContents().size());
         }
     }
 
@@ -240,7 +240,7 @@ public class LetterQueueTest {
         for (int x = 2; x < 15; x++) {
             assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(x, 8), b));
         }
-        assertEquals(15, q.getLetterQueue().size());
+        assertEquals(15, q.getContents().size());
     }
 
     @Test
@@ -251,7 +251,7 @@ public class LetterQueueTest {
         for (int y = 2; y < 15; y++) {
             assertEquals(true, q.addLetterToQueue(new Letter(LetterType.LETTER_E), new Coord(8, y), b));
         }
-        assertEquals(15, q.getLetterQueue().size());
+        assertEquals(15, q.getContents().size());
     }
     
     @Test

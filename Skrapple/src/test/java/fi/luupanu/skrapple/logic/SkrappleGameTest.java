@@ -31,6 +31,8 @@ public class SkrappleGameTest {
         p1 = new Player("p1");
         p2 = new Player("p2");
         s = new SkrappleGame(p1, p2, new Dictionary("kotus-wordlist-fi"));
+        p1.getPlayerRack().getContents().clear();
+        p2.getPlayerRack().getContents().clear();
     }
     
     @Test

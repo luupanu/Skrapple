@@ -47,7 +47,7 @@ public class WordCheckerTest {
         words.add(w1);
         words.add(w2);
         words.add(w3);
-        assertEquals(true, wc.allWordsExistInDictionary(words));
+        assertEquals(0, wc.allWordsExistInDictionary(words).size());
     }
 
     @Test
@@ -59,7 +59,8 @@ public class WordCheckerTest {
         words.add(w2);
         words.add(w3);
         words.add(w4);
-        assertEquals(false, wc.allWordsExistInDictionary(words));
+        assertEquals(w4, wc.allWordsExistInDictionary(words).stream().findAny().orElse(null));
+        assertEquals(1, wc.allWordsExistInDictionary(words).size());
     }
     
     private void makeRealWords() {

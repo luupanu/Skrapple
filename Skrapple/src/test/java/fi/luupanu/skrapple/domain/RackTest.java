@@ -108,16 +108,16 @@ public class RackTest {
     public void canReturnACanceledLetterQueueToRack() {
         addLettersToBag();
         rack.refillRack(bag);
-        List<Letter> originalContents = new ArrayList<>(rack.getContents());
+        List<Letter> originalContents = new ArrayList<>(rack.getContentsAsList());
         LetterQueue q = new LetterQueue();
         Board b = new Board();
         for (int x = 0; x < 7; x++) {
-            Letter let = rack.takeLetter(rack.getContents().get(0));
+            Letter let = rack.takeLetter(rack.getContents().get(x));
             assertEquals(true, q.addLetterToQueue(let, new Coord(x, 7), b));
         }
         List<Letter> canceled = q.cancelLetterQueue();
         assertEquals(true, rack.addLetters(canceled));
-        assertEquals(true, rack.getContents().equals(originalContents));
+        assertEquals(true, rack.getContentsAsList().equals(originalContents));
     }
 
     @Test
