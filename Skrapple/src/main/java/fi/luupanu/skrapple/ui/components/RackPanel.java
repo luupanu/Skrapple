@@ -22,18 +22,16 @@ import javax.swing.JPanel;
  *
  * @author panu
  */
-public class GUIRack extends JPanel {
+public class RackPanel extends JPanel {
 
     private Image image;
 
-    public GUIRack(LayoutManager layout) {
+    public RackPanel(LayoutManager layout) {
         super(layout);
         try {
             this.image = ImageIO.read(new File("rackbg.png"));
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GUIRack.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GUIRack.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RackPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
