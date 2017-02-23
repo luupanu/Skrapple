@@ -7,6 +7,8 @@ package fi.luupanu.skrapple.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * Every player has a unique rack that stores up to 7 letters. Using the letters
@@ -16,18 +18,27 @@ import java.util.List;
  */
 public class Rack {
 
-    // TO-DO: switching letters
-    private final List<Letter> rack;
+    private final SortedMap<Integer, Letter> sortedRack;
+    //private final List<Letter> rack;
     private static final int RACK_MAX_SIZE = 7;
 
     /**
      * Create a new rack. Maximum size of the rack is 7.
      */
     public Rack() {
-        this.rack = new ArrayList<>(RACK_MAX_SIZE);
+        //this.rack = new ArrayList<>(RACK_MAX_SIZE);
+        this.sortedRack = new TreeMap<>();
     }
 
-    public List<Letter> getContents() {
+    public SortedMap<Integer, Letter> getContents() {
+        return sortedRack;
+    }
+    
+    public List<Letter> getContentsAsList() {
+        List<Letter> rack = new ArrayList<>(RACK_MAX_SIZE);
+        for (Letter let : sortedRack.values()) {
+            rack.add(let);
+        }
         return rack;
     }
 
@@ -40,7 +51,7 @@ public class Rack {
      */
     public int getRackPoints() {
         int sum = 0;
-        for (Letter let : rack) {
+        for (Letter let : sortedRack.values()) {
             sum += let.getPoints();
         }
         return sum;
@@ -51,12 +62,16 @@ public class Rack {
      * her rack, if possible.
      *
      * @param bag the letter bag
+     * @return a list of the new letters from the LetterBag
      */
-    public void refillRack(LetterBag bag) {
-        while (bag.getSize() > 0 && rack.size() < RACK_MAX_SIZE) {
+    public List<Letter> refillRack(LetterBag bag) {
+        List<Letter> newLetters = new ArrayList<>(7);
+        while (bag.getSize() > 0 && sortedRack.size() < RACK_MAX_SIZE) {
             Letter taken = bag.takeRandomLetterFromBag();
             addLetter(taken);
+            newLetters.add(taken);
         }
+        return newLetters;
     }
 
     /**
@@ -66,10 +81,10 @@ public class Rack {
      * @return the letter taken, null if not found
      */
     public Letter takeLetter(Letter let) {
-        for (Letter l : rack) {
-            if (l == let) {
+        for (Integer i : sortedRack.keySet()) {
+            if (sortedRack.get(i) == let) {
                 Letter taken = let;
-                rack.remove(let);
+                sortedRack.remove(i);
                 return taken;
             }
         }
@@ -84,11 +99,11 @@ public class Rack {
      * @return true only if all letters can be added
      */
     public boolean addLetters(List<Letter> letters) {
-        if (rack.size() + letters.size() > 7) {
+        if (sortedRack.size() + letters.size() > 7) {
             return false;
         }
         for (Letter let : letters) {
-            rack.add(let);
+            addLetter(let);
         }
         return true;
     }
@@ -100,8 +115,15 @@ public class Rack {
      * @return true if the letter could be added to the rack
      */
     public boolean addLetter(Letter let) {
-        if (rack.size() < RACK_MAX_SIZE) {
-            return rack.add(let);
+        if (sortedRack.size() < RACK_MAX_SIZE) {
+            int i = 0;
+            while (i < RACK_MAX_SIZE) {
+                if (sortedRack.get(i) == null) {
+                    sortedRack.put(i, let);
+                    return true;
+                }
+                i++;
+            }
         }
         return false;
     }
