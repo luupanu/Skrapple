@@ -38,7 +38,7 @@ public class LetterQueue {
         n = new Neighbours(this);
     }
 
-    public List<Letter> getLetterQueue() {
+    public List<Letter> getContents() {
         return list;
     }
 
