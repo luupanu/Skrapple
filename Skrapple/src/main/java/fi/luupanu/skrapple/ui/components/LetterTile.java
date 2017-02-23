@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.ui;
+package fi.luupanu.skrapple.ui.components;
 
+import fi.luupanu.skrapple.constants.SkrappleImageIcon;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
@@ -19,14 +19,14 @@ import javax.swing.border.LineBorder;
  *
  * @author panu
  */
-public class JButtonLetter extends JButton {
+public class LetterTile extends JButton {
 
     private Coord c;
     private Letter let;
     private boolean sel;
     private final boolean isBoardLetter;
 
-    public JButtonLetter(boolean isBoardLetter) {
+    public LetterTile(boolean isBoardLetter) {
         this.isBoardLetter = isBoardLetter;
         createJButtonLetter();
     }
@@ -68,17 +68,17 @@ public class JButtonLetter extends JButton {
         paintLetter();
     }
 
-    private void paintLetter() {
+    public void paintLetter() {
         if (getLetter() != null) {
             if (sel) {
                 setBorder(new LineBorder(Color.GREEN, 3));
-                setIcon(new ImageIcon("lettertile_sel_46x46.png"));
+                setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
             } else {
                 setBorder(new LineBorder(Color.WHITE));
                 if (isBoardLetter) {
-                    setIcon(new ImageIcon("lettertile_sel_46x46.png"));
+                    setIcon(SkrappleImageIcon.LETTER_TILE_SELECTED.getIcon());
                 } else {
-                    setIcon(new ImageIcon("lettertile_46x46.png"));
+                    setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
                 }
             }
         }
@@ -90,13 +90,13 @@ public class JButtonLetter extends JButton {
             if (layout[c.getY()].charAt(c.getX()) == '.') {
                 setIcon(null);
             } else if (layout[c.getY()].charAt(c.getX()) == 'l') {
-                setIcon(new ImageIcon("bonus_letter_2_46x46.png"));
+                setIcon(SkrappleImageIcon.BONUS_LETTER_2X.getIcon());
             } else if (layout[c.getY()].charAt(c.getX()) == 'w') {
-                setIcon(new ImageIcon("bonus_word_2_46x46.png"));
+                setIcon(SkrappleImageIcon.BONUS_WORD_2X.getIcon());
             } else if (layout[c.getY()].charAt(c.getX()) == 'L') {
-                setIcon(new ImageIcon("bonus_letter_3_46x46.png"));
+                setIcon(SkrappleImageIcon.BONUS_LETTER_3X.getIcon());
             } else if (layout[c.getY()].charAt(c.getX()) == 'W') {
-                setIcon(new ImageIcon("bonus_word_3_46x46.png"));
+                setIcon(SkrappleImageIcon.BONUS_WORD_3X.getIcon());
             }
         }
     }
@@ -107,5 +107,6 @@ public class JButtonLetter extends JButton {
         setLayout(new BorderLayout());
         setHorizontalTextPosition(JButton.CENTER);
         setVerticalTextPosition(JButton.CENTER);
+        setForeground(new Color(40, 0, 0));
     }
 }
