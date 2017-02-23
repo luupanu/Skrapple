@@ -5,24 +5,43 @@
  */
 package fi.luupanu.skrapple.ui.components;
 
+import fi.luupanu.skrapple.domain.Player;
+import fi.luupanu.skrapple.logic.SkrappleGame;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
  * @author panu
  */
 public class GameOverDialog {
-    
+
+    private final JFrame frame;
+    private final SkrappleGame s;
+
     // TO-DO:
-    
-    public GameOverDialog(PlayerName playerOneName, PlayerName playerTwoName,
+    public GameOverDialog(SkrappleGame s, JFrame frame,
+            PlayerName playerOneName, PlayerName playerTwoName,
             PlayerPoints playerOnePoints, PlayerPoints playerTwoPoints) {
+        this.frame = frame;
+        this.s = s;
+        showDialog();
     }
-    
-//    public JPanel getPanel() {
-//        JOptionPane.showConfirmDialog(panel, this, "example", 
-//                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-//        return panel;
-//    }
+
+    private void showDialog() {
+        Player winner = s.declareWinner();
+        Player loser = s.getGame().getPlayerOne().equals(winner)
+                ? s.getGame().getPlayerTwo() : s.getGame().getPlayerOne();
+        String message;
+        if (winner != null) {
+            message = winner.getPlayerName() + " won with "
+                    + winner.getPlayerPoints() + " points compared to "
+                    + loser.getPlayerName() + "'s " + loser.getPlayerPoints()
+                    + ".";
+        } else {
+            message = "Game was drawn!";
+        }
+        JOptionPane.showConfirmDialog(frame, message, "Game Over :-(",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+    }
 }
