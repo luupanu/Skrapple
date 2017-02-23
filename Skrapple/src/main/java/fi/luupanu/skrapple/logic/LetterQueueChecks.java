@@ -30,7 +30,7 @@ public class LetterQueueChecks {
      */
     public LetterQueueChecks(LetterQueue queue) {
         this.q = queue;
-        this.list = queue.getLetterQueue();
+        this.list = queue.getContents();
     }
 
     /**
@@ -127,14 +127,12 @@ public class LetterQueueChecks {
     }
 
     private boolean rowOrNeighbouringRowHasLetter(int row, Board board) {
-        Square[][] b = board.getContents();
-
         for (int y = row - 1; y <= row + 1; y++) {
             for (int x = 0; x < 15; x++) {
                 if (!q.isValidCoordinate(x, y)) {
                     continue;
                 }
-                Square s = b[x][y];
+                Square s = board.getSquare(x, y);
                 if (s.hasLetter()) {
                     return true;
                 }
@@ -144,14 +142,12 @@ public class LetterQueueChecks {
     }
 
     private boolean columnOrNeighbouringColumnHasLetter(int col, Board board) {
-        Square[][] b = board.getContents();
-
         for (int y = 0; y < 15; y++) {
-            for (int x = col - 1; x < col + 1; x++) {
+            for (int x = col - 1; x <= col + 1; x++) {
                 if (!q.isValidCoordinate(x, y)) {
                     continue;
                 }
-                Square s = b[x][y];
+                Square s = board.getSquare(x, y);
                 if (s.hasLetter()) {
                     return true;
                 }
