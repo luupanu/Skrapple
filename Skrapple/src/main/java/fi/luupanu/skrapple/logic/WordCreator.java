@@ -33,9 +33,13 @@ public class WordCreator {
      */
     public WordCreator(LetterQueue queue) {
         this.q = queue;
-        this.list = queue.getLetterQueue();
+        this.list = queue.getContents();
         this.n = queue.getNeighbours();
         this.words = new ArrayList<>();
+    }
+    
+    public List<Word> getContents() {
+        return words;
     }
 
     /**
@@ -59,11 +63,11 @@ public class WordCreator {
 
     private void constructFirstWordOfTheGame(Board board) {
         if (q.getDirection()) {
-            Coord c = q.getLetterQueue().stream().findFirst().get().getCoord();
+            Coord c = q.getContents().stream().findFirst().get().getCoord();
             n.addHorizontalNeighbour(c);
             constructHorizontalWords(board);
         } else if (!q.getDirection()) {
-            Coord c = q.getLetterQueue().stream().findFirst().get().getCoord();
+            Coord c = q.getContents().stream().findFirst().get().getCoord();
             n.addVerticalNeighbour(c);
             constructVerticalWords(board);
         }
