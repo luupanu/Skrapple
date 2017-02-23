@@ -7,6 +7,7 @@ package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Word;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,14 +34,15 @@ public class WordChecker {
      * the dictionary.
      *
      * @param words a list of words to be checked
-     * @return true if all words were found in the dictionary
+     * @return a list of words not found in the dictionary (empty if found all)
      */
-    public boolean allWordsExistInDictionary(List<Word> words) {
+    public List<Word> allWordsExistInDictionary(List<Word> words) {
+        List<Word> notFound = new ArrayList<>();
         for (Word w : words) {
             if (!d.containsWord(w.toString().toLowerCase())) {
-                return false;
+                notFound.add(w);
             }
         }
-        return true;
+        return notFound;
     }
 }
