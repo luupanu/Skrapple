@@ -54,9 +54,7 @@ public class LetterBag {
         if (bag.size() > 1) {
             i = random.nextInt(bag.size());
         }
-        Letter taken = bag.get(i);
-        removeLetterByType(taken.getType());
-        return taken;
+        return bag.remove(i);
     }
 
     /**
@@ -155,7 +153,11 @@ public class LetterBag {
 
     private void createAndPlaceMultipleLettersOfTypeInBag(LetterType t, int n) {
         for (int i = 0; i < n; i++) {
-            placeLetterInBag(new Letter(t));
+            if (t == LetterType.LETTER_WILD) {
+                placeLetterInBag(new WildLetter(t));
+            } else {
+                placeLetterInBag(new Letter(t));
+            }
         }
     }
 }
