@@ -5,7 +5,7 @@
  */
 package fi.luupanu.skrapple;
 
-import fi.luupanu.skrapple.ui.Skrapple;
+import fi.luupanu.skrapple.ui.SkrappleGUI;
 import javax.swing.SwingUtilities;
 
 /**
@@ -16,6 +16,6 @@ public class Main {
 
     public static void main(String[] args) {
         
-        SwingUtilities.invokeLater(new Skrapple());
+        SwingUtilities.invokeLater(new SkrappleGUI());
     }
 }
