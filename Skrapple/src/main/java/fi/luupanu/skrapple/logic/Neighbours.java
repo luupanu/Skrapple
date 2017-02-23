@@ -52,7 +52,7 @@ public class Neighbours {
         boolean direction;
 
         int[][] neighbours = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};
-        for (Letter let : q.getLetterQueue()) {
+        for (Letter let : q.getContents()) {
             for (int[] offset : neighbours) {
                 if (offset[1] == 0) {
                     direction = true; // horizontal
