@@ -5,6 +5,8 @@
  */
 package fi.luupanu.skrapple.ui.listeners;
 
+import fi.luupanu.skrapple.constants.ErrorMessage;
+import fi.luupanu.skrapple.constants.SkrappleGameState;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.logic.actions.Resign;
 import fi.luupanu.skrapple.ui.components.ConfirmationDialog;
@@ -30,7 +32,7 @@ public class ResignActionListener extends ConfirmationDialog implements ActionLi
     private final PlayerName playerTwoName;
     private final PlayerPoints playerOnePoints;
     private final PlayerPoints playerTwoPoints;
-    
+
     public ResignActionListener(SkrappleGame s, JFrame frame, JButton resign,
             PlayerName playerOneName, PlayerName playerTwoName,
             PlayerPoints playerOnePoints, PlayerPoints playerTwoPoints) {
@@ -45,8 +47,8 @@ public class ResignActionListener extends ConfirmationDialog implements ActionLi
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == resign) {
-            int response = super.askConfirmation(frame, "Resign");            
+        if (e.getSource() == resign && s.getGame().getGameState() == SkrappleGameState.PLAYING) {
+            int response = super.askConfirmation(frame, "Resign");
             if (response == JOptionPane.YES_OPTION) {
                 resignCurrentPlayer();
             }
@@ -54,9 +56,10 @@ public class ResignActionListener extends ConfirmationDialog implements ActionLi
     }
 
     public void resignCurrentPlayer() {
-        s.doAction(new Resign(s.getGame()));
-        // end game screen
-        GameOverDialog god = new GameOverDialog(playerOneName, playerTwoName, playerOnePoints, playerTwoPoints);
-        god.getPanel();
+        if (s.doAction(new Resign(s.getGame())) != ErrorMessage.GAME_IS_OVER) {
+            // end game screen
+            GameOverDialog god = new GameOverDialog(s, frame, playerOneName,
+                    playerTwoName, playerOnePoints, playerTwoPoints);
+        }
     }
 }

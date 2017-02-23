@@ -7,6 +7,7 @@ package fi.luupanu.skrapple.ui.listeners;
 
 import fi.luupanu.skrapple.constants.Announcement;
 import fi.luupanu.skrapple.constants.ErrorMessage;
+import fi.luupanu.skrapple.constants.SkrappleGameState;
 import fi.luupanu.skrapple.domain.Word;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.logic.actions.Move;
@@ -43,6 +44,9 @@ public class MoveActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (s.getGame().getGameState() != SkrappleGameState.PLAYING) {
+            return;
+        }
         Move move = new Move(s.getGame(), announcer, gui);
         ErrorMessage errorMsg = s.doAction(move);
         if (errorMsg == ErrorMessage.NO_ERRORS) {

@@ -6,6 +6,8 @@
 package fi.luupanu.skrapple.ui.listeners;
 
 import fi.luupanu.skrapple.constants.Announcement;
+import fi.luupanu.skrapple.constants.ErrorMessage;
+import fi.luupanu.skrapple.constants.SkrappleGameState;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.logic.actions.EndTurn;
 import fi.luupanu.skrapple.ui.SkrappleGUI;
@@ -31,8 +33,8 @@ public class EndTurnActionListener extends ConfirmationDialog implements ActionL
     private final JButton moveButton;
     private final JButton exchangeButton;
 
-    public EndTurnActionListener(Announcer a, SkrappleGUI gui, SkrappleGame s, 
-            JFrame frame, JButton endTurnButton, JButton moveButton, 
+    public EndTurnActionListener(Announcer a, SkrappleGUI gui, SkrappleGame s,
+            JFrame frame, JButton endTurnButton, JButton moveButton,
             JButton exchangeButton) {
         this.announcer = a;
         this.gui = gui;
@@ -45,7 +47,7 @@ public class EndTurnActionListener extends ConfirmationDialog implements ActionL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == endTurnButton) {
+        if (e.getSource() == endTurnButton && s.getGame().getGameState() == SkrappleGameState.PLAYING) {
             int response = super.askConfirmation(frame, "End turn");
             if (response == JOptionPane.YES_OPTION) {
                 endTurn();
@@ -54,13 +56,14 @@ public class EndTurnActionListener extends ConfirmationDialog implements ActionL
     }
 
     private void endTurn() {
-        s.doAction(new EndTurn(s.getGame()));
-        gui.updatePlayerNames();
-        gui.updatePlayerRack();
-        gui.update(announcer.announce(Announcement.TURN_START_MESSAGE));
-        gui.updateRemoveAddedLettersMessage();
-        gui.updateSetLetterTilesEnabled(true);
-        moveButton.setEnabled(true);
-        exchangeButton.setEnabled(true);
+        if (s.doAction(new EndTurn(s.getGame())) != ErrorMessage.GAME_IS_OVER) {
+            gui.updatePlayerNames();
+            gui.updatePlayerRack();
+            gui.update(announcer.announce(Announcement.TURN_START_MESSAGE));
+            gui.updateRemoveAddedLettersMessage();
+            gui.updateSetLetterTilesEnabled(true);
+            moveButton.setEnabled(true);
+            exchangeButton.setEnabled(true);
+        }
     }
 }
