@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic.actions;
 
+import fi.luupanu.skrapple.constants.ErrorMessage;
 import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Letter;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author panu
  */
-public class ExchangeLetters extends Action {
+public class ExchangeLetters extends GameAction {
 
     private final List<Letter> letters;
 
@@ -23,7 +24,7 @@ public class ExchangeLetters extends Action {
      * Creates a new action ExchangeLetters.
      *
      * @param game the game being played
-     * @param letters the (rack's) indexes of the letters to be exchanged
+     * @param letters the letters to be exchanged
      */
     public ExchangeLetters(Game game, List<Letter> letters) {
         super(game);
@@ -36,17 +37,23 @@ public class ExchangeLetters extends Action {
      * letters back to the letter bag.
      *
      * @param game the game that is being played
+     * @return always true
      */
     @Override
-    public void perform(Game game) {
-        List<Letter> letters = new ArrayList<>(7);
-        for (Letter let : letters) {
-            letters.add(game.getCurrentPlayer().getPlayerRack().takeLetter(let));
+    public ErrorMessage perform(Game game) {
+        if (letters.size() > game.getLetterBag().getSize()) {
+            return ErrorMessage.LETTERS_NOT_EXCHANGED;
         }
-        game.getCurrentPlayer().getPlayerRack().refillRack(game.getLetterBag());
+        
+        List<Letter> aside = new ArrayList<>();
         for (Letter let : letters) {
+            aside.add(game.getCurrentPlayer().getPlayerRack().takeLetter(let));
+        }    
+        game.getCurrentPlayer().getPlayerRack().refillRack(game.getLetterBag());
+        for (Letter let : aside) {
             game.getLetterBag().placeLetterInBag(let);
         }
+        return ErrorMessage.NO_ERRORS;
     }
 
 }
