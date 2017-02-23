@@ -5,8 +5,9 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.ErrorMessage;
 import fi.luupanu.skrapple.constants.SkrappleGameState;
-import fi.luupanu.skrapple.logic.actions.Action;
+import fi.luupanu.skrapple.logic.actions.GameAction;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Player;
@@ -44,12 +45,13 @@ public class SkrappleGame {
      * Performs an action if the game is still going on.
      *
      * @param action the action to be performed
+     * @return true if the action succeeded
      */
-    public void doAction(Action action) {
-        if (game.getGameState() != SkrappleGameState.PLAYING) {
-            action.perform(game);
-            game.switchTurn();
+    public ErrorMessage doAction(GameAction action) {
+        if (game.getGameState() == SkrappleGameState.PLAYING) {
+            return action.perform(game);
         }
+        return ErrorMessage.GAME_IS_OVER;
     }
 
     /**

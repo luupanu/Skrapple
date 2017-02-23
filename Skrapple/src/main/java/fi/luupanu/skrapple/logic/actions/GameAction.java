@@ -5,18 +5,21 @@
  */
 package fi.luupanu.skrapple.logic.actions;
 
+import fi.luupanu.skrapple.constants.ErrorMessage;
 import fi.luupanu.skrapple.domain.Game;
 
 /**
- * The abstract class Action. A player can make one of four different actions
+ * The abstract class GameAction. A player can make one of four different actions
  * during a turn:
  *
- * - make a Move (place words on the board) - x points - exchange letters - 0
- * points - skip the turn - 0 points - resign
+ * - make a Move (place words on the board) - x points
+ * - exchange letters - 0 points
+ * - end the turn - 0-* points
+ * - resign
  *
  * @author panu
  */
-public abstract class Action {
+public abstract class GameAction {
 
     private final Game game;
 
@@ -25,7 +28,7 @@ public abstract class Action {
      *
      * @param game the game that is being played
      */
-    public Action(Game game) {
+    public GameAction(Game game) {
         this.game = game;
     }
 
@@ -33,6 +36,7 @@ public abstract class Action {
      * Perform an abstract action.
      *
      * @param game the game that is being played
+     * @return true if the action was successful
      */
-    public abstract void perform(Game game);
+    public abstract ErrorMessage perform(Game game);
 }
