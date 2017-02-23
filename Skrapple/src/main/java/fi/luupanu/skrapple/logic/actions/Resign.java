@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic.actions;
 
+import fi.luupanu.skrapple.constants.ErrorMessage;
 import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.constants.SkrappleGameState;
 
@@ -13,7 +14,7 @@ import fi.luupanu.skrapple.constants.SkrappleGameState;
  *
  * @author panu
  */
-public class Resign extends Action {
+public class Resign extends GameAction {
 
     /**
      * Creates a new action Resign.
@@ -28,13 +29,15 @@ public class Resign extends Action {
      * Checks which player's turn it is, and changes the game state accordingly.
      *
      * @param game the game being played
+     * @return true
      */
     @Override
-    public void perform(Game game) {
+    public ErrorMessage perform(Game game) {
         if (game.getTurn()) {
             game.setGameState(SkrappleGameState.PLAYER_1_RESIGNED);
         } else {
             game.setGameState(SkrappleGameState.PLAYER_2_RESIGNED);
         }
+        return ErrorMessage.NO_ERRORS;
     }
 }
