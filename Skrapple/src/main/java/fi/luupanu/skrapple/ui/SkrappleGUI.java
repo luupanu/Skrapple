@@ -19,6 +19,7 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
+import fi.luupanu.skrapple.ui.components.GUIRack;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -143,7 +144,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         makeBoard(board);
 
         // create rack
-        JPanel rack = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        GUIRack rack = new GUIRack(new FlowLayout(FlowLayout.CENTER, 10, 0));
         makeRack(rack);
 
         gbc.fill = GridBagConstraints.BOTH;
@@ -178,7 +179,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         }
     }
 
-    private void makeRack(JPanel rack) {
+    private void makeRack(GUIRack rack) {
         for (int x = 0; x < rackLetters.length; x++) {
             LetterTile b = new LetterTile(false);
             b.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
@@ -241,11 +242,11 @@ public class SkrappleGUI implements Runnable, Updateable {
         playerTwoName.setFont(normal);
 
         // create player one points
-        playerOnePoints = new PlayerPoints(s, s.getGame().getPlayerOne());
+        playerOnePoints = new PlayerPoints(s, s.getGame().getPlayerOne(), normal);
         playerOnePoints.setHorizontalAlignment(SwingConstants.LEFT);
 
         // create player two points
-        playerTwoPoints = new PlayerPoints(s, s.getGame().getPlayerTwo());
+        playerTwoPoints = new PlayerPoints(s, s.getGame().getPlayerTwo(), normal);
         playerTwoPoints.setHorizontalAlignment(SwingConstants.RIGHT);
 
         // add player one name
