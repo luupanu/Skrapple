@@ -57,11 +57,14 @@ public class EndTurnActionListener extends ConfirmationDialog implements ActionL
 
     private void endTurn() {
         if (s.doAction(new EndTurn(s.getGame())) != ErrorMessage.GAME_IS_OVER) {
-            gui.updatePlayerNames();
+            gui.updatePlayerInfo();
+            gui.updatePlayerPoints();
             gui.updatePlayerRack();
             gui.update(announcer.announce(Announcement.TURN_START_MESSAGE));
-            gui.updateRemoveAddedLettersMessage();
-            gui.updateSetLetterTilesEnabled(true);
+            gui.removeAddedLettersMessage();
+            gui.setLetterTilesEnabled(true);
+            gui.updateHangingLetterTiles();
+            gui.setUndoQueueButtonVisible(false);
             moveButton.setEnabled(true);
             exchangeButton.setEnabled(true);
         }

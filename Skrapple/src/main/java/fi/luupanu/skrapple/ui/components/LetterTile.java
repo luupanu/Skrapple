@@ -10,8 +10,10 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 /**
@@ -21,9 +23,12 @@ import javax.swing.border.LineBorder;
  */
 public class LetterTile extends JButton {
 
+    private final Border greenThickBorder = new LineBorder(Color.GREEN, 3);
+    private final Border whiteBorder = new LineBorder(Color.WHITE);
+    
     private Coord c;
-    private Letter let;
-    private boolean sel;
+    private Letter letter;
+    private boolean selected;
     private final boolean isBoardLetter;
 
     public LetterTile(boolean isBoardLetter) {
@@ -38,17 +43,17 @@ public class LetterTile extends JButton {
      * @param let the letter to be set
      */
     public void setLetter(Letter let) {
-        this.let = let;
+        this.letter = let;
         if (let != null) {
             this.setText(let.toString() + " " + let.getPointsAsUnicodeSubScript());
         } else {
             this.setText("");
         }
-        paintLetter();
+        paintLetterSelected();
     }
 
     public Letter getLetter() {
-        return let;
+        return letter;
     }
 
     public boolean getIsBoardLetter() {
@@ -63,18 +68,18 @@ public class LetterTile extends JButton {
         this.c = c;
     }
 
-    public void setSel(boolean b) {
-        sel = b;
-        paintLetter();
+    public void setSelectedVisualEffect(boolean b) {
+        selected = b;
+        paintLetterSelected();
     }
 
-    public void paintLetter() {
+    public void paintLetterSelected() {
         if (getLetter() != null) {
-            if (sel) {
-                setBorder(new LineBorder(Color.GREEN, 3));
+            if (selected) {
+                setBorder(greenThickBorder);
                 setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
             } else {
-                setBorder(new LineBorder(Color.WHITE));
+                setBorder(whiteBorder);
                 if (isBoardLetter) {
                     setIcon(SkrappleImageIcon.LETTER_TILE_SELECTED.getIcon());
                 } else {

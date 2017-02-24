@@ -29,11 +29,6 @@ public class PlayerPoints extends JLabel {
     }
 
     public void updatePlayerPoints() {
-        if (s.getGame().getCurrentPlayer() == owner) {
-            setFont(bolded);
-        } else {
-            setFont(normal);
-        }
-        this.setText(Integer.toString(owner.getPlayerPoints()) + " points");
+        setText(Integer.toString(owner.getPlayerPoints()) + " points");
     }
 }

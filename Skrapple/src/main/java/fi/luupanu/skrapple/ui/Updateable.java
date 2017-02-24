@@ -6,10 +6,16 @@
 package fi.luupanu.skrapple.ui;
 
 /**
+ * An interface to handle updating.
  *
  * @author panu
  */
 public interface Updateable {
 
+    /**
+     * Update with a message string.
+     *
+     * @param message a message string
+     */
     void update(String message);
 }

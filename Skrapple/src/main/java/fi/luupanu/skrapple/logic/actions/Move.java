@@ -55,6 +55,7 @@ public class Move extends GameAction {
             return ErrorMessage.LETTERQUEUE_IS_EMPTY;
         }
         if (!letterQueueIsValid(game)) {
+            clearNeighbours(game);
             return ErrorMessage.LETTERQUEUE_IS_NOT_VALID;
         }
         // generate words
@@ -64,8 +65,9 @@ public class Move extends GameAction {
         if (!notFound.isEmpty()) {
             ErrorMessage e = ErrorMessage.WORD_IS_NOT_VALID;
             Word w = notFound.stream().findAny().get();
-            e.setWord(w);
+            e.setMessage(w);
             clearWordCreator(game);
+            clearNeighbours(game);
             return e;
         }
         // all good

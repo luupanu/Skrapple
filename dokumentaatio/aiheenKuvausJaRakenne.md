@@ -46,4 +46,4 @@ Kahden pelaajan suomenkielinen [Scrabble](https://fi.wikipedia.org/wiki/Scrabble
   
 **Luokkakaavio:**
   
-  ![Luokkakaavio](https://yuml.me/7373003a)
+  ![Luokkakaavio](https://yuml.me/09e96321)

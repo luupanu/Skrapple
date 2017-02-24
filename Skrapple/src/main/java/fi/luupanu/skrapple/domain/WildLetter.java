@@ -8,6 +8,8 @@ package fi.luupanu.skrapple.domain;
 import fi.luupanu.skrapple.constants.LetterType;
 
 /**
+ * Wild letters are letters that any letter type can be assigned to but they
+ * always score 0 points.
  *
  * @author panu
  */
@@ -15,6 +17,11 @@ public class WildLetter extends Letter {
 
     private LetterType wildLetterType;
 
+    /**
+     * Creates a new WildLetter.
+     *
+     * @param type LetterType.WILD
+     */
     public WildLetter(LetterType type) {
         super(type);
     }
@@ -26,7 +33,7 @@ public class WildLetter extends Letter {
     public void setWildLetterType(LetterType wildLetterType) {
         this.wildLetterType = wildLetterType;
     }
-    
+
     @Override
     public String toString() {
         if (wildLetterType != null) {

@@ -51,9 +51,9 @@ public class MoveActionListener implements ActionListener {
         ErrorMessage errorMsg = s.doAction(move);
         if (errorMsg == ErrorMessage.NO_ERRORS) {
             gui.updateBoardLettersColour();
-            gui.updatePlayerPoints();
             gui.updatePlayerRack();
-            gui.updateSetLetterTilesEnabled(false);
+            gui.setLetterTilesEnabled(false);
+            gui.setUndoQueueButtonVisible(false);
             moveButton.setEnabled(false);
             exchangeButton.setEnabled(false);
         } else if (errorMsg == ErrorMessage.LETTERQUEUE_IS_EMPTY) {
@@ -63,7 +63,7 @@ public class MoveActionListener implements ActionListener {
             String msg = announcer.announce(Announcement.LETTERQUEUE_NOT_VALID_ERROR);
             JOptionPane.showMessageDialog(frame, msg);
         } else if (errorMsg == ErrorMessage.WORD_IS_NOT_VALID) {
-            Word word = errorMsg.getWord();
+            Word word = errorMsg.getMessage();
             String msg = announcer.announce(Announcement.WORD_NOT_VALID_ERROR, word);
             JOptionPane.showMessageDialog(frame, msg);
         }

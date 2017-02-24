@@ -16,6 +16,7 @@ import fi.luupanu.skrapple.constants.SquareType;
  */
 public class Board {
 
+    private static final int BOARD_MAX_SIZE = 15;
     private final String[] layout = {
         "W..l...W...l..W",
         ".w...L...L...w.",
@@ -49,6 +50,10 @@ public class Board {
     public String[] getLayout() {
         return layout;
     }
+    
+    public int getBoardSize() {
+        return BOARD_MAX_SIZE;
+    }
 
     /**
      * Returns a square based on coordinates if they are valid.
@@ -58,7 +63,7 @@ public class Board {
      * @return the Square in the coordinates
      */
     public Square getSquare(int x, int y) {
-        if (x >= 0 && x < 15 && y >= 0 && y < 15) {
+        if (x >= 0 && x < BOARD_MAX_SIZE && y >= 0 && y < BOARD_MAX_SIZE) {
             return board[y][x];
         }
         return null;
@@ -81,7 +86,7 @@ public class Board {
     }
 
     private void createDefaultBoard() {
-        board = new Square[15][15];
+        board = new Square[BOARD_MAX_SIZE][BOARD_MAX_SIZE];
         for (int y = 0; y < board.length; y++) {
             String row = layout[y];
             for (int x = 0; x < board[y].length; x++) {

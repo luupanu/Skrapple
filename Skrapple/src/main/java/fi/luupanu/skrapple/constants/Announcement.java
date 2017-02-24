@@ -6,6 +6,8 @@
 package fi.luupanu.skrapple.constants;
 
 /**
+ * Announcements are generic strings with replaceable elements that are used to
+ * announce game events to the player.
  *
  * @author panu
  */
@@ -19,12 +21,16 @@ public enum Announcement implements Message {
     BONUS_SCORE_MESSAGE("You used all seven letter tiles! 50 bonus points scored."),
     REFILL_RACK_MESSAGE("Added new letters <LETTERS> to the rack.");
 
-    private final String message;
+    private String message;
 
     private Announcement(String message) {
+        setMessage(message);
+    }
+
+    private void setMessage(String message) {
         this.message = message;
     }
-    
+
     @Override
     public String getMessage() {
         return message;

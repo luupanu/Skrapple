@@ -33,13 +33,22 @@ public class Rack {
     public SortedMap<Integer, Letter> getContents() {
         return sortedRack;
     }
-    
+
+    /**
+     * Get contents of the rack as a list.
+     *
+     * @return a list of letters in the rack
+     */
     public List<Letter> getContentsAsList() {
         List<Letter> rack = new ArrayList<>(RACK_MAX_SIZE);
         for (Letter let : sortedRack.values()) {
             rack.add(let);
         }
         return rack;
+    }
+
+    public int getRackSize() {
+        return RACK_MAX_SIZE;
     }
 
     /**

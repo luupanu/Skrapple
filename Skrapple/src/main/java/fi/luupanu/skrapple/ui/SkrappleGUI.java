@@ -20,8 +20,11 @@ import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.ui.components.RackPanel;
+import fi.luupanu.skrapple.ui.listeners.UndoLetterQueueActionListener;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -32,17 +35,18 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultCaret;
 
 /**
  * A giant mess of a graphical UI.
@@ -51,31 +55,43 @@ import javax.swing.border.TitledBorder;
  */
 public class SkrappleGUI implements Runnable, Updateable {
 
-    private Font normal;
-    private Font bolded;
+    private final int BOARD_MAX_SIZE;
+    private final int RACK_MAX_SIZE;
 
-    private Announcer announcer;
-    private LetterTileActionListener cal;
+    private final Font normal;
+    private final Font bolded;
+
+    private final Announcer announcer;
+    private LetterTileActionListener letterListener;
     private JFrame frame;
     private JButton moveButton;
     private JButton endTurnButton;
     private JButton exchangeButton;
     private JButton resignButton;
     private JButton undoQueueButton;
-    private LetterTile[][] boardSquares;
-    private LetterTile[] rackLetters;
+    private JPanel undoQueuePanel;
+    private CardLayout cards;
+    private final LetterTile[][] boardSquares;
+    private final LetterTile[] rackLetters;
     private JTextArea infoField;
+    private JPanel playerOne;
+    private JPanel playerTwo;
     private PlayerName playerOneName;
     private PlayerName playerTwoName;
     private PlayerPoints playerOnePoints;
     private PlayerPoints playerTwoPoints;
     private SkrappleGame s;
+    private RackPanel rackPanel;
 
-    public SkrappleGUI() {
-        s = new SkrappleGame(new Player("Jussi Pattitussi"), new Player("Kikka Korea"), new Dictionary("kotus-wordlist-fi"));
-        boardSquares = new LetterTile[15][15];
-        rackLetters = new LetterTile[7];
-        normal = new Font("Lucida Grande", Font.PLAIN, 13);
+    public SkrappleGUI(SkrappleGame s) {
+        this.s = s;
+
+        BOARD_MAX_SIZE = s.getGame().getBoard().getBoardSize();
+        RACK_MAX_SIZE = s.getGame().getCurrentPlayer().getPlayerRack().getRackSize();
+
+        boardSquares = new LetterTile[BOARD_MAX_SIZE][BOARD_MAX_SIZE];
+        rackLetters = new LetterTile[RACK_MAX_SIZE];
+        normal = new Font("Lucida Grande", Font.PLAIN, 14);
         bolded = new Font(normal.getName(), Font.BOLD, normal.getSize());
         announcer = new Announcer(s);
         UIManager.put("Button.disabledText", new Color(130, 0, 0));
@@ -84,7 +100,7 @@ public class SkrappleGUI implements Runnable, Updateable {
     @Override
     public void run() {
         frame = new JFrame("Skrapple");
-        frame.setPreferredSize(new Dimension(1024, 768));
+        //frame.setPreferredSize(new Dimension(1008, 826));
         frame.setMinimumSize(new Dimension(800, 600));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,9 +112,9 @@ public class SkrappleGUI implements Runnable, Updateable {
     }
 
     private void addComponents(Container contentPane) {
-        // create ActionListener
-        cal = new LetterTileActionListener(s, frame, boardSquares, rackLetters,
-                moveButton, endTurnButton, exchangeButton, resignButton);
+        // create LetterTileActionListener
+        letterListener = new LetterTileActionListener(this, s, frame,
+                boardSquares, rackLetters, undoQueueButton);
 
         // set layout
         GridBagLayout layout = new GridBagLayout();
@@ -110,26 +126,21 @@ public class SkrappleGUI implements Runnable, Updateable {
         makeSidePanel(sidePanel);
 
         // create right-side panel with the board and the rack
-        JLayeredPane boardPanel = new JLayeredPane();
+        JPanel boardPanel = new JPanel();
         makeBoardPanel(boardPanel);
 
         // add left-side panel
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weighty = 1;
-        gbc.weightx = 0.15;
+        gbc.weightx = 0.5;
         frame.add(sidePanel, gbc);
 
         // add right-side panel
         gbc.gridx = 1;
-        gbc.weightx = 0.85;
         frame.add(boardPanel, gbc);
     }
 
-    private void makeBoardPanel(JLayeredPane boardPanel) {
-        /*board.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createRaisedBevelBorder(),
-                BorderFactory.createLoweredBevelBorder()));*/
-
+    private void makeBoardPanel(JPanel boardPanel) {
         // set layout
         GridBagLayout layout = new GridBagLayout();
         GridBagConstraints gbc = new GridBagConstraints();
@@ -140,12 +151,15 @@ public class SkrappleGUI implements Runnable, Updateable {
                 BevelBorder.LOWERED, Color.LIGHT_GRAY, Color.DARK_GRAY));
 
         // create board
-        JPanel board = new JPanel(new GridLayout(0, 15));
+        JPanel board = new JPanel(new GridLayout(0, BOARD_MAX_SIZE));
         makeBoard(board);
 
         // create rack
-        RackPanel rack = new RackPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        makeRack(rack);
+        rackPanel = new RackPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        makeRack(rackPanel);
+
+        // create undo queue button & panel
+        makeUndoQueuePanel(rackPanel);
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1;
@@ -154,7 +168,7 @@ public class SkrappleGUI implements Runnable, Updateable {
 
         gbc.gridy = 1;
         gbc.weighty = 0.0625;
-        boardPanel.add(rack, gbc);
+        boardPanel.add(rackPanel, gbc);
     }
 
     private void makeBoard(JPanel board) {
@@ -171,7 +185,7 @@ public class SkrappleGUI implements Runnable, Updateable {
 
                 b.paintBoardIcon(layout);
 
-                b.addActionListener(cal);
+                b.addActionListener(letterListener);
 
                 boardSquares[x][y] = b;
                 board.add(boardSquares[x][y]);
@@ -179,20 +193,58 @@ public class SkrappleGUI implements Runnable, Updateable {
         }
     }
 
-    private void makeRack(RackPanel rack) {
+    private void makeRack(RackPanel rackPanel) {
+        // add invisible area to balance Undo Move button
+        rackPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         for (int x = 0; x < rackLetters.length; x++) {
             LetterTile b = new LetterTile(false);
             b.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
+            //b.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-            b.addActionListener(cal);
+            b.addActionListener(letterListener);
 
             rackLetters[x] = b;
-            rack.add(rackLetters[x]);
+            rackPanel.add(rackLetters[x]);
         }
-        undoQueueButton = new JButton("Undo");
-        undoQueueButton.setVisible(false);
-        rack.add(undoQueueButton);
-        rack.add(Box.createVerticalStrut(80));
+        rackPanel.add(Box.createRigidArea(new Dimension(0, 78)));
+    }
+
+    private void makeUndoQueuePanel(RackPanel rackPanel) {
+        // set layout
+        undoQueuePanel = new JPanel();
+        cards = new CardLayout();
+        undoQueuePanel.setLayout(cards);
+
+        // set transparent background
+        undoQueuePanel.setBackground(new Color(255, 255, 255, 0));
+
+        // add undo queue button
+        undoQueueButton = new JButton("Undo move");
+        undoQueueButton.setFocusable(false);
+        undoQueueButton.addActionListener(new UndoLetterQueueActionListener(s,
+                this, rackPanel, undoQueueButton));
+
+        /*  an empty panel and CardLayout are used instead of setVisible to keep
+            the layout from jumping around when the button visibility is being 
+            toggled */
+        JPanel invisible = new JPanel();
+
+        // set transparent background
+        invisible.setBackground(new Color(255, 255, 255, 0));
+
+        // add visible & invisible states to the CardLayout
+        cards.addLayoutComponent(undoQueueButton, "visible");
+        cards.addLayoutComponent(invisible, "invisible");
+
+        // add components to the panel
+        undoQueuePanel.add(undoQueueButton);
+        undoQueuePanel.add(invisible);
+
+        // start as invisible
+        cards.show(undoQueuePanel, "invisible");
+
+        // add to rackPanel
+        rackPanel.add(undoQueuePanel);
     }
 
     private void makeSidePanel(JPanel sidePanel) {
@@ -209,11 +261,11 @@ public class SkrappleGUI implements Runnable, Updateable {
 
         // create top-left player infobox
         JPanel sidePanelPlayers = new JPanel();
-        makePlayerInfo(sidePanelPlayers);
+        makePlayerInfoPanel(sidePanelPlayers);
 
         // create center-left move history infobox
-        JPanel sidePanelMoves = new JPanel(new BorderLayout());
-        makeInfoBox(sidePanelMoves);
+        JPanel sidePanelInfoBox = new JPanel(new BorderLayout());
+        makeInfoBox(sidePanelInfoBox);
 
         // create bottom-left buttons
         JPanel sidePanelButtons = new JPanel();
@@ -221,74 +273,93 @@ public class SkrappleGUI implements Runnable, Updateable {
 
         // add all to side panel
         sidePanel.add(sidePanelPlayers);
-        sidePanel.add(sidePanelMoves);
+        sidePanel.add(sidePanelInfoBox);
         sidePanel.add(sidePanelButtons);
     }
 
-    private void makePlayerInfo(JPanel sidePanelPlayerInfo) {
+    private void makePlayerInfoPanel(JPanel sidePanelPlayers) {
         // set layout
-        GridBagLayout layout = new GridBagLayout();
+        GridLayout layout = new GridLayout(2, 2);
         GridBagConstraints gbc = new GridBagConstraints();
-        sidePanelPlayerInfo.setLayout(layout);
+        sidePanelPlayers.setLayout(layout);
 
         // create player one name
         playerOneName = new PlayerName(s, s.getGame().getPlayerOne(), normal);
-        playerOneName.setHorizontalAlignment(SwingConstants.RIGHT);
-        playerOneName.setFont(bolded);
-
-        // create player two name
-        playerTwoName = new PlayerName(s, s.getGame().getPlayerTwo(), normal);
-        playerTwoName.setHorizontalAlignment(SwingConstants.LEFT);
-        playerTwoName.setFont(normal);
+        playerOneName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // create player one points
         playerOnePoints = new PlayerPoints(s, s.getGame().getPlayerOne(), normal);
-        playerOnePoints.setHorizontalAlignment(SwingConstants.LEFT);
+        playerOnePoints.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        playerOne = new JPanel();
+        playerOne.setLayout(new BoxLayout(playerOne, BoxLayout.PAGE_AXIS));
+        playerOne.setBorder(BorderFactory.createEtchedBorder());
+        playerOne.add(playerOneName);
+        playerOne.add(Box.createRigidArea(new Dimension(0, 20)));
+        playerOne.add(playerOnePoints);
+
+        // create player two name
+        playerTwoName = new PlayerName(s, s.getGame().getPlayerTwo(), normal);
+        playerTwoName.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // create player two points
         playerTwoPoints = new PlayerPoints(s, s.getGame().getPlayerTwo(), normal);
-        playerTwoPoints.setHorizontalAlignment(SwingConstants.RIGHT);
+        playerTwoPoints.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        playerTwo = new JPanel();
+        playerTwo.setLayout(new BoxLayout(playerTwo, BoxLayout.PAGE_AXIS));
+        playerTwo.setBorder(BorderFactory.createEtchedBorder());
+        playerTwo.add(playerTwoName);
+        playerTwo.add(Box.createRigidArea(new Dimension(0, 20)));
+        playerTwo.add(playerTwoPoints);
 
         // add player one name
-        gbc.weighty = 0.2;
-        gbc.insets = new Insets(0, 5, 0, 5);
-        sidePanelPlayerInfo.add(playerOneName, gbc);
+        gbc.weightx = 0.5;
+        gbc.gridx = 0;
+        gbc.insets = new Insets(0, 10, 0, 10);
+        sidePanelPlayers.add(playerOne);
 
         // add player two name
         gbc.gridx = 1;
-        sidePanelPlayerInfo.add(playerTwoName, gbc);
-
+        sidePanelPlayers.add(playerTwo);
+        sidePanelPlayers.add(new JPanel());
+        sidePanelPlayers.add(new JPanel());
+/*
         // add player one points
         gbc.weighty = 0.8;
         gbc.fill = GridBagConstraints.NONE;
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.gridy = 1;
-        sidePanelPlayerInfo.add(playerOnePoints, gbc);
 
         // add player two points
         gbc.gridx = 1;
-        sidePanelPlayerInfo.add(playerTwoPoints, gbc);
+        sidePanelPlayerInfo.add(playerTwoPoints, gbc);*/
     }
 
-    private void makeInfoBox(JPanel sidePanelInfo) {
+    private void makeInfoBox(JPanel sidePanelInfoBox) {
         // set background & border
-        sidePanelInfo.setBackground(Color.LIGHT_GRAY);
-        sidePanelInfo.setBorder(BorderFactory.createLoweredBevelBorder());
+        sidePanelInfoBox.setBackground(Color.LIGHT_GRAY);
+        sidePanelInfoBox.setBorder(BorderFactory.createLoweredBevelBorder());
 
         // create info field text area
-        infoField = new JTextArea();
-        infoField.setEnabled(false);
+        infoField = new JTextArea(10, 18);
+        infoField.setEditable(false);
         infoField.setLineWrap(true);
         infoField.setWrapStyleWord(true);
+        infoField.setFont(normal);
 
         // create vertical scrollpane
         JScrollPane sp = new JScrollPane(infoField,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        // auto-scroll to bottom
+        DefaultCaret caret = (DefaultCaret) infoField.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+
         // add text area with scrollpane
-        sidePanelInfo.add(sp);
+        sidePanelInfoBox.add(sp);
     }
 
     private void makeSidePanelButtons(JPanel sidePanelButtons) {
@@ -307,9 +378,9 @@ public class SkrappleGUI implements Runnable, Updateable {
                 moveButton, exchangeButton));
         endTurnButton.addActionListener(new EndTurnActionListener(announcer, this, s,
                 frame, endTurnButton, moveButton, exchangeButton));
-        exchangeButton.addActionListener(cal);
+        exchangeButton.addActionListener(letterListener);
         resignButton.addActionListener(new ResignActionListener(s, frame, resignButton,
-        playerOneName, playerTwoName, playerOnePoints, playerTwoPoints));
+                playerOneName, playerTwoName, playerOnePoints, playerTwoPoints));
 
         // add buttons
         sidePanelButtons.add(moveButton);
@@ -333,7 +404,17 @@ public class SkrappleGUI implements Runnable, Updateable {
         infoField.append(message);
     }
 
-    public void updateSetLetterTilesEnabled(boolean bool) {
+    public void updateHangingLetterTiles() {
+        for (LetterTile[] tiles : boardSquares) {
+            for (LetterTile tile : tiles) {
+                if (tile.getIcon() == SkrappleImageIcon.LETTER_TILE_SELECTED.getIcon()) {
+                    tile.paintBoardIcon(s.getGame().getBoard().getLayout());
+                }
+            }
+        }
+    }
+
+    public void setLetterTilesEnabled(boolean bool) {
         for (LetterTile jbl : rackLetters) {
             jbl.setDisabledIcon(jbl.getIcon());
             jbl.setEnabled(bool);
@@ -346,9 +427,26 @@ public class SkrappleGUI implements Runnable, Updateable {
         }
     }
 
-    public void updatePlayerNames() {
-        playerOneName.updatePlayerName();
-        playerTwoName.updatePlayerName();
+    public void updatePlayerInfo() {
+        if (s.getGame().getTurn()) {
+            for (Component c : playerOne.getComponents()) {
+                c.setFont(bolded);
+            }
+            for (Component c : playerTwo.getComponents()) {
+                c.setFont(normal);
+            }
+            playerOne.setBorder(BorderFactory.createEtchedBorder());
+            playerTwo.setBorder(null);
+        } else {
+            for (Component c : playerOne.getComponents()) {
+                c.setFont(normal);
+            }
+            for (Component c : playerTwo.getComponents()) {
+                c.setFont(bolded);
+            }
+            playerOne.setBorder(null);
+            playerTwo.setBorder(BorderFactory.createEtchedBorder());
+        }
     }
 
     public void updatePlayerPoints() {
@@ -363,14 +461,33 @@ public class SkrappleGUI implements Runnable, Updateable {
         }
     }
 
-    public void updateRemoveAddedLettersMessage() {
+    public void removeAddedLettersMessage() {
         infoField.setText(infoField.getText().replaceAll(".*Added new letters .* to the rack.", ""));
     }
-    
+
+    public void setUndoQueueButtonVisible(boolean bool) {
+        String visibility = "visible";
+        if (!bool) {
+            visibility = "invisible";
+        }
+        cards.show(undoQueuePanel, visibility);
+        rackPanel.repaint(); // fix a bug where undoQueuePanel background doesn't keep its transparency
+    }
+
     private void initializeGameGUI() {
         update(announcer.announce(Announcement.WELCOME_MESSAGE));
         update(announcer.announce(Announcement.TURN_START_MESSAGE));
+        updatePlayerInfo();
         updatePlayerPoints();
         updatePlayerRack();
+    }
+
+    public static void main(String[] args) {
+        Player p1 = new Player("name");
+        Player p2 = new Player("name2");
+        Dictionary d = new Dictionary("kotus-wordlist-fi");
+        SkrappleGame s = new SkrappleGame(p1, p2, d);
+
+        SwingUtilities.invokeLater(new SkrappleGUI(s));
     }
 }

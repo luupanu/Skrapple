@@ -8,6 +8,8 @@ package fi.luupanu.skrapple.constants;
 import fi.luupanu.skrapple.domain.Word;
 
 /**
+ * Error messages are used to return feedback to the game logic of what went
+ * wrong while trying to perform an action.
  *
  * @author panu
  */
@@ -17,16 +19,12 @@ public enum ErrorMessage implements Message {
 
     private Word word;
 
-    public void setWord(Word word) {
+    public void setMessage(Word word) {
         this.word = word;
-    }
-    
-    public Word getWord() {
-        return word;
     }
 
     @Override
-    public String getMessage() {
-        return null;
+    public Word getMessage() {
+        return word;
     }
 }
