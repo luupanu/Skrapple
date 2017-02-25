@@ -43,7 +43,33 @@ Kahden pelaajan suomenkielinen [Scrabble](https://fi.wikipedia.org/wiki/Scrabble
 * all-time top 10 high-score
   * käyttäjä avaa listan parhaista pisteistä ja voi tarkastella sitä
   * päivittyy automattisesti pelin päätyttyä
+
+**Käyttöohjeet (englanniksi):**
+
+[Manual.pdf](Manual.pdf) 
+
+**Rakennekuvaus:**
+
+Kun aloitetaan uusi peli, luodaan uusi luokka SkrappleGame, jonka UI ottaa konstruktorina, ja joka toimii linkkinä UI:n ja logiikan välillä. SkrappleGame luo uuden luokan Game parametrinaan kaksi pelaajaa ja sanakirja, jota käytetään pelissä. Luokasta Game voidaan gettereillä saada kaikki pelaamiseen tarvittavat loput luokat.
+
+Käyttäjä asettaa kirjaimia pelilaudalle LetterQueuen kautta. LetterQueue on luokka, joka lisää kirjaimia omaan jonoonsa, muttei vielä pelilaudalle. Ennen jonoon laittamista LetterQueueChecks tarkistaa voiko kirjainta asettaa jonoon (sääntöjen mukaisesti sanan pitää voida koskettaa edellistä sanaa). Jonon käyttämisestä on se hyöty, että jonossa olevat kirjaimet voidaan perua ennen lopullista siirtoa, mikäli käyttäjä muuttaa mieltänsä.
+
+Kun käyttäjä haluaa tehdä siirron (Move), tarkistaa LetterQueueValidator ensin Neighboursin avulla, että kirjainjono on ehjä ja että vähintään yksi kirjain jonossa koskettaa laudalla jo valmiina ollutta kirjainlaattaa. Sitten WordCreator luo kirjaimista sanoja ja WordChecker tarkistaa sanakirjan (Dictionary) avulla että sanat ovat oikeita sanoja.
+
+Jos sanat hyväksytään, kirjaimet asetetaan pelilaudalle (Board). Sanat pisteytetään (jokainen sana pitää sisällään oman pistemääränsä) ja pisteet annetaan pelaajalle. Pelaajan kirjainteline (Rack) hakee pelaajalle uudet kirjaimet kirjainpussista (LetterBag). Pelaaja voi sitten vaihtaa vuoroa katsottuaan ensin saadut uudet kirjaimet (EndTurn).
+
+Pelin päätyttyä SkrappleGame miinustaa tarvittaessa kirjaintelineelle jääneiden kirjainten pistemäärän ja julistaa voittajan.
   
 **Luokkakaavio:**
   
-  ![Luokkakaavio](https://yuml.me/09e96321)
+![Luokkakaavio](https://yuml.me/09e96321)
+  
+**Sekvenssikaavioita:**
+  
+*Kirjaimen lisääminen jonoon*
+  
+![Lisää kirjain jonoon](https://i.imgur.com/emLTbv5.png)
+  
+*Kokonaisen siirron tekeminen*
+  
+![Tee siirto](https://i.imgur.com/w59Llzj.png)

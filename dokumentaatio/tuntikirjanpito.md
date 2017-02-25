@@ -15,3 +15,6 @@ Päivä | Tunnit | Kuvaus
 15.02.2017 | 4h | UI:n jatkamista
 17.02.2017 | 2h | JavaDocien lisäämistä
 21.02.2017 | 9h | UI: Rackin ja Boardin välinen yhteys tehty, oma ActionListener
+22.02.2017 | 8h | UI:n tekoa, ActionListenereiden tekoa
+23.02.2017 | 8h | Peliruutu (UI) valmis, toimiva demo
+24.02.2017 | 8h | Refaktorointia, kaavioita, UI:n parantelua, lisänappi Undo Move
