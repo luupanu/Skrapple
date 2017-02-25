@@ -10,6 +10,6 @@ Kahden pelaajan suomenkielinen [Scrabble](https://fi.wikipedia.org/wiki/Scrabble
 
 [Käyttöohjeet (englanniksi)](dokumentaatio/Manual.pdf)  
 
-[pit-raportti](https://htmlpreview.github.io/?https://github.com/luupanu/Skrapple/blob/master/dokumentaatio/pit-reports/201702172346/index.html)
+[pit-raportti](https://htmlpreview.github.io/?https://github.com/luupanu/Skrapple/blob/master/dokumentaatio/pit-reports/201702250400/index.html)
 
 [CheckStyle-raportti](https://htmlpreview.github.io/?https://github.com/luupanu/Skrapple/blob/master/dokumentaatio/checkstyle/checkstyle.html)
