@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 31,
+      <title>File: 50,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -60,35 +60,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.Resign.java">fi/luupanu/skrapple/logic/actions/Resign.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.SkrappleGameState.java">fi/luupanu/skrapple/constants/SkrappleGameState.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Board.java">fi/luupanu/skrapple/domain/Board.java</a>
                 </td>
                 <td>
                   0
@@ -130,21 +102,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.Action.java">fi/luupanu/skrapple/logic/actions/Action.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.ActionListener.java">fi/luupanu/skrapple/ui/ActionListener.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.WildLetterTypeDialog.java">fi/luupanu/skrapple/ui/components/WildLetterTypeDialog.java</a>
                 </td>
                 <td>
                   0
@@ -159,6 +117,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.LetterQueueChecks.java">fi/luupanu/skrapple/logic/LetterQueueChecks.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.listeners.MoveActionListener.java">fi/luupanu/skrapple/ui/listeners/MoveActionListener.java</a>
                 </td>
                 <td>
                   0
@@ -200,7 +172,273 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.LetterTile.java">fi/luupanu/skrapple/ui/components/LetterTile.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.RackPanel.java">fi/luupanu/skrapple/ui/components/RackPanel.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Game.java">fi/luupanu/skrapple/domain/Game.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.SquareType.java">fi/luupanu/skrapple/constants/SquareType.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Coord.java">fi/luupanu/skrapple/domain/Coord.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.Message.java">fi/luupanu/skrapple/constants/Message.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.Move.java">fi/luupanu/skrapple/logic/actions/Move.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.LetterQueueValidator.java">fi/luupanu/skrapple/logic/LetterQueueValidator.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.utils.Announcer.java">fi/luupanu/skrapple/utils/Announcer.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.WildLetter.java">fi/luupanu/skrapple/domain/WildLetter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.SkrappleGUI.java">fi/luupanu/skrapple/ui/SkrappleGUI.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.PlayerPoints.java">fi/luupanu/skrapple/ui/components/PlayerPoints.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Dictionary.java">fi/luupanu/skrapple/domain/Dictionary.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.MyTransferHandler.java">fi/luupanu/skrapple/ui/MyTransferHandler.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.Neighbours.java">fi/luupanu/skrapple/logic/Neighbours.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.Resign.java">fi/luupanu/skrapple/logic/actions/Resign.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Board.java">fi/luupanu/skrapple/domain/Board.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.listeners.EndTurnActionListener.java">fi/luupanu/skrapple/ui/listeners/EndTurnActionListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.ErrorMessage.java">fi/luupanu/skrapple/constants/ErrorMessage.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.listeners.UndoLetterQueueActionListener.java">fi/luupanu/skrapple/ui/listeners/UndoLetterQueueActionListener.java</a>
                 </td>
                 <td>
                   0
@@ -256,20 +494,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.Skrapple.java">fi/luupanu/skrapple/ui/Skrapple.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.filemanager.FileReader.java">fi/luupanu/skrapple/filemanager/FileReader.java</a>
                 </td>
                 <td>
@@ -284,21 +508,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.SquareType.java">fi/luupanu/skrapple/constants/SquareType.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Coord.java">fi/luupanu/skrapple/domain/Coord.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.SkrappleImageIcon.java">fi/luupanu/skrapple/constants/SkrappleImageIcon.java</a>
                 </td>
                 <td>
                   0
@@ -313,34 +523,6 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Letter.java">fi/luupanu/skrapple/domain/Letter.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.Move.java">fi/luupanu/skrapple/logic/actions/Move.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.LetterQueueValidator.java">fi/luupanu/skrapple/logic/LetterQueueValidator.java</a>
                 </td>
                 <td>
                   0
@@ -382,7 +564,35 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.JButtonLetter.java">fi/luupanu/skrapple/ui/JButtonLetter.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.ExchangeLettersDialog.java">fi/luupanu/skrapple/ui/components/ExchangeLettersDialog.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.listeners.ResignActionListener.java">fi/luupanu/skrapple/ui/listeners/ResignActionListener.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.listeners.LetterTileActionListener.java">fi/luupanu/skrapple/ui/listeners/LetterTileActionListener.java</a>
                 </td>
                 <td>
                   0
@@ -410,7 +620,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.domain.Dictionary.java">fi/luupanu/skrapple/domain/Dictionary.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.constants.Announcement.java">fi/luupanu/skrapple/constants/Announcement.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.ConfirmationDialog.java">fi/luupanu/skrapple/ui/components/ConfirmationDialog.java</a>
                 </td>
                 <td>
                   0
@@ -438,7 +662,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.MyTransferHandler.java">fi/luupanu/skrapple/ui/MyTransferHandler.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.EndTurn.java">fi/luupanu/skrapple/logic/actions/EndTurn.java</a>
                 </td>
                 <td>
                   0
@@ -466,7 +690,49 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.Neighbours.java">fi/luupanu/skrapple/logic/Neighbours.java</a>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.GameOverDialog.java">fi/luupanu/skrapple/ui/components/GameOverDialog.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.components.PlayerName.java">fi/luupanu/skrapple/ui/components/PlayerName.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.logic.actions.GameAction.java">fi/luupanu/skrapple/logic/actions/GameAction.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#fi.luupanu.skrapple.ui.Updateable.java">fi/luupanu/skrapple/ui/Updateable.java</a>
                 </td>
                 <td>
                   0
