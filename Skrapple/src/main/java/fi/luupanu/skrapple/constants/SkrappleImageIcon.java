@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.constants;
 
+import fi.luupanu.skrapple.filemanager.FileReader;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,14 +31,16 @@ public enum SkrappleImageIcon {
     private final ImageIcon icon;
 
     private SkrappleImageIcon(String filename) {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(filename);
-        BufferedImage bf = null;
+        icon = loadIcon(filename);
+    }
+
+    private ImageIcon loadIcon(String filename) {
         try {
-            bf = ImageIO.read(is);
+            return new ImageIcon(new FileReader().readImage(filename));
         } catch (IOException ex) {
             Logger.getLogger(SkrappleImageIcon.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.icon = new ImageIcon(bf);
+        return null;
     }
 
     public ImageIcon getIcon() {

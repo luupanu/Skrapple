@@ -5,11 +5,15 @@
  */
 package fi.luupanu.skrapple.filemanager;
 
-import java.io.File;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.imageio.ImageIO;
 
 /**
  * FileReader is used to create a Dictionary from a file.
@@ -19,18 +23,35 @@ import java.util.Scanner;
 public class FileReader {
 
     /**
-     * Reads the dictionary file.
+     * Reads a text file.
+     *
      * @param filename the file name
      * @return the read file as a list of strings
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
+     * @throws IOException
      */
-    public List<String> readFile(String filename) throws FileNotFoundException {
+    public List<String> readFile(String filename) throws FileNotFoundException, IOException {
         ArrayList<String> list = new ArrayList<>(84420);
-        Scanner s = new Scanner(new File(filename));
-        while (s.hasNextLine()) {
-            list.add(s.nextLine());
+        try (InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
+                Scanner s = new Scanner(stream)) {
+            while (s.hasNextLine()) {
+                list.add(s.nextLine());
+            }
         }
-        s.close();
         return list;
+    }
+
+    /**
+     * Reads an image.
+     * @param filename the file name
+     * @return the read file as an image
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    public Image readImage(String filename) throws FileNotFoundException, IOException {
+        InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
+        BufferedImage img;
+        img = ImageIO.read(stream);
+        return img;
     }
 }

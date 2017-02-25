@@ -5,12 +5,14 @@
  */
 package fi.luupanu.skrapple.ui.components;
 
+import fi.luupanu.skrapple.filemanager.FileReader;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.LayoutManager;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -26,13 +28,9 @@ public class RackPanel extends JPanel {
 
     public RackPanel(LayoutManager layout) {
         super(layout);
-        try {
-            this.image = ImageIO.read(new File("rackbg.png"));
-        } catch (IOException ex) {
-            Logger.getLogger(RackPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        loadImage();
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         drawTiled(g);
@@ -47,6 +45,14 @@ public class RackPanel extends JPanel {
             for (int y = 0; y < d.height; y += height) {
                 g.drawImage(image, x, y, null, null);
             }
+        }
+    }
+
+    private void loadImage() {
+        try {
+            this.image = new FileReader().readImage("images/rackbg.png");
+        } catch (IOException ex) {
+            Logger.getLogger(RackPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -7,6 +7,7 @@ package fi.luupanu.skrapple.domain;
 
 import fi.luupanu.skrapple.filemanager.FileReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,8 +36,10 @@ public class Dictionary {
             return new FileReader().readFile(filename);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Dictionary.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(Dictionary.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
     public List<String> getWordList() {
