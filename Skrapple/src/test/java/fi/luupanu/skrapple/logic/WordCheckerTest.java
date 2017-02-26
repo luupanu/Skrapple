@@ -10,6 +10,7 @@ import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Word;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -34,7 +35,7 @@ public class WordCheckerTest {
     private final Word w4 = new Word();
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         b = new Board();
         d = new Dictionary("kotus-wordlist-fi");
         wc = new WordChecker(d);
