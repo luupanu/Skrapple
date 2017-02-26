@@ -16,7 +16,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 /**
- * FileReader is used to create a Dictionary from a file.
+ * FileReader is used to read files.
  *
  * @author panu
  */
@@ -32,21 +32,21 @@ public class FileReader {
      */
     public List<String> readFile(String filename) throws FileNotFoundException, IOException {
         ArrayList<String> list = new ArrayList<>(84420);
-        try (InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
-                Scanner s = new Scanner(stream)) {
-            while (s.hasNextLine()) {
-                list.add(s.nextLine());
-            }
+        InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
+        Scanner s = new Scanner(stream);
+        while (s.hasNextLine()) {
+            list.add(s.nextLine());
         }
         return list;
     }
 
     /**
      * Reads an image.
+     *
      * @param filename the file name
      * @return the read file as an image
      * @throws FileNotFoundException
-     * @throws IOException 
+     * @throws IOException
      */
     public Image readImage(String filename) throws FileNotFoundException, IOException {
         InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
