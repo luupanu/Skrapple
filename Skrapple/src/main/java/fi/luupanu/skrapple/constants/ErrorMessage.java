@@ -14,8 +14,8 @@ import fi.luupanu.skrapple.domain.Word;
  * @author panu
  */
 public enum ErrorMessage implements Message {
-    NO_ERRORS, LETTERQUEUE_IS_EMPTY, LETTERQUEUE_IS_NOT_VALID, WORD_IS_NOT_VALID,
-    LETTERS_NOT_EXCHANGED, GAME_IS_OVER;
+    NO_ERRORS, LETTERQUEUE_IS_EMPTY, LETTERQUEUE_IS_NOT_VALID,
+    WORD_IS_NOT_VALID, LETTERS_NOT_EXCHANGED, LETTERBAG_IS_EMPTY, GAME_IS_OVER;
 
     private Word word;
 
