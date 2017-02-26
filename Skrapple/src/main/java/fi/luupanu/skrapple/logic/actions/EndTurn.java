@@ -27,11 +27,11 @@ public class EndTurn extends GameAction {
     }
 
     /**
-     * Cancels the current player's LetterQueue, places the letters back to the
-     * rack if any and switches the turn.
+     * Cancels the current player's LetterQueue, places the letters from the
+     * queue back to the rack if there were any, and switches the turn.
      *
      * @param game the game that is being played
-     * @return 
+     * @return no errors
      */
     @Override
     public ErrorMessage perform(Game game) {
