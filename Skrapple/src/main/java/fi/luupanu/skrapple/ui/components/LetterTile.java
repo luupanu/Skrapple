@@ -10,14 +10,15 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
 /**
- * A custom JButton class that optionally contains a Letter.
+ * A custom JButton class that optionally contains a Letter. Should refactor
+ * this into an interface or superclass that the board letters & rack letters
+ * could extend from, but probably don't have time.
  *
  * @author panu
  */
@@ -25,7 +26,7 @@ public class LetterTile extends JButton {
 
     private final Border greenThickBorder = new LineBorder(Color.GREEN, 3);
     private final Border whiteBorder = new LineBorder(Color.WHITE);
-    
+
     private Coord c;
     private Letter letter;
     private boolean selected;
