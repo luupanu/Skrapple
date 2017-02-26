@@ -41,15 +41,20 @@ public class ExchangeLetters extends GameAction {
      */
     @Override
     public ErrorMessage perform(Game game) {
+        if (game.getLetterBag().getContents().isEmpty()) {
+            return ErrorMessage.LETTERBAG_IS_EMPTY;
+        }
         if (letters.size() > game.getLetterBag().getSize()) {
             return ErrorMessage.LETTERS_NOT_EXCHANGED;
         }
-        
+        // put letters aside
         List<Letter> aside = new ArrayList<>();
         for (Letter let : letters) {
             aside.add(game.getCurrentPlayer().getPlayerRack().takeLetter(let));
-        }    
+        }
+        // refill player's rack
         game.getCurrentPlayer().getPlayerRack().refillRack(game.getLetterBag());
+        // put letters back to the letter bag
         for (Letter let : aside) {
             game.getLetterBag().placeLetterInBag(let);
         }
