@@ -51,7 +51,7 @@ public class Board {
         return layout;
     }
     
-    public int getBoardSize() {
+    public int getBoardMaxSize() {
         return BOARD_MAX_SIZE;
     }
 
