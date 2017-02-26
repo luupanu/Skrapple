@@ -57,7 +57,10 @@ public class LetterQueueValidator {
         }
 
         // the letters in the queue cannot leave a gap
-        if (list.size() != 1 && queueHasNoGaps(board)) {
+        if (list.size() != 1) {
+            if (!queueHasNoGaps(board)) {
+                return false;
+            }
             return n.findAllNeighbours(board);
         }
 
