@@ -6,14 +6,9 @@
 package fi.luupanu.skrapple.domain;
 
 import fi.luupanu.skrapple.constants.SquareType;
-import fi.luupanu.skrapple.domain.Board;
-import fi.luupanu.skrapple.domain.Square;
 import java.awt.Point;
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

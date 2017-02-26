@@ -7,14 +7,10 @@ package fi.luupanu.skrapple.logic.actions;
  */
 import fi.luupanu.skrapple.constants.SkrappleGameState;
 import fi.luupanu.skrapple.domain.Dictionary;
-import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import java.io.IOException;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
