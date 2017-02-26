@@ -152,14 +152,4 @@ public class LetterQueue {
         }
         return false;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Letter let : list) {
-            Coord c = let.getCoord();
-            sb.append(c).append(" - ");
-        }
-        return sb.toString();
-    }
 }
