@@ -59,4 +59,25 @@ public class SquareTest {
         normal.placeLetter(new Letter(LetterType.LETTER_H));
         assertEquals(let, normal.getLetter());
     }
+    
+    @Test
+    public void toStringReturnsSquareTypeWhenSquareUnOccupied() {
+        Board b = createBoard();
+        assertEquals("5", b.getSquare(0, 0).toString());
+        assertEquals("4", b.getSquare(1, 1).toString());
+        assertEquals("3", b.getSquare(5, 1).toString());
+        assertEquals("2", b.getSquare(3, 0).toString());
+        assertEquals(".", b.getSquare(7, 8).toString());
+    }
+    
+    @Test
+    public void toStringReturnsLetterToStringWhenSquareOccupied() {
+        Board b = createBoard();
+        b.getSquare(0, 0).placeLetter(let);
+        assertEquals("E", b.getSquare(0, 0).toString());
+    }
+    
+    private Board createBoard() {
+        return new Board();
+    }
 }
