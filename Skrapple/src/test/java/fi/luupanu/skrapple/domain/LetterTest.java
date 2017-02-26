@@ -68,5 +68,16 @@ public class LetterTest {
             assertEquals(i, l.getPoints());
         }
     }
-
+    
+    @Test
+    public void pointsAsUnicodeSubscriptReturnsCorrectValues() {
+        assertEquals("\u2080", new Letter(LetterType.LETTER_WILD).getPointsAsUnicodeSubScript()); // 0
+        assertEquals("\u2081", new Letter(LetterType.LETTER_A).getPointsAsUnicodeSubScript()); // 1
+        assertEquals("\u2082", new Letter(LetterType.LETTER_K).getPointsAsUnicodeSubScript()); // 2
+        assertEquals("\u2083", new Letter(LetterType.LETTER_M).getPointsAsUnicodeSubScript()); // 3
+        assertEquals("\u2084", new Letter(LetterType.LETTER_H).getPointsAsUnicodeSubScript()); // 4
+        assertEquals("\u2087", new Letter(LetterType.LETTER_D).getPointsAsUnicodeSubScript()); // 7
+        assertEquals("\u2088", new Letter(LetterType.LETTER_B).getPointsAsUnicodeSubScript()); // 8
+        assertEquals("\u2081\u2080", new Letter(LetterType.LETTER_C).getPointsAsUnicodeSubScript()); // 10
+    }
 }
