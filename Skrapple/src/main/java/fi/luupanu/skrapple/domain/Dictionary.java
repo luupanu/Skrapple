@@ -9,8 +9,6 @@ import fi.luupanu.skrapple.filemanager.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The Dictionary class houses the word list used to evaluate if a word will be
