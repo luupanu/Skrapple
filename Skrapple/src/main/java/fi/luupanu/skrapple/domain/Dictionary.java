@@ -26,20 +26,16 @@ public class Dictionary {
      * Loads the word list used by the dictionary.
      *
      * @param filename the file location
+     * @throws java.io.FileNotFoundException
+     * @throws java.io.IOException
      */
-    public Dictionary(String filename) {
+    public Dictionary(String filename) throws FileNotFoundException, IOException {
         wordlist = loadWordList(filename);
     }
 
-    private List<String> loadWordList(String filename) {
-        try {
-            return new FileReader().readFile(filename);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Dictionary.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Dictionary.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    private List<String> loadWordList(String filename)
+            throws FileNotFoundException, IOException {
+        return new FileReader().readFile(filename);
     }
 
     public List<String> getWordList() {
