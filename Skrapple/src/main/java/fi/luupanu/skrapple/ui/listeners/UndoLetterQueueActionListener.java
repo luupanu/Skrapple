@@ -5,7 +5,9 @@
  */
 package fi.luupanu.skrapple.ui.listeners;
 
+import fi.luupanu.skrapple.constants.LetterType;
 import fi.luupanu.skrapple.domain.Letter;
+import fi.luupanu.skrapple.domain.WildLetter;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.ui.SkrappleGUI;
 import fi.luupanu.skrapple.ui.components.RackPanel;
@@ -40,10 +42,20 @@ public class UndoLetterQueueActionListener implements ActionListener, MouseListe
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == undoQueueButton) {
             List<Letter> canceled = s.getGame().getLetterQueue().cancelLetterQueue();
+            for (Letter let : canceled) {
+                resetWildLetterType(let);
+            }
             s.getGame().getCurrentPlayer().getPlayerRack().addLetters(canceled);
             gui.updateHangingLetterTiles();
             gui.updatePlayerRack();
             gui.setUndoQueueButtonVisible(false);
+        }
+    }
+    
+    private void resetWildLetterType(Letter let) {
+        if (let.getType() == LetterType.LETTER_WILD) {
+            WildLetter wLet = (WildLetter) let;
+            wLet.setWildLetterType(null);
         }
     }
 
