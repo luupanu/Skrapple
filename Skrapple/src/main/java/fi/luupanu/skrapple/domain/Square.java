@@ -60,6 +60,13 @@ public class Square {
         return occupied;
     }
 
+    /**
+     * For text-based user interface of the game. The values for unoccupied
+     * squares are listed in SquareType.
+     *
+     * @return SquareType value if square is unoccupied, otherwise the letter's
+     * string representation
+     */
     @Override
     public String toString() {
         if (!occupied) {
