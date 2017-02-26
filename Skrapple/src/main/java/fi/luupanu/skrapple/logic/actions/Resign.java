@@ -6,8 +6,9 @@
 package fi.luupanu.skrapple.logic.actions;
 
 import fi.luupanu.skrapple.constants.ErrorMessage;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.domain.Game;
-import fi.luupanu.skrapple.constants.SkrappleGameState;
+import fi.luupanu.skrapple.domain.Player;
 
 /**
  * A player can choose to resign the game during her turn.
@@ -33,11 +34,23 @@ public class Resign extends GameAction {
      */
     @Override
     public ErrorMessage perform(Game game) {
-        if (game.getTurn()) {
-            game.setGameState(SkrappleGameState.PLAYER_1_RESIGNED);
-        } else {
-            game.setGameState(SkrappleGameState.PLAYER_2_RESIGNED);
+        if (game.getGameState() == GameState.GAMEOVER) {
+            return ErrorMessage.GAME_IS_OVER;
         }
+        game.getCurrentPlayer().resign();
+        if (gameIsOver(game)) {
+            game.setGameState(GameState.GAMEOVER);
+        }     
         return ErrorMessage.NO_ERRORS;
+    }
+
+    private boolean gameIsOver(Game game) {
+        int resignedPlayers = 0;
+        for (Player p : game.getPlayerList()) {
+            if (p.isResigned()) {
+                resignedPlayers++;
+            }
+        }
+        return resignedPlayers == game.getPlayerList().size() - 1;
     }
 }

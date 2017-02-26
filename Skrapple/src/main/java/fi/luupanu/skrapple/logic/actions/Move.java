@@ -140,17 +140,4 @@ public class Move extends GameAction {
     private boolean letterQueueIsValid(Game game) {
         return game.getLetterQueueValidator().letterQueueIsValid(game.getBoard());
     }
-//
-//    private ErrorMessage generateWordIsNotValidErrorMessage(List<Word> notFound) {
-//        ErrorMessage e = ErrorMessage.WORD_IS_NOT_VALID;
-//        StringBuilder message = new StringBuilder();
-//        for (int i = 0; i < notFound.size(); i++) {
-//            message.append(notFound.get(i));
-//            if (i < notFound.size() - 1) {
-//                message.append(", ");
-//            }
-//        }
-//        e.setWord(message.toString());
-//        return e;
-//    }
 }

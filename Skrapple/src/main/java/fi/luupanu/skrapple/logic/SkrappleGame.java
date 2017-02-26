@@ -6,35 +6,35 @@
 package fi.luupanu.skrapple.logic;
 
 import fi.luupanu.skrapple.constants.ErrorMessage;
-import fi.luupanu.skrapple.constants.SkrappleGameState;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.logic.actions.GameAction;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Player;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * SkrappleGame is the class that is called to create a new game. It creates a
- * new instance of Game and handles the final declaration of a winner.
+ * new instance of Game and handles the final scoring of points.
  *
  * @author panu
  */
 public class SkrappleGame {
 
     private final Game game;
-    private final Player p1;
-    private final Player p2;
 
     /**
      * Creates a new SkrappleGame.
      *
      * @param p1 player one
      * @param p2 player two
+     * @param p3 player three
+     * @param p4 player four
      * @param d the dictionary
      */
-    public SkrappleGame(Player p1, Player p2, Dictionary d) {
-        this.p1 = p1;
-        this.p2 = p2;
-        this.game = new Game(p1, p2, d);
+    public SkrappleGame(Player p1, Player p2, Player p3, Player p4, Dictionary d) {
+        this.game = new Game(p1, p2, p3, p4, d);
     }
 
     public Game getGame() {
@@ -48,37 +48,37 @@ public class SkrappleGame {
      * @return true if the action succeeded
      */
     public ErrorMessage doAction(GameAction action) {
-        if (game.getGameState() == SkrappleGameState.PLAYING) {
+        if (game.getGameState() == GameState.PLAYING) {
             return action.perform(game);
         }
         return ErrorMessage.GAME_IS_OVER;
     }
 
     /**
-     * This method returns the winner of the game. If none of the players
-     * resigned, need to subtract all remaining letters in the racks of the
-     * players before comparing scores.
+     * This method does the final scoring of the game. If a player resigned, her
+     * points are zeroed, if not, all remaining letter tiles in her rack are
+     * subtracted from the total score.
      *
-     * @return the winning player of the game, null if drawn
+     * @return a sorted list of players in winning order
      */
-    public Player declareWinner() {
-        if (game.getGameState() == SkrappleGameState.PLAYER_2_RESIGNED) {
-            return p1;
-        } else if (game.getGameState() == SkrappleGameState.PLAYER_1_RESIGNED) {
-            return p2;
-        }
+    public List<Player> doFinalScoring() {
         subtractRemainingLetters();
-        if (p1.getPlayerPoints() > p2.getPlayerPoints()) {
-            return p1;
-        } else if (p1.getPlayerPoints() < p2.getPlayerPoints()) {
-            return p2;
-        }
-        return null;
+        resetResignedPlayersPoints();
+        Collections.sort(getGame().getPlayerList());
+        return getGame().getPlayerList();
     }
 
     private void subtractRemainingLetters() {
-        p1.addPoints(-p1.getPlayerRack().getRackPoints());
-        p2.addPoints(-p2.getPlayerRack().getRackPoints());
+        for (Player p : getGame().getPlayerList()) {
+            p.addPoints(-p.getPlayerRack().getRackPoints());
+        }
     }
 
+    private void resetResignedPlayersPoints() {
+        for (Player p : getGame().getPlayerList()) {
+            if (p.isResigned()) {
+                p.addPoints(-p.getPlayerPoints() -100); // = -100, should always be enough
+            }
+        }
+    }
 }

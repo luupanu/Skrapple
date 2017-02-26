@@ -11,11 +11,12 @@ package fi.luupanu.skrapple.domain;
  *
  * @author panu
  */
-public class Player {
-
+public class Player implements Comparable<Player> {
+    
     private final String name;
     private int points;
     private final Rack rack;
+    private boolean resigned;
 
     /**
      * Create a new player with 0 points and her own Rack.
@@ -27,17 +28,25 @@ public class Player {
         this.points = 0;
         this.rack = new Rack();
     }
-
+    
     public String getPlayerName() {
         return name;
     }
-
+    
     public int getPlayerPoints() {
         return points;
     }
-
+    
     public Rack getPlayerRack() {
         return rack;
+    }
+    
+    public boolean isResigned() {
+        return resigned;
+    }
+    
+    public void resign() {
+        resigned = true;
     }
 
     /**
@@ -48,9 +57,14 @@ public class Player {
     public void addPoints(int n) {
         points += n;
     }
-
+    
     @Override
     public String toString() {
         return name + ": " + points + " points";
+    }
+
+    @Override
+    public int compareTo(Player other) {
+        return other.points - this.points;
     }
 }

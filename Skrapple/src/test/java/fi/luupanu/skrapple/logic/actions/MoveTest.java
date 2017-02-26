@@ -35,7 +35,8 @@ public class MoveTest {
     @Before
     public void setUp() throws IOException {
         p1 = new Player("");
-        s = new SkrappleGame(p1, new Player(""), new Dictionary("kotus-wordlist-fi"));
+        s = new SkrappleGame(p1, new Player(""), null, null,
+                new Dictionary("kotus-wordlist-fi"));
         Updateable u = (String message) -> {};
         Announcer a = new Announcer(s);
         m = new Move(s.getGame(), a, u);
@@ -85,7 +86,7 @@ public class MoveTest {
                     new Coord(x+1, 7),s.getGame().getBoard());
         }
         assertEquals(ErrorMessage.NO_ERRORS, m.perform(s.getGame()));
-        assertEquals(s.getGame().getPlayerOne(), s.getGame().getCurrentPlayer());
+        assertEquals(p1, s.getGame().getCurrentPlayer());
         assertEquals(74, s.getGame().getCurrentPlayer().getPlayerPoints());
         neighboursAndWordCreatorAreEmpty();
         assertEquals(7, s.getGame().getCurrentPlayer().getPlayerRack().getContents().size());

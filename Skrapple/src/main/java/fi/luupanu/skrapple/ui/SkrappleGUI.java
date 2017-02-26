@@ -6,7 +6,6 @@
 package fi.luupanu.skrapple.ui;
 
 import fi.luupanu.skrapple.ui.components.PlayerPoints;
-import fi.luupanu.skrapple.ui.components.PlayerName;
 import fi.luupanu.skrapple.ui.components.LetterTile;
 import fi.luupanu.skrapple.utils.Announcer;
 import fi.luupanu.skrapple.ui.listeners.EndTurnActionListener;
@@ -19,6 +18,7 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
+import fi.luupanu.skrapple.ui.components.PlayerPanel;
 import fi.luupanu.skrapple.ui.components.RackPanel;
 import fi.luupanu.skrapple.ui.listeners.UndoLetterQueueActionListener;
 import java.awt.BorderLayout;
@@ -34,6 +34,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -41,6 +43,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -48,6 +51,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.DefaultCaret;
 
@@ -77,12 +82,7 @@ public class SkrappleGUI implements Runnable, Updateable {
     private final LetterTile[][] boardSquares;
     private final LetterTile[] rackLetters;
     private JTextArea infoField;
-    private JPanel playerOne;
-    private JPanel playerTwo;
-    private PlayerName playerOneName;
-    private PlayerName playerTwoName;
-    private PlayerPoints playerOnePoints;
-    private PlayerPoints playerTwoPoints;
+    private List<PlayerPanel> playerPanels;
     private SkrappleGame s;
     private RackPanel rackPanel;
 
@@ -284,59 +284,46 @@ public class SkrappleGUI implements Runnable, Updateable {
         GridLayout layout = new GridLayout(2, 2);
         GridBagConstraints gbc = new GridBagConstraints();
         sidePanelPlayers.setLayout(layout);
+        
+        playerPanels = new ArrayList<>();
 
-        // create player one name
-        playerOneName = new PlayerName(s, s.getGame().getPlayerOne(), normal);
-        playerOneName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // create all player panels, names & points
+        for (Player p : s.getGame().getPlayerList()) {
+            JLabel name = new JLabel(p.getPlayerName());
+            name.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
+            PlayerPoints points = new PlayerPoints(p);
+            points.setAlignmentX(Component.CENTER_ALIGNMENT);
+            
+            PlayerPanel panel = new PlayerPanel(p);
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+            panel.add(name);
+            panel.add(Box.createRigidArea(new Dimension(0, 20)));
+            panel.add(points);
+            playerPanels.add(panel);
+        }
 
-        // create player one points
-        playerOnePoints = new PlayerPoints(s, s.getGame().getPlayerOne(), normal);
-        playerOnePoints.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        playerOne = new JPanel();
-        playerOne.setLayout(new BoxLayout(playerOne, BoxLayout.PAGE_AXIS));
-        playerOne.setBorder(BorderFactory.createEtchedBorder());
-        playerOne.add(playerOneName);
-        playerOne.add(Box.createRigidArea(new Dimension(0, 20)));
-        playerOne.add(playerOnePoints);
-
-        // create player two name
-        playerTwoName = new PlayerName(s, s.getGame().getPlayerTwo(), normal);
-        playerTwoName.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // create player two points
-        playerTwoPoints = new PlayerPoints(s, s.getGame().getPlayerTwo(), normal);
-        playerTwoPoints.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        playerTwo = new JPanel();
-        playerTwo.setLayout(new BoxLayout(playerTwo, BoxLayout.PAGE_AXIS));
-        playerTwo.setBorder(BorderFactory.createEtchedBorder());
-        playerTwo.add(playerTwoName);
-        playerTwo.add(Box.createRigidArea(new Dimension(0, 20)));
-        playerTwo.add(playerTwoPoints);
-
-        // add player one name
+        // add player panels
         gbc.weightx = 0.5;
-        gbc.gridx = 0;
-        gbc.insets = new Insets(0, 10, 0, 10);
-        sidePanelPlayers.add(playerOne);
-
-        // add player two name
-        gbc.gridx = 1;
-        sidePanelPlayers.add(playerTwo);
-        sidePanelPlayers.add(new JPanel());
-        sidePanelPlayers.add(new JPanel());
-        /*
-        // add player one points
-        gbc.weighty = 0.8;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 0;
-        gbc.anchor = GridBagConstraints.NORTH;
-        gbc.gridy = 1;
-
-        // add player two points
-        gbc.gridx = 1;
-        sidePanelPlayerInfo.add(playerTwoPoints, gbc);*/
+        gbc.weighty = 0.5;
+        //gbc.insets = new Insets(0, 10, 0, 10);
+        for (int i = 0; i < 4; i++) {
+            if (i % 2 == 1) {
+                gbc.gridx = 0;
+            } else {
+                gbc.gridx = 1;
+            }
+            if (i < 2) {
+                gbc.gridy = 0;
+            } else {
+                gbc.gridy = 1;
+            }
+            if (i < playerPanels.size()) {
+                sidePanelPlayers.add(playerPanels.get(i));
+            } else {
+                sidePanelPlayers.add(new JPanel());
+            }
+        }
     }
 
     private void makeInfoBox(JPanel sidePanelInfoBox) {
@@ -376,13 +363,13 @@ public class SkrappleGUI implements Runnable, Updateable {
         resignButton = new JButton("Resign");
 
         // add ActionListeners
-        moveButton.addActionListener(new MoveActionListener(announcer, this, s, frame,
-                moveButton, exchangeButton));
-        endTurnButton.addActionListener(new EndTurnActionListener(announcer, this, s,
-                frame, endTurnButton, moveButton, exchangeButton));
+        moveButton.addActionListener(new MoveActionListener(announcer, this, s,
+                frame, moveButton, exchangeButton));
+        endTurnButton.addActionListener(new EndTurnActionListener(announcer,
+                this, s, frame, endTurnButton, moveButton, exchangeButton));
         exchangeButton.addActionListener(letterActionListener);
-        resignButton.addActionListener(new ResignActionListener(s, frame, resignButton,
-                playerOneName, playerTwoName, playerOnePoints, playerTwoPoints));
+        resignButton.addActionListener(new ResignActionListener(announcer, this,
+                s, frame, resignButton, endTurnButton));
 
         // add buttons
         sidePanelButtons.add(moveButton);
@@ -430,30 +417,31 @@ public class SkrappleGUI implements Runnable, Updateable {
     }
 
     public void updatePlayerInfo() {
-        if (s.getGame().getTurn()) {
-            for (Component c : playerOne.getComponents()) {
-                c.setFont(bolded);
+        for (PlayerPanel panel : playerPanels) {
+            if (s.getGame().getCurrentPlayer() == panel.getOwner()) {
+                panel.setBorder(BorderFactory.createCompoundBorder(
+                        new EtchedBorder(), new EmptyBorder(20, 20, 20, 20)));
+                for (Component c : panel.getComponents()) {
+                    c.setFont(bolded);
+                }
+            } else {
+                panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+                for (Component c : panel.getComponents()) {
+                    c.setFont(normal);
+                }
             }
-            for (Component c : playerTwo.getComponents()) {
-                c.setFont(normal);
-            }
-            playerOne.setBorder(BorderFactory.createEtchedBorder());
-            playerTwo.setBorder(null);
-        } else {
-            for (Component c : playerOne.getComponents()) {
-                c.setFont(normal);
-            }
-            for (Component c : playerTwo.getComponents()) {
-                c.setFont(bolded);
-            }
-            playerOne.setBorder(null);
-            playerTwo.setBorder(BorderFactory.createEtchedBorder());
         }
     }
 
     public void updatePlayerPoints() {
-        playerOnePoints.updatePlayerPoints();
-        playerTwoPoints.updatePlayerPoints();
+        for (PlayerPanel panel : playerPanels) {
+            for (Component c : panel.getComponents()) {
+                if (c instanceof PlayerPoints) {
+                    PlayerPoints points = (PlayerPoints) c;
+                    points.updatePlayerPoints();
+                }
+            }
+        }
     }
 
     public void updatePlayerRack() {
@@ -464,7 +452,7 @@ public class SkrappleGUI implements Runnable, Updateable {
     }
 
     public void removeAddedLettersMessage() {
-        infoField.setText(infoField.getText().replaceAll(".*Added new letters .* to the rack.", ""));
+        infoField.setText(infoField.getText().replaceAll("\n.*Added new letters .* to the rack.", ""));
     }
 
     public void setUndoQueueButtonVisible(boolean bool) {
@@ -485,15 +473,17 @@ public class SkrappleGUI implements Runnable, Updateable {
     }
 
     public static void main(String[] args) {
-        Player p1 = new Player("name");
-        Player p2 = new Player("name2");
+        Player p1 = new Player("Player 1");
+        Player p2 = new Player("Player 2");
+        Player p3 = new Player("Player 3");
+        Player p4 = new Player("Player 4");
         Dictionary d = null;
         try {
             d = new Dictionary("kotus-wordlist-fi");
         } catch (IOException ex) {
             Logger.getLogger(SkrappleGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        SkrappleGame s = new SkrappleGame(p1, p2, d);
+        SkrappleGame s = new SkrappleGame(p1, p2, p3, p4, d);
 
         SwingUtilities.invokeLater(new SkrappleGUI(s));
     }

@@ -7,9 +7,11 @@ package fi.luupanu.skrapple.domain;
 
 import fi.luupanu.skrapple.logic.LetterQueue;
 import fi.luupanu.skrapple.logic.LetterQueueValidator;
-import fi.luupanu.skrapple.constants.SkrappleGameState;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.logic.WordChecker;
 import fi.luupanu.skrapple.logic.WordCreator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Game stores and returns all the classes required for a SkrappleGame.
@@ -18,34 +20,34 @@ import fi.luupanu.skrapple.logic.WordCreator;
  */
 public class Game {
 
-    private final Player p1;
-    private final Player p2;
+    private final List<Player> players;
     private final Board board;
     private final LetterBag bag;
     private final LetterQueue queue;
     private final LetterQueueValidator validator;
     private final WordChecker wordChecker;
     private final WordCreator wordCreator;
-    private SkrappleGameState state;
-    private boolean whoseTurn;
+    private GameState state;
+    private int whoseTurn;
 
     /**
      * A new two player game.
      *
      * @param p1 player one
      * @param p2 player two
+     * @param p3 player three
+     * @param p4 player four
      * @param d the dictionary
      */
-    public Game(Player p1, Player p2, Dictionary d) {
-        this.p1 = p1;
-        this.p2 = p2;
+    public Game(Player p1, Player p2, Player p3, Player p4, Dictionary d) {
+        this.players = new ArrayList<>(4);
         this.board = new Board();
         this.bag = new LetterBag();
         this.queue = new LetterQueue();
         this.validator = new LetterQueueValidator(queue);
         this.wordChecker = new WordChecker(d);
         this.wordCreator = new WordCreator(queue);
-        createGame();
+        createGame(p1, p2, p3, p4);
     }
 
     public Board getBoard() {
@@ -71,6 +73,10 @@ public class Game {
     public WordCreator getWordCreator() {
         return wordCreator;
     }
+    
+    public List<Player> getPlayerList() {
+        return players;
+    }
 
     /**
      * This method returns the current player.
@@ -78,45 +84,57 @@ public class Game {
      * @return the current player
      */
     public Player getCurrentPlayer() {
-        if (getTurn()) {
-            return p1;
-        } else {
-            return p2;
+        return players.get(whoseTurn - 1);
+    }
+    
+    /**
+     * This method switches the turn.
+     */
+    public void switchTurn() {
+        whoseTurn++;
+        if (whoseTurn > players.size()) {
+            whoseTurn = 1;
+        }
+        while (getCurrentPlayer().isResigned() &&
+                getGameState() == GameState.PLAYING
+                && atLeastOnePlayerIsNotResigned()) { // avoid infinite loops
+            switchTurn();
         }
     }
 
-    public Player getPlayerOne() {
-        return p1;
-    }
-
-    public Player getPlayerTwo() {
-        return p2;
-    }
-
-    public boolean getTurn() {
-        return whoseTurn;
-    }
-
-    /**
-     * Switches the turn.
-     */
-    public void switchTurn() {
-        whoseTurn = !getTurn();
-    }
-
-    public SkrappleGameState getGameState() {
+    public GameState getGameState() {
         return state;
     }
 
-    public void setGameState(SkrappleGameState s) {
+    public void setGameState(GameState s) {
         state = s;
     }
 
-    private void createGame() {
-        state = SkrappleGameState.PLAYING;
-        whoseTurn = true; // true = player one's turn
-        getPlayerOne().getPlayerRack().refillRack(bag);
-        getPlayerTwo().getPlayerRack().refillRack(bag);
+    private void createGame(Player p1, Player p2, Player p3, Player p4) {
+        addPlayer(p1);
+        addPlayer(p2);
+        addPlayer(p3);
+        addPlayer(p4);
+
+        state = GameState.PLAYING;
+        whoseTurn = 1; // 1 = player one's turn
+        for (Player p : players) {
+            p.getPlayerRack().refillRack(bag);
+        }
     }
 
+    private void addPlayer(Player p) {
+        if (p != null) {
+            players.add(p);
+        }
+    }
+
+    private boolean atLeastOnePlayerIsNotResigned() {
+        for (Player p : players) {
+            if (!p.isResigned()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

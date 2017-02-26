@@ -32,7 +32,8 @@ public class ExchangeLettersTest {
 
     @Before
     public void setUp() throws IOException {
-        game = new Game(new Player(""), new Player(""), new Dictionary("kotus-wordlist-fi"));
+        game = new Game(new Player(""), new Player(""), null, null,
+                new Dictionary("kotus-wordlist-fi"));
         toBeExchanged = new ArrayList<>();
         addAllLettersFromRackToExchangeQueue();
     }

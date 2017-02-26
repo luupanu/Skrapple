@@ -6,21 +6,21 @@
 package fi.luupanu.skrapple.ui.components;
 
 import fi.luupanu.skrapple.domain.Player;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author panu
  */
-public class PlayerPoints extends JLabel {
+public class PlayerPanel extends JPanel {
 
     private final Player owner;
-
-    public PlayerPoints(Player owner) {
+    
+    public PlayerPanel(Player owner) {
         this.owner = owner;
     }
-
-    public void updatePlayerPoints() {
-        setText(Integer.toString(owner.getPlayerPoints()) + " points");
+    
+    public Player getOwner() {
+        return owner;
     }
 }

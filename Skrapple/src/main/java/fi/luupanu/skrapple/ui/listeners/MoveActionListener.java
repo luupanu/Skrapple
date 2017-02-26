@@ -7,7 +7,7 @@ package fi.luupanu.skrapple.ui.listeners;
 
 import fi.luupanu.skrapple.constants.Announcement;
 import fi.luupanu.skrapple.constants.ErrorMessage;
-import fi.luupanu.skrapple.constants.SkrappleGameState;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.domain.Word;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.logic.actions.Move;
@@ -44,7 +44,7 @@ public class MoveActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (s.getGame().getGameState() != SkrappleGameState.PLAYING) {
+        if (s.getGame().getGameState() != GameState.PLAYING) {
             return;
         }
         Move move = new Move(s.getGame(), announcer, gui);
@@ -57,14 +57,14 @@ public class MoveActionListener implements ActionListener {
             moveButton.setEnabled(false);
             exchangeButton.setEnabled(false);
         } else if (errorMsg == ErrorMessage.LETTERQUEUE_IS_EMPTY) {
-            String msg = announcer.announce(Announcement.LETTERQUEUE_EMPTY_ERROR);
+            String msg = announcer.announce(Announcement.LETTERQUEUE_EMPTY_MESSAGE);
             JOptionPane.showMessageDialog(frame, msg);
         } else if (errorMsg == ErrorMessage.LETTERQUEUE_IS_NOT_VALID) {
-            String msg = announcer.announce(Announcement.LETTERQUEUE_NOT_VALID_ERROR);
+            String msg = announcer.announce(Announcement.LETTERQUEUE_NOT_VALID_MESSAGE);
             JOptionPane.showMessageDialog(frame, msg);
         } else if (errorMsg == ErrorMessage.WORD_IS_NOT_VALID) {
             Word word = errorMsg.getMessage();
-            String msg = announcer.announce(Announcement.WORD_NOT_VALID_ERROR, word);
+            String msg = announcer.announce(Announcement.WORD_NOT_VALID_MESSAGE, word);
             JOptionPane.showMessageDialog(frame, msg);
         }
     }

@@ -10,9 +10,7 @@ package fi.luupanu.skrapple.constants;
  * 
  * @author panu
  */
-public enum SkrappleGameState {
+public enum GameState {
     PLAYING,
     GAMEOVER,
-    PLAYER_1_RESIGNED,
-    PLAYER_2_RESIGNED;
 }

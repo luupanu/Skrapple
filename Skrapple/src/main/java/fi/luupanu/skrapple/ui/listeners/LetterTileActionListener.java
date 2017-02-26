@@ -6,7 +6,7 @@
 package fi.luupanu.skrapple.ui.listeners;
 
 import fi.luupanu.skrapple.constants.LetterType;
-import fi.luupanu.skrapple.constants.SkrappleGameState;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.WildLetter;
 import fi.luupanu.skrapple.logic.SkrappleGame;
@@ -48,7 +48,7 @@ public class LetterTileActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (s.getGame().getGameState() != SkrappleGameState.PLAYING) {
+        if (s.getGame().getGameState() != GameState.PLAYING) {
             return;
         }
 

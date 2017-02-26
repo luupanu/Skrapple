@@ -18,7 +18,7 @@ import java.util.List;
 public class EndTurn extends GameAction {
 
     /**
-     * Creates a new GameAction SkipTurn.
+     * Creates a new GameAction EndTurn.
      *
      * @param game the game that is being played
      */

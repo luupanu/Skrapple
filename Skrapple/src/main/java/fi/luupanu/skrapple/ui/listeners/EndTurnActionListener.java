@@ -7,7 +7,7 @@ package fi.luupanu.skrapple.ui.listeners;
 
 import fi.luupanu.skrapple.constants.Announcement;
 import fi.luupanu.skrapple.constants.ErrorMessage;
-import fi.luupanu.skrapple.constants.SkrappleGameState;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.logic.actions.EndTurn;
 import fi.luupanu.skrapple.ui.SkrappleGUI;
@@ -47,10 +47,14 @@ public class EndTurnActionListener extends ConfirmationDialog implements ActionL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == endTurnButton && s.getGame().getGameState() == SkrappleGameState.PLAYING) {
-            int response = super.askConfirmation(frame, "End turn");
-            if (response == JOptionPane.YES_OPTION) {
+        if (e.getSource() == endTurnButton && s.getGame().getGameState() == GameState.PLAYING) {
+            if (e.getModifiers() == 0) { // resign event
                 endTurn();
+            } else {
+                int response = super.askConfirmation(frame, "End turn");
+                if (response == JOptionPane.YES_OPTION) {
+                    endTurn();
+                }
             }
         }
     }

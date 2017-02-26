@@ -26,19 +26,32 @@ public class EndTurnTest {
     
     private EndTurn e;
     private Game game;
+    private Player p1;
+    private Player p2;
+    private Player p3;
+    private Player p4;
 
     @Before
     public void setUp() throws IOException {
-        game = new Game(new Player(""), new Player(""), new Dictionary("kotus-wordlist-fi"));
+        p1 = new Player("");
+        p2 = new Player("");
+        p3 = new Player("");
+        p4 = new Player("");
+        game = new Game(p1, p2, p3, p4, new Dictionary("kotus-wordlist-fi"));
         e = new EndTurn(game);
     }
 
     @Test
     public void endingTurnSwitchesTurn() {
+        assertEquals(p1, game.getCurrentPlayer());
         assertEquals(ErrorMessage.NO_ERRORS, e.perform(game));
-        assertEquals(game.getPlayerTwo(), game.getCurrentPlayer());
+        assertEquals(p2, game.getCurrentPlayer());
         assertEquals(ErrorMessage.NO_ERRORS, e.perform(game));
-        assertEquals(game.getPlayerOne(), game.getCurrentPlayer());
+        assertEquals(p3, game.getCurrentPlayer());
+        assertEquals(ErrorMessage.NO_ERRORS, e.perform(game));
+        assertEquals(p4, game.getCurrentPlayer());
+        assertEquals(ErrorMessage.NO_ERRORS, e.perform(game));
+        assertEquals(p1, game.getCurrentPlayer());
     }
     
     @Test
