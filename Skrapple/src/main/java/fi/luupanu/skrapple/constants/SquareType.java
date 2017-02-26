@@ -7,7 +7,9 @@ package fi.luupanu.skrapple.constants;
 
 /**
  * SquareType contains the different types of square tiles included in the game.
- * 
+ * The values are for text-based representation of the game and/or testing
+ * purposes.
+ *
  * @author panu
  */
 public enum SquareType {
