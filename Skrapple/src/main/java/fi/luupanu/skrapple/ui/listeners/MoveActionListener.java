@@ -50,7 +50,7 @@ public class MoveActionListener implements ActionListener {
         Move move = new Move(s.getGame(), announcer, gui);
         ErrorMessage errorMsg = s.doAction(move);
         if (errorMsg == ErrorMessage.NO_ERRORS) {
-            gui.updateBoardLettersColour();
+            gui.updateBoardLettersIcon();
             gui.updatePlayerRack();
             gui.setLetterTilesEnabled(false);
             gui.setUndoQueueButtonVisible(false);
