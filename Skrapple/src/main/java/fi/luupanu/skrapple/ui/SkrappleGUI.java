@@ -284,17 +284,17 @@ public class SkrappleGUI implements Runnable, Updateable {
         GridLayout layout = new GridLayout(2, 2);
         GridBagConstraints gbc = new GridBagConstraints();
         sidePanelPlayers.setLayout(layout);
-        
+
         playerPanels = new ArrayList<>();
 
         // create all player panels, names & points
         for (Player p : s.getGame().getPlayerList()) {
             JLabel name = new JLabel(p.getPlayerName());
             name.setAlignmentX(Component.CENTER_ALIGNMENT);
-            
+
             PlayerPoints points = new PlayerPoints(p);
             points.setAlignmentX(Component.CENTER_ALIGNMENT);
-            
+
             PlayerPanel panel = new PlayerPanel(p);
             panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
             panel.add(name);
@@ -378,11 +378,12 @@ public class SkrappleGUI implements Runnable, Updateable {
         sidePanelButtons.add(resignButton);
     }
 
-    public void updateBoardLettersColour() {
-        for (LetterTile[] jbls : boardSquares) {
-            for (LetterTile jbl : jbls) {
-                if (jbl.getLetter() != null) {
-                    jbl.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
+    public void updateBoardLettersIcon() {
+        for (LetterTile[] tiles : boardSquares) {
+            for (LetterTile tile : tiles) {
+                if (tile.getLetter() != null) {
+                    tile.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
+                    tile.setUnClickable();
                 }
             }
         }

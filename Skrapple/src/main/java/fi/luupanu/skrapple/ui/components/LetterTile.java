@@ -30,11 +30,25 @@ public class LetterTile extends JButton {
     private Coord c;
     private Letter letter;
     private boolean selected;
-    private final boolean isBoardLetter;
+    private final boolean boardLetter;
+    private boolean unClickable;
 
-    public LetterTile(boolean isBoardLetter) {
-        this.isBoardLetter = isBoardLetter;
+    public LetterTile(boolean boardLetter) {
+        this.boardLetter = boardLetter;
         createJButtonLetter();
+    }
+
+    public boolean isUnClickable() {
+        return unClickable;
+    }
+
+    /**
+     * Call this function to set this letter tile unclickable. I.e. after a move
+     * has been made, this tile is final, and no actions can be performed to it.
+     *
+     */
+    public void setUnClickable() {
+        unClickable = true;
     }
 
     /**
@@ -57,8 +71,8 @@ public class LetterTile extends JButton {
         return letter;
     }
 
-    public boolean getIsBoardLetter() {
-        return isBoardLetter;
+    public boolean isBoardLetter() {
+        return boardLetter;
     }
 
     public Coord getCoord() {
@@ -81,7 +95,7 @@ public class LetterTile extends JButton {
                 setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
             } else {
                 setBorder(whiteBorder);
-                if (isBoardLetter) {
+                if (boardLetter) {
                     setIcon(SkrappleImageIcon.LETTER_TILE_SELECTED.getIcon());
                 } else {
                     setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
@@ -91,7 +105,7 @@ public class LetterTile extends JButton {
     }
 
     public void paintBoardIcon(String[] layout) {
-        if (getIsBoardLetter()) {
+        if (isBoardLetter()) {
             setLetter(null);
             if (layout[c.getY()].charAt(c.getX()) == '.') {
                 setIcon(null);

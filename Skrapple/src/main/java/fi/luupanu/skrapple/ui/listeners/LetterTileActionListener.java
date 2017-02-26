@@ -54,9 +54,13 @@ public class LetterTileActionListener implements ActionListener {
 
         if (e.getSource() instanceof LetterTile) {
             LetterTile tile = (LetterTile) e.getSource();
+            
+            if (tile.isUnClickable()) {
+                return;
+            }
 
             /// if the lettertile clicked is a rack tile
-            if (!tile.getIsBoardLetter()) {
+            if (!tile.isBoardLetter()) {
                 handleRackTilePress(tile);
                 return;
             }
