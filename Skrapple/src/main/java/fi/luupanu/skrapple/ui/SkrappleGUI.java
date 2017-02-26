@@ -33,6 +33,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -62,7 +65,7 @@ public class SkrappleGUI implements Runnable, Updateable {
     private final Font bolded;
 
     private final Announcer announcer;
-    private LetterTileActionListener letterListener;
+    private LetterTileActionListener letterActionListener;
     private JFrame frame;
     private JButton moveButton;
     private JButton endTurnButton;
@@ -86,8 +89,8 @@ public class SkrappleGUI implements Runnable, Updateable {
     public SkrappleGUI(SkrappleGame s) {
         this.s = s;
 
-        BOARD_MAX_SIZE = s.getGame().getBoard().getBoardSize();
-        RACK_MAX_SIZE = s.getGame().getCurrentPlayer().getPlayerRack().getRackSize();
+        BOARD_MAX_SIZE = s.getGame().getBoard().getBoardMaxSize();
+        RACK_MAX_SIZE = s.getGame().getCurrentPlayer().getPlayerRack().getRackMaxSize();
 
         boardSquares = new LetterTile[BOARD_MAX_SIZE][BOARD_MAX_SIZE];
         rackLetters = new LetterTile[RACK_MAX_SIZE];
@@ -113,7 +116,7 @@ public class SkrappleGUI implements Runnable, Updateable {
 
     private void addComponents(Container contentPane) {
         // create LetterTileActionListener
-        letterListener = new LetterTileActionListener(this, s, frame,
+        letterActionListener = new LetterTileActionListener(this, s, frame,
                 boardSquares, rackLetters, undoQueueButton);
 
         // set layout
@@ -185,7 +188,7 @@ public class SkrappleGUI implements Runnable, Updateable {
 
                 b.paintBoardIcon(layout);
 
-                b.addActionListener(letterListener);
+                b.addActionListener(letterActionListener);
 
                 boardSquares[x][y] = b;
                 board.add(boardSquares[x][y]);
@@ -199,9 +202,8 @@ public class SkrappleGUI implements Runnable, Updateable {
         for (int x = 0; x < rackLetters.length; x++) {
             LetterTile b = new LetterTile(false);
             b.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
-            //b.setAlignmentY(Component.CENTER_ALIGNMENT);
 
-            b.addActionListener(letterListener);
+            b.addActionListener(letterActionListener);
 
             rackLetters[x] = b;
             rackPanel.add(rackLetters[x]);
@@ -324,7 +326,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         sidePanelPlayers.add(playerTwo);
         sidePanelPlayers.add(new JPanel());
         sidePanelPlayers.add(new JPanel());
-/*
+        /*
         // add player one points
         gbc.weighty = 0.8;
         gbc.fill = GridBagConstraints.NONE;
@@ -378,7 +380,7 @@ public class SkrappleGUI implements Runnable, Updateable {
                 moveButton, exchangeButton));
         endTurnButton.addActionListener(new EndTurnActionListener(announcer, this, s,
                 frame, endTurnButton, moveButton, exchangeButton));
-        exchangeButton.addActionListener(letterListener);
+        exchangeButton.addActionListener(letterActionListener);
         resignButton.addActionListener(new ResignActionListener(s, frame, resignButton,
                 playerOneName, playerTwoName, playerOnePoints, playerTwoPoints));
 
@@ -485,7 +487,12 @@ public class SkrappleGUI implements Runnable, Updateable {
     public static void main(String[] args) {
         Player p1 = new Player("name");
         Player p2 = new Player("name2");
-        Dictionary d = new Dictionary("kotus-wordlist-fi");
+        Dictionary d = null;
+        try {
+            d = new Dictionary("kotus-wordlist-fi");
+        } catch (IOException ex) {
+            Logger.getLogger(SkrappleGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         SkrappleGame s = new SkrappleGame(p1, p2, d);
 
         SwingUtilities.invokeLater(new SkrappleGUI(s));
