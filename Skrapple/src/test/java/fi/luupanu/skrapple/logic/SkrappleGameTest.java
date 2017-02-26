@@ -5,10 +5,19 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.ErrorMessage;
 import fi.luupanu.skrapple.constants.SkrappleGameState;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.LetterBag;
 import fi.luupanu.skrapple.domain.Player;
+import fi.luupanu.skrapple.logic.actions.EndTurn;
+import fi.luupanu.skrapple.logic.actions.ExchangeLetters;
+import fi.luupanu.skrapple.logic.actions.Move;
+import fi.luupanu.skrapple.logic.actions.Resign;
+import fi.luupanu.skrapple.ui.Updateable;
+import fi.luupanu.skrapple.utils.Announcer;
+import java.io.IOException;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,7 +36,7 @@ public class SkrappleGameTest {
     private SkrappleGame s;
     
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         p1 = new Player("p1");
         p2 = new Player("p2");
         s = new SkrappleGame(p1, p2, new Dictionary("kotus-wordlist-fi"));
@@ -70,5 +79,16 @@ public class SkrappleGameTest {
         s.getGame().switchTurn();
         assertEquals(false, s.getGame().getTurn());
         assertEquals(p2, s.getGame().getCurrentPlayer());
+    }
+    
+    @Test
+    public void noActionsCanBePerformedWhenGameIsOver() {
+        s.getGame().setGameState(SkrappleGameState.GAMEOVER);
+        Announcer a = new Announcer(s);
+        Updateable u = (String message) -> {};
+        assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new Move(s.getGame(), a, u)));
+        assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new ExchangeLetters(s.getGame(), new ArrayList<>())));
+        assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new Resign(s.getGame())));
+        assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new EndTurn(s.getGame())));
     }
 }
