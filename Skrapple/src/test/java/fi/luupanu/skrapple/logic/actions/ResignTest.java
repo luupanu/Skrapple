@@ -10,6 +10,7 @@ import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class ResignTest {
     private Resign r;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         p1 = new Player("p1");
         p2 = new Player("p2");
         s = new SkrappleGame(p1, p2, new Dictionary("kotus-wordlist-fi"));
