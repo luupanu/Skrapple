@@ -88,7 +88,9 @@ public class LetterQueueChecks {
         /*  Second letter of the word must be on the same row or column as the
             first letter. The second letter gives us the direction for all the 
             rest of the letters (a player can either place a word vertically or
-            horizontally on the board, not both at the same time) */
+            horizontally on the board, not both at the same time!) */
+        
+        // check second letter of the first word of the game correct placement
         if (board.hasNoLetters() && c.getX() != 7 && c.getY() != 7) {
             return false;
         }
