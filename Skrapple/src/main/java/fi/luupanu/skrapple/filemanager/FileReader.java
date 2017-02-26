@@ -33,7 +33,12 @@ public class FileReader {
     public List<String> readFile(String filename) throws FileNotFoundException, IOException {
         ArrayList<String> list = new ArrayList<>(84420);
         InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
-        Scanner s = new Scanner(stream);
+        Scanner s;
+        try {
+            s = new Scanner(stream);
+        } catch (NullPointerException n) {
+            return new ArrayList(0);
+        }
         while (s.hasNextLine()) {
             list.add(s.nextLine());
         }
