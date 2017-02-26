@@ -59,7 +59,6 @@ public class ResignActionListener extends ConfirmationDialog implements ActionLi
             gui.update(msg);
             if (s.getGame().getGameState() == GameState.GAMEOVER) {
                 // end game screen
-                gui.updateHangingLetterTiles();
                 GameOverDialog god = new GameOverDialog(announcer, gui, s,
                         frame);
             } else {
