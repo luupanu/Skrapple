@@ -85,7 +85,7 @@ public class LetterQueueTest {
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
         assertEquals(1, q.getContents().size());
     }
-    
+
     @Test
     public void addingALetterToSameCoordinatesFails() {
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
@@ -132,6 +132,32 @@ public class LetterQueueTest {
             LetterQueue queue = new LetterQueue();
             assertEquals(true, queue.addLetterToQueue(let1, new Coord(x, 7), b));
             assertEquals(1, queue.getContents().size());
+        }
+    }
+
+    @Test
+    public void addingASecondLetterToQueueWhenBoardIsEmptyFailsIfTheWordIsNotConstructedTowardsTheCenterSquareHorizontally() {
+        for (int x = 0; x < 15; x++) {
+            if (x == 7) {
+                continue;
+            }
+            LetterQueue queue = new LetterQueue();
+            assertEquals(true, queue.addLetterToQueue(let1, new Coord(x, 7), b));
+            assertEquals(false, queue.addLetterToQueue(let2, new Coord(x, 8), b));
+            assertEquals(false, queue.addLetterToQueue(let2, new Coord(x, 6), b));
+        }
+    }
+
+    @Test
+    public void addingASecondLetterToQueueWhenBoardIsEmptyFailsIfTheWordIsNotConstructedTowardsTheCenterSquareVertically() {
+        for (int y = 0; y < 15; y++) {
+            if (y == 7) {
+                continue;
+            }
+            LetterQueue queue = new LetterQueue();
+            assertEquals(true, queue.addLetterToQueue(let1, new Coord(7, y), b));
+            assertEquals(false, queue.addLetterToQueue(let2, new Coord(6, y), b));
+            assertEquals(false, queue.addLetterToQueue(let2, new Coord(8, y), b));
         }
     }
 
@@ -253,7 +279,7 @@ public class LetterQueueTest {
         }
         assertEquals(15, q.getContents().size());
     }
-    
+
     @Test
     public void isValidCoordinateReturnsFalseWithOutOfBoundsValues() {
         assertEquals(false, q.isValidCoordinate(-1, 0));
@@ -261,14 +287,14 @@ public class LetterQueueTest {
         assertEquals(false, q.isValidCoordinate(15, 0));
         assertEquals(false, q.isValidCoordinate(0, 15));
     }
-    
+
     @Test
     public void getLetterByCoordinateWorks() {
         Letter l = new Letter(LetterType.LETTER_E);
         q.addLetterToQueue(l, new Coord(7, 4), b);
         assertEquals(l, q.getLetterByCoordinate(7, 4));
     }
-    
+
     @Test
     public void takeLetterFromQueueReturnsNullIfLetterNotFound() {
         assertEquals(null, q.takeLetterFromQueue(let1));
