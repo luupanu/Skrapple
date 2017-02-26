@@ -47,7 +47,7 @@ public class Rack {
         return rack;
     }
 
-    public int getRackSize() {
+    public int getRackMaxSize() {
         return RACK_MAX_SIZE;
     }
 
