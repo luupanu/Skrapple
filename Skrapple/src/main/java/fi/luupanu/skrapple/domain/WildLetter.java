@@ -30,10 +30,27 @@ public class WildLetter extends Letter {
         return wildLetterType;
     }
 
+    /**
+     * Sets the wild letter type. LetterType.LETTER_WILD cannot be assigned to
+     * wild letter type.
+     *
+     * @param wildLetterType the letter type this wild letter type will be set
+     * to
+     */
     public void setWildLetterType(LetterType wildLetterType) {
-        this.wildLetterType = wildLetterType;
+        if (wildLetterType != LetterType.LETTER_WILD) {
+            this.wildLetterType = wildLetterType;
+        }
     }
 
+    /**
+     * toString() representation for WildLetter. If the wild letter type has
+     * been set, return it, otherwise return the normal letter type toString()
+     * representation.
+     *
+     * @return wild letter type name if wild letter type has been set, otherwise
+     * normal letter type name
+     */
     @Override
     public String toString() {
         if (wildLetterType != null) {
