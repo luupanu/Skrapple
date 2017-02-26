@@ -18,6 +18,7 @@ import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Dictionary;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
+import fi.luupanu.skrapple.ui.components.BoardTile;
 import fi.luupanu.skrapple.ui.components.PlayerPanel;
 import fi.luupanu.skrapple.ui.components.RackPanel;
 import fi.luupanu.skrapple.ui.listeners.UndoLetterQueueActionListener;
@@ -79,7 +80,7 @@ public class SkrappleGUI implements Runnable, Updateable {
     private JButton undoQueueButton;
     private JPanel undoQueuePanel;
     private CardLayout cards;
-    private final LetterTile[][] boardSquares;
+    private final BoardTile[][] boardSquares;
     private final LetterTile[] rackLetters;
     private JTextArea infoField;
     private List<PlayerPanel> playerPanels;
@@ -92,7 +93,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         BOARD_MAX_SIZE = s.getGame().getBoard().getBoardMaxSize();
         RACK_MAX_SIZE = s.getGame().getCurrentPlayer().getPlayerRack().getRackMaxSize();
 
-        boardSquares = new LetterTile[BOARD_MAX_SIZE][BOARD_MAX_SIZE];
+        boardSquares = new BoardTile[BOARD_MAX_SIZE][BOARD_MAX_SIZE];
         rackLetters = new LetterTile[RACK_MAX_SIZE];
         normal = new Font("Lucida Grande", Font.PLAIN, 14);
         bolded = new Font(normal.getName(), Font.BOLD, normal.getSize());
@@ -182,7 +183,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         String[] layout = s.getGame().getBoard().getLayout();
         for (int y = 0; y < boardSquares.length; y++) {
             for (int x = 0; x < boardSquares[y].length; x++) {
-                LetterTile b = new LetterTile(true);
+                BoardTile b = new BoardTile();
                 b.setCoord(new Coord(x, y));
                 b.setMargin(buttonMargin);
 
@@ -200,7 +201,7 @@ public class SkrappleGUI implements Runnable, Updateable {
         // add invisible area to balance Undo Move button
         rackPanel.add(Box.createRigidArea(new Dimension(115, 0)));
         for (int x = 0; x < rackLetters.length; x++) {
-            LetterTile b = new LetterTile(false);
+            LetterTile b = new LetterTile();
             b.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
 
             b.addActionListener(letterActionListener);
@@ -379,8 +380,8 @@ public class SkrappleGUI implements Runnable, Updateable {
     }
 
     public void updateBoardLettersIcon() {
-        for (LetterTile[] tiles : boardSquares) {
-            for (LetterTile tile : tiles) {
+        for (BoardTile[] tiles : boardSquares) {
+            for (BoardTile tile : tiles) {
                 if (tile.getLetter() != null) {
                     tile.setIcon(SkrappleImageIcon.LETTER_TILE.getIcon());
                     tile.setUnClickable();
@@ -395,8 +396,8 @@ public class SkrappleGUI implements Runnable, Updateable {
     }
 
     public void updateHangingLetterTiles() {
-        for (LetterTile[] tiles : boardSquares) {
-            for (LetterTile tile : tiles) {
+        for (BoardTile[] tiles : boardSquares) {
+            for (BoardTile tile : tiles) {
                 if (tile.getIcon() == SkrappleImageIcon.LETTER_TILE_SELECTED.getIcon()) {
                     tile.paintBoardIcon(s.getGame().getBoard().getLayout());
                 }

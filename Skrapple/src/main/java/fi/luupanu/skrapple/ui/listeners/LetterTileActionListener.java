@@ -11,6 +11,7 @@ import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.WildLetter;
 import fi.luupanu.skrapple.logic.SkrappleGame;
 import fi.luupanu.skrapple.ui.SkrappleGUI;
+import fi.luupanu.skrapple.ui.components.BoardTile;
 import fi.luupanu.skrapple.ui.components.LetterTile;
 import fi.luupanu.skrapple.ui.components.WildLetterTypeDialog;
 import java.awt.Color;
@@ -54,18 +55,16 @@ public class LetterTileActionListener implements ActionListener {
 
         if (e.getSource() instanceof LetterTile) {
             LetterTile tile = (LetterTile) e.getSource();
-            
-            if (tile.isUnClickable()) {
-                return;
-            }
 
-            /// if the lettertile clicked is a rack tile
-            if (!tile.isBoardLetter()) {
-                handleRackTilePress(tile);
+            /// if the lettertile clicked is a board tile
+            if (tile instanceof BoardTile) {
+                if (!((BoardTile) tile).isUnClickable()) {
+                    handleBoardTilePress(tile);
+                }
                 return;
             }
-            // if the lettertile clicked is a board tile
-            handleBoardTilePress(tile);
+            // if the lettertile clicked is a rack tile
+            handleRackTilePress(tile);
         }
     }
 
@@ -76,7 +75,7 @@ public class LetterTileActionListener implements ActionListener {
         }
         // unselect the previous rack letter (remove visuals)
         if (selected != null) {
-            selected.setSelectedVisualEffect(false);
+            selected.paintLetterTile(false);
         }
         // if we select the same letter twice, set selected to null and return
         if (tile == selected) {
@@ -84,7 +83,7 @@ public class LetterTileActionListener implements ActionListener {
         } else {
             // select the clicked rack letter
             selected = tile;
-            tile.setSelectedVisualEffect(true);
+            tile.paintLetterTile(true);
         }
         paintValidMoves();
     }
@@ -104,10 +103,12 @@ public class LetterTileActionListener implements ActionListener {
                     return;
                 }
             }
-            if (s.getGame().getLetterQueue().addLetterToQueue(let, tile.getCoord(), s.getGame().getBoard())) {
+            if (s.getGame().getLetterQueue().addLetterToQueue(let,
+                    ((BoardTile) tile).getCoord(), s.getGame().getBoard())) {
                 s.getGame().getCurrentPlayer().getPlayerRack().takeLetter(let);
                 tile.setLetter(let);
-                selected.setSelectedVisualEffect(false);
+                selected.paintLetterTile(false);
+                tile.paintLetterTile(false);
                 selected.setLetter(null);
                 selected = null;
                 gui.setUndoQueueButtonVisible(true);
@@ -126,10 +127,10 @@ public class LetterTileActionListener implements ActionListener {
         if (s.getGame().getLetterQueue().getContents().isEmpty()) {
             gui.setUndoQueueButtonVisible(false);
         }
-        for (LetterTile jbl : rackLetters) {
-            if (jbl.getLetter() == null) {
-                jbl.setLetter(let);
-                tile.paintBoardIcon(s.getGame().getBoard().getLayout());
+        for (LetterTile rackTile : rackLetters) {
+            if (rackTile.getLetter() == null) {
+                rackTile.setLetter(let);
+                ((BoardTile) tile).paintBoardIcon(s.getGame().getBoard().getLayout());
                 break;
             }
         }
