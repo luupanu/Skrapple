@@ -1,0 +1,12 @@
+fi.luupanu.skrapple
+fi.luupanu.skrapple.constants
+fi.luupanu.skrapple.domain
+fi.luupanu.skrapple.filemanager
+fi.luupanu.skrapple.logic
+fi.luupanu.skrapple.logic.actions
+fi.luupanu.skrapple.ui
+fi.luupanu.skrapple.ui.components
+fi.luupanu.skrapple.ui.components.dialogs
+fi.luupanu.skrapple.ui.components.panels
+fi.luupanu.skrapple.ui.listeners
+fi.luupanu.skrapple.utils
