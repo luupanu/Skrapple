@@ -18,3 +18,6 @@ Päivä | Tunnit | Kuvaus
 22.02.2017 | 8h | UI:n tekoa, ActionListenereiden tekoa
 23.02.2017 | 8h | Peliruutu (UI) valmis, toimiva demo
 24.02.2017 | 8h | Refaktorointia, kaavioita, UI:n parantelua, lisänappi Undo Move
+26.02.2017 | 8h | Refaktorointia, bugien fiksailua
+04.03.2017 | 8h | Melkein viimeinen versio	
+05.03.2017 | 6h | Viimeisiä kiusauksia

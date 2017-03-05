@@ -13,64 +13,84 @@
 <a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">package</strong> fi.luupanu.skrapple.ui.listeners;
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   
-<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.constants.ErrorMessage;
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.constants.SkrappleGameState;
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.logic.SkrappleGame;
-<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.logic.actions.Resign;
-<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.ConfirmationDialog;
-<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.GameOverDialog;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.PlayerName;
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.PlayerPoints;
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> java.awt.event.ActionEvent;
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> java.awt.event.ActionListener;
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> javax.swing.JButton;
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> javax.swing.JFrame;
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> javax.swing.JOptionPane;
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> * @author panu</em>
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../fi/luupanu/skrapple/ui/listeners/ResignActionListener.html">ResignActionListener</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/ConfirmationDialog.html">ConfirmationDialog</a> <strong class="jxr_keyword">implements</strong> ActionListener {
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/logic/SkrappleGame.html">SkrappleGame</a> s;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> JFrame frame;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> JButton resign;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerName.html">PlayerName</a> playerOneName;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerName.html">PlayerName</a> playerTwoName;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerPoints.html">PlayerPoints</a> playerOnePoints;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerPoints.html">PlayerPoints</a> playerTwoPoints;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../fi/luupanu/skrapple/ui/listeners/ResignActionListener.html">ResignActionListener</a>(<a href="../../../../../fi/luupanu/skrapple/logic/SkrappleGame.html">SkrappleGame</a> s, JFrame frame, JButton resign,
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>              <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerName.html">PlayerName</a> playerOneName, <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerName.html">PlayerName</a> playerTwoName,
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>              <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerPoints.html">PlayerPoints</a> playerOnePoints, <a href="../../../../../fi/luupanu/skrapple/ui/components/PlayerPoints.html">PlayerPoints</a> playerTwoPoints) {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          <strong class="jxr_keyword">this</strong>.s = s;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          <strong class="jxr_keyword">this</strong>.frame = frame;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <strong class="jxr_keyword">this</strong>.resign = resign;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">this</strong>.playerOneName = playerOneName;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <strong class="jxr_keyword">this</strong>.playerTwoName = playerOneName;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          <strong class="jxr_keyword">this</strong>.playerOnePoints = playerOnePoints;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">this</strong>.playerTwoPoints = playerTwoPoints;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>      }
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      @Override
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> actionPerformed(ActionEvent e) {
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">if</strong> (e.getSource() == resign &amp;&amp; s.getGame().getGameState() == SkrappleGameState.PLAYING) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>              <strong class="jxr_keyword">int</strong> response = <strong class="jxr_keyword">super</strong>.askConfirmation(frame, <span class="jxr_string">"Resign"</span>);
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>              <strong class="jxr_keyword">if</strong> (response == JOptionPane.YES_OPTION) {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>                  resignCurrentPlayer();
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>              }
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          }
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>      }
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resignCurrentPlayer() {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">if</strong> (s.doAction(<strong class="jxr_keyword">new</strong> Resign(s.getGame())) != ErrorMessage.GAME_IS_OVER) {
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>              <em class="jxr_comment">// end game screen</em>
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>              <a href="../../../../../fi/luupanu/skrapple/ui/components/GameOverDialog.html">GameOverDialog</a> god = <strong class="jxr_keyword">new</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/GameOverDialog.html">GameOverDialog</a>(s, frame, playerOneName,
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                      playerTwoName, playerOnePoints, playerTwoPoints);
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.constants.Announcement;
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.constants.ErrorMessage;
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.constants.GameState;
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.logic.SkrappleGame;
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.logic.actions.Resign;
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.dialogs.ConfirmationDialog;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.dialogs.GameOverDialog;
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.ui.components.panels.GameScreen;
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <strong class="jxr_keyword">import</strong> fi.luupanu.skrapple.utils.Announcer;
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <strong class="jxr_keyword">import</strong> java.awt.event.ActionEvent;
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <strong class="jxr_keyword">import</strong> java.awt.event.ActionListener;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">import</strong> javax.swing.JButton;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> javax.swing.JFrame;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> javax.swing.JOptionPane;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> * An action listener for the Resign button.</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> * @author panu</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../../fi/luupanu/skrapple/ui/listeners/ResignActionListener.html">ResignActionListener</a> <strong class="jxr_keyword">extends</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/dialogs/ConfirmationDialog.html">ConfirmationDialog</a> <strong class="jxr_keyword">implements</strong> ActionListener {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/logic/SkrappleGame.html">SkrappleGame</a> s;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> JFrame frame;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> JButton resignButton;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/utils/Announcer.html">Announcer</a> announcer;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/panels/GameScreen.html">GameScreen</a> gameScreen;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> JButton endTurnButton;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * Creates a new ResignActionListener.</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     * @param a the announcer</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     * @param gameScreen the game screen</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * @param s SkrappleGame</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * @param frame the frame to display dialogs on</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     * @param resignButton the resign button</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * @param endTurnButton the end turn button</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../../fi/luupanu/skrapple/ui/listeners/ResignActionListener.html">ResignActionListener</a>(<a href="../../../../../fi/luupanu/skrapple/utils/Announcer.html">Announcer</a> a, <a href="../../../../../fi/luupanu/skrapple/ui/components/panels/GameScreen.html">GameScreen</a> gameScreen, <a href="../../../../../fi/luupanu/skrapple/logic/SkrappleGame.html">SkrappleGame</a> s,
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>              JFrame frame, JButton resignButton, JButton endTurnButton) {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">this</strong>.announcer = a;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">this</strong>.gameScreen = gameScreen;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">this</strong>.s = s;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">this</strong>.frame = frame;
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">this</strong>.endTurnButton = endTurnButton;
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          <strong class="jxr_keyword">this</strong>.resignButton = resignButton;
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      }
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      @Override
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> actionPerformed(ActionEvent e) {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">if</strong> (e.getSource() == resignButton &amp;&amp; s.getGame().getGameState() == GameState.PLAYING) {
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>              <strong class="jxr_keyword">int</strong> response = <strong class="jxr_keyword">super</strong>.askConfirmation(frame, <span class="jxr_string">"Resign"</span>);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>              <strong class="jxr_keyword">if</strong> (response == JOptionPane.YES_OPTION) {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  resignCurrentPlayer();
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>              }
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          }
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * Resigns the current player. If all but one player has resigned, game</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * over, else switch the turn.</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resignCurrentPlayer() {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">if</strong> (s.doAction(<strong class="jxr_keyword">new</strong> Resign(s.getGame())) != ErrorMessage.GAME_IS_OVER) {
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>              String msg = announcer.announce(Announcement.PLAYER_RESIGNED_MESSAGE);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>              gameScreen.update(announcer.addIndentation(msg));
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>              <strong class="jxr_keyword">if</strong> (s.getGame().getGameState() == GameState.GAMEOVER) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>                  <em class="jxr_comment">// end game screen</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <a href="../../../../../fi/luupanu/skrapple/ui/components/dialogs/GameOverDialog.html">GameOverDialog</a> god = <strong class="jxr_keyword">new</strong> <a href="../../../../../fi/luupanu/skrapple/ui/components/dialogs/GameOverDialog.html">GameOverDialog</a>(announcer, gameScreen, s,
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>                          frame);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                  god.showDialog();
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>                  endTurnButton.doClick();
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          }
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      }
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017. All rights reserved.</div>

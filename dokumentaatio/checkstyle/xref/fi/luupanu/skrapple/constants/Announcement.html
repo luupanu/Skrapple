@@ -20,30 +20,37 @@
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * @author panu</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">public</strong> enum <a href="../../../../fi/luupanu/skrapple/constants/Announcement.html">Announcement</a> <strong class="jxr_keyword">implements</strong> <a href="../../../../fi/luupanu/skrapple/constants/Message.html">Message</a> {
-<a class="jxr_linenumber" name="L15" href="#L15">15</a>      WELCOME_MESSAGE(<span class="jxr_string">"Welcome to Skrapple!\n"</span>),
-<a class="jxr_linenumber" name="L16" href="#L16">16</a>      TURN_START_MESSAGE(<span class="jxr_string">"It's &lt;PLAYER&gt;'s turn."</span>),
-<a class="jxr_linenumber" name="L17" href="#L17">17</a>      LETTERQUEUE_EMPTY_ERROR(<span class="jxr_string">"You didn't place any letters, silly you! ^_^"</span>),
-<a class="jxr_linenumber" name="L18" href="#L18">18</a>      LETTERQUEUE_NOT_VALID_ERROR(<span class="jxr_string">"Can't make an invalid move, now can we? ^_^"</span>),
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>      WORD_NOT_VALID_ERROR(<span class="jxr_string">"&lt;WORD&gt;? That's not a word! ^_^"</span>),
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      WORD_SCORE_MESSAGE(<span class="jxr_string">"Word &lt;WORD&gt; scored &lt;WORDPOINTS&gt; points."</span>),
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>      BONUS_SCORE_MESSAGE(<span class="jxr_string">"You used all seven letter tiles! 50 bonus points scored."</span>),
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>      REFILL_RACK_MESSAGE(<span class="jxr_string">"Added new letters &lt;LETTERS&gt; to the rack."</span>);
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>      <strong class="jxr_keyword">private</strong> String message;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../fi/luupanu/skrapple/constants/Announcement.html">Announcement</a>(String message) {
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>          setMessage(message);
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      }
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setMessage(String message) {
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>          <strong class="jxr_keyword">this</strong>.message = message;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>      }
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>      @Override
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> String getMessage() {
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>          <strong class="jxr_keyword">return</strong> message;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      }
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  }
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>      WELCOME_MESSAGE(<span class="jxr_string">"Welcome to Skrapple!"</span>),
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>      TURN_START_MESSAGE(<span class="jxr_string">"\nIt's &lt;PLAYER&gt;'s turn."</span>),
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>      PLAYER_RESIGNED_MESSAGE(<span class="jxr_string">"&lt;PLAYER&gt; resigned!"</span>),
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>      PLAYER_EXCHANGED_MESSAGE(<span class="jxr_string">"&lt;PLAYER&gt; exchanged their letters."</span>),
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>      LETTERQUEUE_EMPTY_MESSAGE(<span class="jxr_string">"You didn't place any letters, silly you! ^_^"</span>),
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      LETTERQUEUE_NOT_VALID_MESSAGE(<span class="jxr_string">"Can't make an invalid move, now can we? ^_^"</span>),
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>      WORD_NOT_VALID_MESSAGE(<span class="jxr_string">"&lt;WORD&gt;? That's not a word! ^_^"</span>),
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>      WORD_SCORE_MESSAGE(<span class="jxr_string">"Word &lt;WORD&gt; scored &lt;WORDPOINTS&gt; points."</span>),
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>      BONUS_SCORE_MESSAGE(<span class="jxr_string">"You used all seven letter tiles! 50 bonus points scored."</span>),
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>      REFILL_RACK_MESSAGE(<span class="jxr_string">"Added new letters &lt;LETTERS&gt; to the rack."</span>),
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      LETTERBAG_EMPTY_MESSAGE(<span class="jxr_string">"The letter bag is empty!"</span>),
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      EXCHANGE_FAILED_MESSAGE(<span class="jxr_string">"The letter bag has less letters than you're trying to exchange!"</span>),
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      EXCHANGE_CANNOT_START_MESSAGE(<span class="jxr_string">"Are you trying to move and exchange at the same time? That's nitwitted! ^_^"</span>),
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      RACK_EMPTY_MESSAGE(<span class="jxr_string">"&lt;PLAYER&gt; has no letters! The game is over!"</span>),
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      GAME_OVER_MESSAGE(<span class="jxr_string">"\nGood game! ^_^"</span>);
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">private</strong> String message;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../fi/luupanu/skrapple/constants/Announcement.html">Announcement</a>(String message) {
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>          setMessage(message);
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      }
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setMessage(String message) {
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          <strong class="jxr_keyword">this</strong>.message = message;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      }
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      @Override
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> String getMessage() {
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <strong class="jxr_keyword">return</strong> message;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017. All rights reserved.</div>

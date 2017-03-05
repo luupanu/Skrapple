@@ -1,6 +1,6 @@
 # Skrapple :cow:
 
-Kahden pelaajan suomenkielinen [Scrabble](https://fi.wikipedia.org/wiki/Scrabble)-klooni. Peliä pelataan paikallisena moninpelinä (nk. [hotseat](https://fi.wikipedia.org/wiki/Hotseat), ei siis esim. Internetin välityksellä.
+2-4 pelaajan [Scrabble](https://fi.wikipedia.org/wiki/Scrabble)-klooni. Peliä pelataan paikallisena moninpelinä (nk. [hotseat](https://fi.wikipedia.org/wiki/Hotseat), ei siis esim. Internetin välityksellä.
 
 ## Dokumentaatio :rabbit:
 
