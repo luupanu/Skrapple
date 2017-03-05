@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.Direction;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
@@ -91,12 +92,12 @@ public class LetterQueueTest {
     public void changingDirectionSucceeds() {
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
         assertEquals(true, q.addLetterToQueue(let2, new Coord(7, 8), b));
-        assertEquals(false, q.getDirection());
+        assertEquals(Direction.VERTICAL, q.getDirection());
         assertEquals(let1, q.takeLetterFromQueue(let1));
         assertEquals(let2, q.takeLetterFromQueue(let2));
         assertEquals(true, q.addLetterToQueue(let1, new Coord(7, 7), b));
         assertEquals(true, q.addLetterToQueue(let2, new Coord(8, 7), b));
-        assertEquals(true, q.getDirection());
+        assertEquals(Direction.HORIZONTAL, q.getDirection());
     }
 
     @Test

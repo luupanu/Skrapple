@@ -98,7 +98,7 @@ public class SkrappleGameTest {
         Announcer a = new Announcer(s);
         Updateable u = (String message) -> {};
         assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new Move(s.getGame(), a, u)));
-        assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new ExchangeLetters(s.getGame(), new ArrayList<>())));
+        assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new ExchangeLetters(s.getGame(), new ArrayList<>(), a, u)));
         assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new Resign(s.getGame())));
         assertEquals(ErrorMessage.GAME_IS_OVER, s.doAction(new EndTurn(s.getGame())));
     }

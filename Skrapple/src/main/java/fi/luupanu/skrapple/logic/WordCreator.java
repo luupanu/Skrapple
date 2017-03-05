@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.Direction;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
@@ -37,39 +38,47 @@ public class WordCreator {
         this.n = queue.getNeighbours();
         this.words = new ArrayList<>();
     }
-    
+
     public List<Word> getContents() {
         return words;
     }
 
     /**
      * This method constructs all the words from the letters in the LetterQueue.
-     * If the word played is the first word of the game, in order to use the
-     * same methods to construct the words, we first need to create an artifical
-     * Neighbour.
+     * In some cases an artificial neighbour needs to be first added in order to
+     * use the same two methods to construct words.
      *
      * @param board the game board
      * @return a list of all the words that were created
      */
     public List<Word> constructWords(Board board) {
-        if (board.hasNoLetters()) {
-            constructFirstWordOfTheGame(board);
-        } else {
-            constructHorizontalWords(board);
-            constructVerticalWords(board);
-        }
+        constructArtificialNeighbour(board);
+        constructHorizontalWords(board);
+        constructVerticalWords(board);
         return words;
     }
 
-    private void constructFirstWordOfTheGame(Board board) {
-        if (q.getDirection()) {
+    /**
+     * This method constructs artificial neighbours, if needed. If the word
+     * played is the first word of the game, or the letter queue contains for
+     * example a valid horizontal word even though it only has a vertical
+     * neighbour, this method will add one artificial neighbour which will be
+     * the first coordinate of the first letter in the queue it finds.
+     *
+     * @param board
+     */
+    private void constructArtificialNeighbour(Board board) {
+        if (q.getDirection() == Direction.HORIZONTAL &&
+                n.getHorizontalNeighbours().isEmpty()) {
             Coord c = q.getContents().stream().findFirst().get().getCoord();
             n.addHorizontalNeighbour(c);
-            constructHorizontalWords(board);
-        } else if (!q.getDirection()) {
+        } else if (q.getDirection() == Direction.VERTICAL &&
+                n.getVerticalNeighbours().isEmpty()) {
             Coord c = q.getContents().stream().findFirst().get().getCoord();
             n.addVerticalNeighbour(c);
-            constructVerticalWords(board);
+        } else if (board.hasNoLetters() && q.getDirection() == null) {
+            Coord c = q.getContents().stream().findFirst().get().getCoord();
+            n.addHorizontalNeighbour(c);
         }
     }
 

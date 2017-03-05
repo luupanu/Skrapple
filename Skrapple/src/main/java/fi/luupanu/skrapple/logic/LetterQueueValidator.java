@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.Direction;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Letter;
 import java.util.List;
@@ -57,27 +58,20 @@ public class LetterQueueValidator {
         }
 
         // the letters in the queue cannot leave a gap
-        if (list.size() != 1) {
-            if (!queueHasNoGaps(board)) {
-                return false;
-            }
-            return n.findAllNeighbours(board);
+        if (!queueHasNoGaps(board)) {
+            return false;
         }
-
-        // if only one letter is in the queue, don't need to check for gaps
         return n.findAllNeighbours(board);
     }
 
     private boolean queueHasNoGaps(Board board) {
-        boolean direction = q.getDirection();
-
-        if (direction) {
+        if (q.getDirection() == Direction.HORIZONTAL) {
             return horizontalQueueHasNoGaps(board);
-        } else if (!direction) {
+        } else if (q.getDirection() == Direction.VERTICAL) {
             return verticalQueueHasNoGaps(board);
-        } else {
-            return false;
         }
+        // the queue has no direction (size <= 1), it can't have gaps
+        return true;
     }
 
     private boolean horizontalQueueHasNoGaps(Board board) {

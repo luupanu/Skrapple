@@ -11,12 +11,12 @@ import fi.luupanu.skrapple.domain.Letter;
 import java.util.List;
 
 /**
- * A player can choose to skip the current turn.
+ * A player can choose to end the current turn.
  *
  * @author panu
  */
 public class EndTurn extends GameAction {
-
+    
     /**
      * Creates a new GameAction EndTurn.
      *

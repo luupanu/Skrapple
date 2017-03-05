@@ -27,11 +27,11 @@ public class FileReader {
      *
      * @param filename the file name
      * @return the read file as a list of strings
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException if file not found
+     * @throws IOException if something went wrong with I/O
      */
     public List<String> readFile(String filename) throws FileNotFoundException, IOException {
-        ArrayList<String> list = new ArrayList<>(84420);
+        ArrayList<String> list = new ArrayList<>(84043);
         InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);
         Scanner s;
         try {
@@ -50,8 +50,8 @@ public class FileReader {
      *
      * @param filename the file name
      * @return the read file as an image
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException if file not found
+     * @throws IOException if something went wrong with I/O
      */
     public Image readImage(String filename) throws FileNotFoundException, IOException {
         InputStream stream = getClass().getClassLoader().getResourceAsStream(filename);

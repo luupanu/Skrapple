@@ -27,8 +27,8 @@ public class DictionaryTest {
     }
 
     @Test
-    public void wordListContains84420Words() {
-        assertEquals(84420, words.size());
+    public void wordListContains84043Words() {
+        assertEquals(84043, words.size());
     }
 
     @Test

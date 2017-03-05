@@ -10,41 +10,40 @@ import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.WildLetter;
 import fi.luupanu.skrapple.logic.SkrappleGame;
-import fi.luupanu.skrapple.ui.SkrappleGUI;
 import fi.luupanu.skrapple.ui.components.BoardTile;
 import fi.luupanu.skrapple.ui.components.LetterTile;
-import fi.luupanu.skrapple.ui.components.WildLetterTypeDialog;
-import java.awt.Color;
+import fi.luupanu.skrapple.ui.components.dialogs.WildLetterTypeDialog;
+import fi.luupanu.skrapple.ui.components.panels.GameScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 /**
+ * A custom action listener for all letter tiles.
  *
  * @author panu
  */
 public class LetterTileActionListener implements ActionListener {
 
     private final JFrame frame;
-    private final LetterTile[][] boardSquares;
     private final LetterTile[] rackLetters;
     private LetterTile selected;
     private final SkrappleGame s;
-    private final JButton undoQueueButton;
-    private final SkrappleGUI gui;
+    private final GameScreen gameScreen;
 
-    public LetterTileActionListener(SkrappleGUI gui, SkrappleGame s, 
-            JFrame frame, LetterTile[][] boardSquares, LetterTile[] rackLetters,
-            JButton undoQueueButton) {
-        this.gui = gui;
+    /**
+     * Creates a new LetterTileActionListener.
+     * @param gameScreen the game screen
+     * @param s SkrappleGame
+     * @param frame the frame to display dialogs on
+     * @param rackLetters the rack letters
+     */
+    public LetterTileActionListener(GameScreen gameScreen, SkrappleGame s,
+            JFrame frame, LetterTile[] rackLetters) {
+        this.gameScreen = gameScreen;
         this.s = s;
         this.frame = frame;
-        this.boardSquares = boardSquares;
         this.rackLetters = rackLetters;
-        this.undoQueueButton = undoQueueButton;
     }
 
     @Override
@@ -111,7 +110,7 @@ public class LetterTileActionListener implements ActionListener {
                 tile.paintLetterTile(false);
                 selected.setLetter(null);
                 selected = null;
-                gui.setUndoQueueButtonVisible(true);
+                gameScreen.setUndoQueueButtonVisible(true);
                 paintValidMoves();
             }
         }
@@ -125,7 +124,7 @@ public class LetterTileActionListener implements ActionListener {
         }
         s.getGame().getCurrentPlayer().getPlayerRack().addLetter(let);
         if (s.getGame().getLetterQueue().getContents().isEmpty()) {
-            gui.setUndoQueueButtonVisible(false);
+            gameScreen.setUndoQueueButtonVisible(false);
         }
         for (LetterTile rackTile : rackLetters) {
             if (rackTile.getLetter() == null) {
@@ -152,6 +151,8 @@ public class LetterTileActionListener implements ActionListener {
         wLet.setWildLetterType(null);
     }
 
+    /*  painting of borders for so many objects does not work that well, things
+        don't get drawn, still searching for a better solution */
     private void paintValidMoves() {
 //        Letter fakeLetter = new Letter(LetterType.LETTER_E);
 //        for (int y = 0; y < boardSquares.length; y++) {

@@ -7,6 +7,7 @@ package fi.luupanu.skrapple.logic.actions;
 
 import fi.luupanu.skrapple.constants.Announcement;
 import fi.luupanu.skrapple.constants.ErrorMessage;
+import fi.luupanu.skrapple.constants.GameState;
 import fi.luupanu.skrapple.domain.Game;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.Word;
@@ -73,27 +74,36 @@ public class Move extends GameAction {
         // all good
         
         // place letters to board
-        placeLettersToBoard(game);
-        // clear LetterQueue, clear WordCreator
+        int placedLetters = placeLettersToBoard(game);
+        // clear LetterQueue
         clearLetterQueue(game);
         // give points to the current player
-        givePointsToCurrentPlayer(game);
+        givePointsToCurrentPlayer(game, placedLetters);
         // clear WordCreator
         clearWordCreator(game);
         // clear Neighbours
         clearNeighbours(game);
         // refill her rack
-        refillCurrentPlayerRack(game);
+        if (!game.getLetterBag().getContents().isEmpty()) {
+            refillCurrentPlayerRack(game);
+        } else { // i used all the letters in my rack, game over
+            if (game.getCurrentPlayer().getPlayerRack().getContents().isEmpty()) {
+                game.setGameState(GameState.GAMEOVER);
+            }
+        }
         
         return ErrorMessage.NO_ERRORS;
     }
      
-    private void placeLettersToBoard(Game game) {
+    private int placeLettersToBoard(Game game) {
+        int placedLetters = 0;
         for (Letter let : game.getLetterQueue().getContents()) {
             int x = let.getCoord().getX();
             int y = let.getCoord().getY();
             game.getBoard().getSquare(x, y).placeLetter(let);
+            placedLetters++;
         }
+        return placedLetters;
     }
     
     private void clearLetterQueue(Game game) {
@@ -109,17 +119,17 @@ public class Move extends GameAction {
         game.getWordCreator().getContents().clear();
     }
     
-    private void givePointsToCurrentPlayer(Game game) {
+    private void givePointsToCurrentPlayer(Game game, int placedLetters) {
         for (Word w : words) {
             game.getCurrentPlayer().addPoints(w.getPoints());
             String message = announcer.announce(Announcement.WORD_SCORE_MESSAGE, w);
             updateable.update(announcer.addIndentation(message));
         }
-        giveBonusPointsToCurrentPlayer(game);
+        giveBonusPointsToCurrentPlayer(game, placedLetters);
     }
     
-    private void giveBonusPointsToCurrentPlayer(Game game) {
-        if (game.getCurrentPlayer().getPlayerRack().getContents().isEmpty()) {
+    private void giveBonusPointsToCurrentPlayer(Game game, int placedLetters) {
+        if (placedLetters == game.getCurrentPlayer().getPlayerRack().getRackMaxSize()) {
             game.getCurrentPlayer().addPoints(50);
             String message = announcer.announce(Announcement.BONUS_SCORE_MESSAGE);
             updateable.update(message);
@@ -131,6 +141,9 @@ public class Move extends GameAction {
                 refillRack(game.getLetterBag());
         String message = announcer.announce(Announcement.REFILL_RACK_MESSAGE, refilled);
         updateable.update(announcer.addIndentation(message));
+        if (game.getLetterBag().getContents().isEmpty()) {
+            updateable.update(announcer.announce(Announcement.LETTERBAG_EMPTY_MESSAGE));
+        }
     }
 
     private boolean letterQueueIsEmpty(Game game) {

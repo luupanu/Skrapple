@@ -10,87 +10,56 @@ import fi.luupanu.skrapple.constants.LetterType;
 import fi.luupanu.skrapple.domain.Letter;
 import fi.luupanu.skrapple.domain.WildLetter;
 import fi.luupanu.skrapple.logic.SkrappleGame;
-import fi.luupanu.skrapple.ui.SkrappleGUI;
-import fi.luupanu.skrapple.ui.components.RackPanel;
+import fi.luupanu.skrapple.ui.components.panels.GameScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JButton;
 
 /**
+ * An action listener for the Undo Move button.
  *
  * @author panu
  */
-public class UndoLetterQueueActionListener implements ActionListener, MouseListener {
+public class UndoLetterQueueActionListener implements ActionListener {
 
     private final SkrappleGame s;
     private final JButton undoQueueButton;
-    private final SkrappleGUI gui;
-    private final RackPanel rackPanel;
+    private final GameScreen gameWindow;
 
-    public UndoLetterQueueActionListener(SkrappleGame s, SkrappleGUI gui,
-            RackPanel rackPanel, JButton undoQueueButton) {
-        this.gui = gui;
-        this.rackPanel = rackPanel;
+    /**
+     * Creates a new UndoLetterQueueActionListener.
+     *
+     * @param s SkrappleGame
+     * @param gameWindow the game window
+     * @param undoQueueButton the undo move button
+     */
+    public UndoLetterQueueActionListener(SkrappleGame s, GameScreen gameWindow,
+            JButton undoQueueButton) {
+        this.gameWindow = gameWindow;
         this.s = s;
         this.undoQueueButton = undoQueueButton;
-        addMouseListener();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == undoQueueButton &&
-                s.getGame().getGameState() == GameState.PLAYING) {
+        if (e.getSource() == undoQueueButton
+                && s.getGame().getGameState() == GameState.PLAYING) {
             List<Letter> canceled = s.getGame().getLetterQueue().cancelLetterQueue();
             for (Letter let : canceled) {
                 resetWildLetterType(let);
             }
             s.getGame().getCurrentPlayer().getPlayerRack().addLetters(canceled);
-            gui.updateHangingLetterTiles();
-            gui.updatePlayerRack();
-            gui.setUndoQueueButtonVisible(false);
+            gameWindow.updateHangingLetterTiles();
+            gameWindow.updatePlayerRack();
+            gameWindow.setUndoQueueButtonVisible(false);
         }
     }
-    
+
     private void resetWildLetterType(Letter let) {
         if (let.getType() == LetterType.LETTER_WILD) {
             WildLetter wLet = (WildLetter) let;
             wLet.setWildLetterType(null);
         }
-    }
-
-    /**
-     * Adding the mouse listener is unfortunately necessary to squash a bug
-     * where the background of the JButton doesn't stay transparent but turns
-     * to black instead when pressed but not released.
-     *
-     */
-    private void addMouseListener() {
-        undoQueueButton.addMouseListener(this);
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        rackPanel.repaint();
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        rackPanel.repaint();
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        rackPanel.repaint();
     }
 }

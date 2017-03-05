@@ -77,7 +77,7 @@ public class SkrappleGame {
     private void resetResignedPlayersPoints() {
         for (Player p : getGame().getPlayerList()) {
             if (p.isResigned()) {
-                p.addPoints(-p.getPlayerPoints() -100); // = -100, should always be enough
+                p.addPoints(-p.getPlayerPoints() - 100); // = -100, should always be enough
             }
         }
     }

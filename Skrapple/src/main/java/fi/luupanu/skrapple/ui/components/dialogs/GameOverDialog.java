@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.luupanu.skrapple.ui.components;
+package fi.luupanu.skrapple.ui.components.dialogs;
 
 import fi.luupanu.skrapple.constants.Announcement;
 import fi.luupanu.skrapple.domain.Player;
 import fi.luupanu.skrapple.logic.SkrappleGame;
-import fi.luupanu.skrapple.ui.SkrappleGUI;
+import fi.luupanu.skrapple.ui.components.panels.GameScreen;
 import fi.luupanu.skrapple.utils.Announcer;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
+ * A game over dialog. Returns to main menu screen when closed.
  *
  * @author panu
  */
@@ -23,23 +24,34 @@ public class GameOverDialog {
     private final JFrame frame;
     private final SkrappleGame s;
     private final Announcer announcer;
-    private final SkrappleGUI gui;
+    private final GameScreen gameScreen;
 
-    public GameOverDialog(Announcer a, SkrappleGUI gui, SkrappleGame s,
-            JFrame frame) {
+    /**
+     * Creates a new GameOverDialog.
+     *
+     * @param a the announcer
+     * @param gameScreen the game screen
+     * @param s SkrappleGame
+     * @param frame the frame to be displayed on
+     */
+    public GameOverDialog(Announcer a, GameScreen gameScreen,
+            SkrappleGame s, JFrame frame) {
         this.announcer = a;
         this.frame = frame;
-        this.gui = gui;
+        this.gameScreen = gameScreen;
         this.s = s;
-        showDialog();
     }
 
-    private void showDialog() {
+    /**
+     * Show the game over dialog.
+     */
+    public void showDialog() {
         List<Player> players = s.doFinalScoring();
         String message = generateGameOverMessage(players);
-        gui.update(announcer.announce(Announcement.GAME_OVER_MESSAGE));
-        JOptionPane.showConfirmDialog(frame, message, "Game Over :-(",
+        gameScreen.update(announcer.announce(Announcement.GAME_OVER_MESSAGE));
+        int response = JOptionPane.showConfirmDialog(frame, message, "Game Over :-(",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+        gameScreen.showMainMenu();
     }
 
     private String generateGameOverMessage(List<Player> players) {

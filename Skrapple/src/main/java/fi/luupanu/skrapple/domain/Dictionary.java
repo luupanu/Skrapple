@@ -24,8 +24,8 @@ public class Dictionary {
      * Loads the word list used by the dictionary.
      *
      * @param filename the file location
-     * @throws java.io.FileNotFoundException
-     * @throws java.io.IOException
+     * @throws java.io.FileNotFoundException if file not found
+     * @throws java.io.IOException if something went wrong with I/O
      */
     public Dictionary(String filename) throws FileNotFoundException, IOException {
         wordlist = loadWordList(filename);

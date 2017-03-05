@@ -10,8 +10,8 @@ import fi.luupanu.skrapple.domain.Coord;
 
 /**
  * A subclass of LetterTile for board letter tiles. BoardTile contains a
- * coordinate that should be equal to the coordinate of the corresponding game
- * logic board square. BoardTiles are special also in that they can be set
+ * coordinate that should be set equal to the coordinate of the corresponding
+ * game logic board square. BoardTiles are special also in that they can be set
  * "final" with the boolean unClickable, which the action listener should
  * respect and not do anything.
  *
@@ -22,6 +22,9 @@ public class BoardTile extends LetterTile {
     private Coord c;
     private boolean unClickable;
 
+    /**
+     * Creates a new BoardTile.
+     */
     public BoardTile() {
         super();
     }
@@ -55,6 +58,12 @@ public class BoardTile extends LetterTile {
         }
     }
 
+    /**
+     * Sets this tile's icon to be a board icon according to the board layout.
+     *
+     * @param layout the board layout used to figure out which icon should be
+     * set
+     */
     public void paintBoardIcon(String[] layout) {
         setLetter(null);
         if (layout[c.getY()].charAt(c.getX()) == '.') {

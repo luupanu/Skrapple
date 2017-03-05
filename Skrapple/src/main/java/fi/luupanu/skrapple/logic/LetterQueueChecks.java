@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.Direction;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
@@ -74,7 +75,7 @@ public class LetterQueueChecks {
         }
 
         // now that we have a direction for the word, we can check the rest
-        return checkRemainingLettersCorrectPlacement(c, board, q.getDirection());
+        return checkRemainingLettersCorrectPlacement(c);
     }
 
     private boolean checkFirstLetterCorrectPlacement(Coord c, Board board) {
@@ -99,27 +100,27 @@ public class LetterQueueChecks {
             if (firstLetterCoord.getX() == c.getX() && firstLetterCoord.getY() == c.getY()) {
                 return false;
             } else if (firstLetterCoord.getX() == c.getX()) {
-                q.setDirection(false); // vertical
+                q.setDirection(Direction.VERTICAL); // vertical
                 return true;
             } else if (firstLetterCoord.getY() == c.getY()) {
-                q.setDirection(true); // horizontal
+                q.setDirection(Direction.HORIZONTAL); // horizontal
                 return true;
             }
         }
         return false;
     }
 
-    private boolean checkRemainingLettersCorrectPlacement(Coord c, Board board, boolean direction) {
+    private boolean checkRemainingLettersCorrectPlacement(Coord c) {
         for (Letter let : list) {
             Coord coordinate = let.getCoord();
             if (c.getY() == coordinate.getY() && c.getX() == coordinate.getX()) {
                 return false; // don't try to add exact same coordinates
             }
-            if (direction) { // horizontal
+            if (q.getDirection() == Direction.HORIZONTAL) { // horizontal
                 if (c.getY() != coordinate.getY()) {
                     return false;
                 }
-            } else if (!direction) { // vertical
+            } else if (q.getDirection() == Direction.VERTICAL) { // vertical
                 if (c.getX() != coordinate.getX()) {
                     return false;
                 }

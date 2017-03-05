@@ -12,7 +12,7 @@ package fi.luupanu.skrapple.domain;
  * @author panu
  */
 public class Player implements Comparable<Player> {
-    
+
     private final String name;
     private int points;
     private final Rack rack;
@@ -28,23 +28,26 @@ public class Player implements Comparable<Player> {
         this.points = 0;
         this.rack = new Rack();
     }
-    
+
     public String getPlayerName() {
         return name;
     }
-    
+
     public int getPlayerPoints() {
         return points;
     }
-    
+
     public Rack getPlayerRack() {
         return rack;
     }
-    
+
     public boolean isResigned() {
         return resigned;
     }
-    
+
+    /**
+     * Resigns this player.
+     */
     public void resign() {
         resigned = true;
     }
@@ -57,7 +60,7 @@ public class Player implements Comparable<Player> {
     public void addPoints(int n) {
         points += n;
     }
-    
+
     @Override
     public String toString() {
         return name + ": " + points + " points";

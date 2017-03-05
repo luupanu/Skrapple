@@ -6,17 +6,6 @@
 
 <suppressions>
     <suppress files="ManualTests.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="Skrapple.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="Main.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="ActionListener.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="MyTransferHandler.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="SkrappleGUI.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="ConfirmationDialog.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="ExchangeLettersDialog.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="GameOverDialog.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="LetterTile.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="PlayerName.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="PlayerPoints.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="RackPanel.java" checks="[a-zA-Z0-9]*"/>
-    <suppress files="WildLetterTypeDialog.java" checks="[a-zA-Z0-9]*"/>    
+    <suppress files="Main.java" checks="[a-zA-Z0-9]*"/>   
+    <suppress files="GameScreen.java" checks="[a-zA-Z0-9]*"/>  
 </suppressions>

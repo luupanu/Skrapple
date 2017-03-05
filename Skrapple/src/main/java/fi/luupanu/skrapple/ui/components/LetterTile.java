@@ -28,6 +28,9 @@ public class LetterTile extends JButton {
 
     private Letter letter;
 
+    /**
+     * Creates a new LetterTile.
+     */
     public LetterTile() {
         createJButtonLetter();
     }
@@ -51,6 +54,12 @@ public class LetterTile extends JButton {
         return letter;
     }
 
+    /**
+     * Paints a letter tile.
+     *
+     * @param selected if true, paints a green thick border, otherwise a white
+     * border
+     */
     public void paintLetterTile(boolean selected) {
         if (getLetter() != null) {
             if (selected) {

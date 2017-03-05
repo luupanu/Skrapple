@@ -5,6 +5,7 @@
  */
 package fi.luupanu.skrapple.logic;
 
+import fi.luupanu.skrapple.constants.Direction;
 import fi.luupanu.skrapple.domain.Board;
 import fi.luupanu.skrapple.domain.Coord;
 import fi.luupanu.skrapple.domain.Letter;
@@ -24,7 +25,7 @@ public class LetterQueue {
 
     private final LetterQueueChecks checks;
     private final List<Letter> list;
-    private boolean direction; // true = horizontal, false = vertical
+    private Direction direction;
     private final Neighbours n;
 
     /**
@@ -43,18 +44,24 @@ public class LetterQueue {
     }
 
     /**
-     * The direction the queue currently has. During a turn a player can only
-     * place letters in one direction, horizontally or vertically, not both at
-     * the same time.
+     * This method returns the direction the queue currently has. During a turn
+     * a player can only place letters in one direction, horizontally or
+     * vertically, not both at the same time.
      *
-     * @return true if horizontal, false if vertical
+     * If the queue has no direction (size less than 1), return null.
+     *
+     * @return HORIZONTAL or VERTICAL if the queue has a direction, otherwise
+     * null
      */
-    public boolean getDirection() {
-        return direction;
+    public Direction getDirection() {
+        if (getContents().size() > 1) {
+            return direction;
+        }
+        return null;
     }
 
-    public void setDirection(boolean bool) {
-        direction = bool;
+    public void setDirection(Direction d) {
+        direction = d;
     }
 
     /**
